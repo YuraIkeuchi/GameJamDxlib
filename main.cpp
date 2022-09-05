@@ -1,11 +1,13 @@
 #include "DxLib.h"
 #include "math.h"
+#include<time.h>
+
 const char TITLE[] = "学籍番号名前：タイトル";
 
 const int WIN_WIDTH = 800; //ウィンドウ横幅
 const int WIN_HEIGHT = 600;//ウィンドウ縦幅
 
-const int Enemy_Max = 3;
+const int Enemy_Max = 5;
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {
 	ChangeWindowMode(TRUE);						//ウィンドウモードに設定
@@ -44,7 +46,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	float PlayerCircleY = 0.0f;
 	float add = 1.0f;
 
-
 	float EnemyPosX[Enemy_Max];
 	float EnemyPosY[Enemy_Max];
 	float Enemyradius[Enemy_Max];
@@ -58,6 +59,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	int EnemyTimer[Enemy_Max];
 	bool EnemyMove[Enemy_Max];
 	bool EnemySet[Enemy_Max];
+	bool EnemyStop[Enemy_Max];
+	int EnemyStopTimer[Enemy_Max];
 	int TargetLine[Enemy_Max];
 	for (int i = 0; i < Enemy_Max; i++) {
 		EnemyPosX[i] = 0.0f;
@@ -69,12 +72,15 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		EnemyCircleY[i] = 0.0f;
 		Enemyadd[i] = 0.0f;
 		EnemyAlive[i] = false;
-		EnemyTimer[i] = 0;
+		EnemyTimer[i] = rand() % 800 + 100;
 		EnemyMove[i] = false;
 		EnemySet[i] = false;
+		EnemyStop[i] = false;
+		EnemyStopTimer[i] = 0;
 		TargetLine[i] = 0;
 		EnemySaveSpeed[i] = 0.0f;
 	}
+	srand(time(NULL));
 	// ゲームループ
 	while (1)
 	{
@@ -90,6 +96,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//---------  ここからプログラムを記述  ----------//
 
 		//更新処理
+		//プレイヤー
 		if (keys[KEY_INPUT_DOWN] == 1 && oldkeys[KEY_INPUT_DOWN] == 0) {
 			if (Playerscale > 81.0f) {
 				Playerscale -= 40.0f;
@@ -101,14 +108,25 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 				Playerscale += 40.0f;
 			}
 		}
-	
+
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0) {
 			add = -add;
 		}
 
+		if (keys[KEY_INPUT_A] == 1 && oldkeys[KEY_INPUT_A] == 0) {
+			for (int i = 0; i < Enemy_Max; i++) {
+				if (Playerscale == Enemyscale[i]) {
+					EnemyStop[i] = true;
+				}
+			}
+		}
+
 		PlayerSpeed += add;
 
-		//プレイヤー
+		if (PlayerSpeed == 360.0f || PlayerSpeed == -360.0f) {
+			PlayerSpeed = 0.0f;
+		}
+
 		Playerradius = PlayerSpeed * PI / 180.0f;
 		PlayerCircleX = cosf(Playerradius) * Playerscale;
 		PlayerCircleY = sinf(Playerradius) * Playerscale;
@@ -117,15 +135,15 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//エネミー
 		for (int i = 0; i < Enemy_Max; i++) {
 			if (!EnemyAlive[i]) {
-				EnemyTimer[i]++;
+				EnemyTimer[i]--;
 
-				if (EnemyTimer[i] == 200) {
+				if (EnemyTimer[i] == 0) {
 					Enemyscale[i] = rand() % 400 + 200;
 					EnemySpeed[i] = rand() % 360;
 					Enemyadd[i] = 1;
 					TargetLine[i] = 4;
 					EnemyAlive[i] = true;
-					EnemyTimer[i] = false;
+					EnemyTimer[i] = rand() % 800;
 					EnemySet[i] = true;
 				}
 			}
@@ -191,7 +209,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		for (int i = 0; i < Enemy_Max; i++) {
 			if (EnemyMove[i]) {
 				if (EnemySpeed[i] == EnemySaveSpeed[i] + 360.0f) {
-					Enemyscale[i] -= 40.0f;
+					if (Enemyscale[i] > 41.0f) {
+						Enemyscale[i] -= 40.0f;
+					}
+					EnemySpeed[i] = EnemySpeed[i] - 360.0f;
 					EnemySaveSpeed[i] = EnemySpeed[i];
 				}
 			}
@@ -203,25 +224,40 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			EnemyCircleY[i] = sinf(Enemyradius[i]) * Enemyscale[i];
 			EnemyPosX[i] = EnemyCircleX[i] + x;
 			EnemyPosY[i] = EnemyCircleY[i] + y;
-			if (EnemyMove[i]) {
+			if (EnemyMove[i] && !EnemyStop[i]) {
 				EnemySpeed[i] += Enemyadd[i];
+			}
+
+			if (EnemyStop[i]) {
+				EnemyStopTimer[i]++;
+
+				if (EnemyStopTimer[i] == 200) {
+					EnemyStop[i] = false;
+					EnemyStopTimer[i] = 0;
+				}
 			}
 		}
 
 
 		//描画処理
-		DrawCircle(x, y, 240,GetColor(255,0,0), false);
+		DrawCircle(x, y, 240, GetColor(255, 0, 0), false);
 		DrawCircle(x, y, 200, GetColor(255, 0, 0), false);
 		DrawCircle(x, y, 160, GetColor(0, 255, 0), false);
 		DrawCircle(x, y, 120, GetColor(0, 0, 255), false);
 		DrawCircle(x, y, 80, GetColor(0, 0, 255), false);
 		DrawCircle(playerPosX, playerPosY, 10, GetColor(0, 0, 0), true);
 		for (int i = 0; i < Enemy_Max; i++) {
-			DrawCircle(EnemyPosX[i], EnemyPosY[i], 10, GetColor(255, 255, 0), true);
-			DrawFormatString(0, (20 * i) + 40, GetColor(0, 0, 0), "Save[%d]:%f", i,EnemySaveSpeed[i]);
+			if (!EnemyStop[i]) {
+				DrawCircle(EnemyPosX[i], EnemyPosY[i], 10, GetColor(255, 255, 0), true);
+			}
+			else {
+				DrawCircle(EnemyPosX[i], EnemyPosY[i], 10, GetColor(0, 255, 255), true);
+			}
+			DrawFormatString(0, (20 * i) + 40, GetColor(0, 0, 0), "Save[%d]:%f", i, EnemySaveSpeed[i]);
 			DrawFormatString(0, (20 * i) + 100, GetColor(0, 0, 0), "Speed[%d]:%f", i, EnemySpeed[i]);
+			DrawFormatString(0, (20 * i) + 180, GetColor(0, 0, 0), "Timer[%d]:%d", i, EnemyStopTimer[i]);
 		}
-		DrawFormatString(0, 0, GetColor(0, 0, 0), "scale:%f", Playerscale);
+		DrawFormatString(0, 0, GetColor(0, 0, 0), "Speed:%f", PlayerSpeed);
 		DrawFormatString(0, 20, GetColor(0, 0, 0), "add:%f", add);
 		//---------  ここまでにプログラムを記述  ---------//
 		ScreenFlip();//（ダブルバッファ）裏面
