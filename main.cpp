@@ -1,5 +1,7 @@
 #include "DxLib.h"
 #include "math.h"
+#include "Vector2.h"
+#include "Vector3.h"
 #include<time.h>
 
 const char TITLE[] = "学籍番号名前：タイトル";
@@ -24,8 +26,20 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	//（ダブルバッファ）描画先グラフィック領域は裏面を指定
 	SetDrawScreen(DX_SCREEN_BACK);
 
-	//画像などのリソースデータの変数宣言と読み込み
+	Vector3 cameraPosition(0.0f, 0.0f, 500.0f);
+	Vector3 cameraTarget(0.0f, 0.0f, 0.0f);
+	Vector3 cameraUp(0.0f, 1.0f, 0.0f);
 
+
+	SetCameraNearFar(1.0f, 1000.0f);
+	SetCameraScreenCenter(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f);
+	SetCameraPositionAndTargetAndUpVec(
+		cameraPosition,
+		cameraTarget,
+		cameraUp);
+
+	//画像などのリソースデータの変数宣言と読み込み
+	int player = LoadGraph("player.png");
 
 
 	//ゲームループで使う変数の宣言
@@ -38,6 +52,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	float playerPosX = WIN_WIDTH / 2;
 	float playerPosY = WIN_HEIGHT / 2;
+
+	float _playerPosX = 0;
+	float _playerPosY = 0;
 
 	float Playerradius = 0.0f;
 	float PlayerSpeed = 0.0f;
@@ -119,6 +136,19 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 					EnemyStop[i] = true;
 				}
 			}
+		}
+		static float speed = 3.0f;
+		if (keys[KEY_INPUT_F]) {
+			_playerPosX -= speed;
+		}
+		if (keys[KEY_INPUT_T]) {
+			_playerPosY += speed;
+		}
+		if (keys[KEY_INPUT_H]) {
+			_playerPosX += speed;
+		}
+		if (keys[KEY_INPUT_G]) {
+			_playerPosY -= speed;
 		}
 
 		PlayerSpeed += add;
@@ -237,8 +267,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 				}
 			}
 		}
+		cameraTarget = Vector3(_playerPosX, _playerPosY, 0);
+		SetCameraPositionAndTargetAndUpVec(
+			cameraPosition,
+			cameraTarget,
+			cameraUp);
 
-
+		DrawCone3D(VECTOR{ 0,0,0 }, VECTOR{ 0,10,0 }, 5, 1, GetColor(0, 255, 0), GetColor(255, 0, 0), true);
 		//描画処理
 		DrawCircle(x, y, 240, GetColor(255, 0, 0), false);
 		DrawCircle(x, y, 200, GetColor(255, 0, 0), false);
@@ -246,6 +281,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		DrawCircle(x, y, 120, GetColor(0, 0, 255), false);
 		DrawCircle(x, y, 80, GetColor(0, 0, 255), false);
 		DrawCircle(playerPosX, playerPosY, 10, GetColor(0, 0, 0), true);
+
+		//DrawGraph3D(0, 0, 0, player, false);
+		DrawBillboard3D(
+			VGet(_playerPosX, _playerPosY, 0.0f),
+			0.5f, 0.5f, 50.0f, 0.0f, player, TRUE);
+
 		for (int i = 0; i < Enemy_Max; i++) {
 			if (!EnemyStop[i]) {
 				DrawCircle(EnemyPosX[i], EnemyPosY[i], 10, GetColor(255, 255, 0), true);
@@ -253,6 +294,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			else {
 				DrawCircle(EnemyPosX[i], EnemyPosY[i], 10, GetColor(0, 255, 255), true);
 			}
+
 			DrawFormatString(0, (20 * i) + 40, GetColor(0, 0, 0), "Save[%d]:%f", i, EnemySaveSpeed[i]);
 			DrawFormatString(0, (20 * i) + 100, GetColor(0, 0, 0), "Speed[%d]:%f", i, EnemySpeed[i]);
 			DrawFormatString(0, (20 * i) + 180, GetColor(0, 0, 0), "Timer[%d]:%d", i, EnemyStopTimer[i]);
