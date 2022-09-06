@@ -29,14 +29,16 @@ public:
 	const float& GetScale() { return EnemyScale; }
 	const bool& GetAttackArea() { return InAttackArea; }
 	void SetStop(bool Stop) { this->EnemyStop = Stop; }
+	void SetEnemyTex(int tex) { this->texture = tex; }
 private:
+	int texture = 0;
 	//ƒƒ“ƒo•Ï”
 	//À•W
 	float EnemyPosX = 0.0f;
 	float EnemyPosY = 0.0f;
 	//‰~‰^“®‚Ì‚½‚ß‚Ì•Ï”
-	float x = WIN_WIDTH / 2;
-	float y = WIN_HEIGHT / 2;
+	float x = 0;
+	float y = 0;
 	float EnemyRadius = 0.0f;
 	//0‚©‚ç360‚Ü‚Å‚Ì‰~ü
 	float EnemySpeed = 0.0f;

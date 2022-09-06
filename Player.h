@@ -24,22 +24,28 @@ public:
 	const float& GetSpeed() { return PlayerSpeed; }
 	const bool& GetStop() { return Stop; }
 	const bool& GetAttack() { return Attack; }
+	const float& GetPositionX() { return playerPosX; }
+	const float& GetPositionY() { return playerPosY; }
 
 	void SetScale(float PlayerScale) { this->PlayerScale = PlayerScale; }
 	void SetSpeed(float PlayerSpeed) { this->PlayerSpeed = PlayerSpeed; }
 	void SetStop(bool Stop) { this->Stop = Stop; }
 	void SetAttack(bool Attack) { this->Attack = Attack; }
+
+	void SetPlayer(int _player) { this->texture = _player; }
 private:
 	//ƒƒ“ƒo•Ï”
+	int texture = 0;
 	//À•W
 	float playerPosX = WIN_WIDTH / 2;
 	float playerPosY = WIN_HEIGHT / 2;
 	//‰~‰^“®‚Ì‚½‚ß‚Ì•Ï”
-	float x = WIN_WIDTH / 2;
-	float y = WIN_HEIGHT / 2;
+	float x = 0;
+	float y = 0;
+	float z = 0;
 	float PlayerRadius = 0.0f;
 	float PlayerSpeed = 0.0f;
-	float PlayerScale = 80.0f;// LaneNum‚Æˆê‚É•Ï‚¦‚é‚±‚Æ
+	float PlayerScale = 160.0f;// LaneNum‚Æˆê‚É•Ï‚¦‚é‚±‚Æ
 	float PlayerCircleX = 0.0f;
 	float PlayerCircleY = 0.0f;
 	float Add = 1.0f;
