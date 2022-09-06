@@ -109,6 +109,13 @@ void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255])
 	for (int i = 0; i < Enemy_Max; i++) {
 		enemy[i]->Update(player);
 	}
+
+	for (int i = 0; i < Enemy_Max; i++) {
+		if (enemy[i]->GetAttackArea()) {
+			enemy[i]->Target(player);
+			break;
+		}
+	}
 }
 
 void SceneManager::GameSceneDraw()
@@ -126,6 +133,8 @@ void SceneManager::GameSceneDraw()
 		enemy[i]->Draw();
 		enemy[i]->FormatDraw(i);
 	}
+
+
 }
 
 void SceneManager::EndInit()

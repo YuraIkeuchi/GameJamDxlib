@@ -14,6 +14,10 @@ public:
 	void ResPorn();
 	//ˆÚ“®
 	void Move();
+	//UŒ‚”ÍˆÍ“à
+	void InArea(Player* player);
+	//•W“I
+	void Target(Player* player);
 	//’â~
 	void Stop(Player* player);
 	//•`‰æ
@@ -22,7 +26,8 @@ public:
 	void FormatDraw(int EnemyCount);
 public:
 	//getter setter
-	const float& GetScale() { return Enemyscale; }
+	const float& GetScale() { return EnemyScale; }
+	const bool& GetAttackArea() { return InAttackArea; }
 	void SetStop(bool Stop) { this->EnemyStop = Stop; }
 private:
 	//ƒƒ“ƒo•Ï”
@@ -32,12 +37,15 @@ private:
 	//‰~‰^“®‚Ì‚½‚ß‚Ì•Ï”
 	float x = WIN_WIDTH / 2;
 	float y = WIN_HEIGHT / 2;
-	float Enemyradius = 0.0f;
+	float EnemyRadius = 0.0f;
+	//0‚©‚ç360‚Ü‚Å‚Ì‰~ü
 	float EnemySpeed = 0.0f;
-	float Enemyscale = 500.0f;
+	//ˆêü‚µ‚½‚©‚Ç‚¤‚©‚Ì”»’è‚ğæ‚é‚½‚ß‚Ì‰~ü
+	float EnemyRoundSpeed = 0.0f;
+	float EnemyScale = 500.0f;
 	float EnemyCircleX = 0.0f;
 	float EnemyCircleY = 0.0f;
-	float Enemyadd = 0.0f;
+	float EnemyAdd = 0.0f;
 	//ƒŠƒXƒ|[ƒ“ŠÖŒW
 	float EnemyAlive = false;
 	float EnemyTimer = 0;
@@ -50,4 +58,9 @@ private:
 	
 	//•Û‘¶—p•Ï”
 	float EnemySaveSpeed = 0.0f;
+	//ƒvƒŒƒCƒ„[‚Æ“G‚ÌˆÊ’u‚Ì‹——£
+	float DistanceScale = 0.0f;
+	float DistanceSpeed = 0.0f;
+	//UŒ‚”ÍˆÍ
+	bool InAttackArea = false;
 };

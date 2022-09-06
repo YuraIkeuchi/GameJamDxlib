@@ -13,11 +13,11 @@ void Enemy::Update(Player* player) {
 
 	ResPorn();
 	Move();
+	InArea(player);
 	Stop(player);
-	
-	Enemyradius = EnemySpeed * PI / 180.0f;
-	EnemyCircleX = cosf(Enemyradius) * Enemyscale;
-	EnemyCircleY = sinf(Enemyradius) * Enemyscale;
+	EnemyRadius = EnemySpeed * PI / 180.0f;
+	EnemyCircleX = cosf(EnemyRadius) * EnemyScale;
+	EnemyCircleY = sinf(EnemyRadius) * EnemyScale;
 	EnemyPosX = EnemyCircleX + x;
 	EnemyPosY = EnemyCircleY + y;
 }
@@ -27,9 +27,9 @@ void Enemy::ResPorn() {
 	if (!EnemyAlive) {
 		EnemyTimer--;
 		if (EnemyTimer == 0) {
-			Enemyscale = rand() % 400 + 200;
+			EnemyScale = rand() % 400 + 200;
 			EnemySpeed = rand() % 360;
-			Enemyadd = 1;
+			EnemyAdd = 1;
 			TargetLine = 4;
 			EnemyAlive = true;
 			EnemyTimer = rand() % 800;
@@ -40,57 +40,61 @@ void Enemy::ResPorn() {
 	//狙いのラインまで行く(現在最も外側)
 	if (EnemySet) {
 		if (TargetLine == 0) {
-			if (Enemyscale >= 80.0f) {
-				Enemyscale -= 5.0f;
+			if (EnemyScale >= 80.0f) {
+				EnemyScale -= 5.0f;
 			}
 			else {
 				EnemySet = false;
 				EnemyMove = true;
-				EnemySaveSpeed = EnemySpeed;
-				Enemyscale = 80.0f;
+				EnemyRoundSpeed = EnemySpeed;
+				EnemySaveSpeed = EnemyRoundSpeed;
+				EnemyScale = 80.0f;
 			}
 		}
 		else if (TargetLine == 1) {
-			if (Enemyscale >= 120.0f) {
-				Enemyscale -= 5.0f;
+			if (EnemyScale >= 120.0f) {
+				EnemyScale -= 5.0f;
 			}
 			else {
 				EnemySet = false;
 				EnemyMove = true;
-				Enemyscale = 120.0f;
+				EnemyScale = 120.0f;
 			}
 		}
 		else if (TargetLine == 2) {
-			if (Enemyscale >= 160.0f) {
-				Enemyscale -= 5.0f;
+			if (EnemyScale >= 160.0f) {
+				EnemyScale -= 5.0f;
 			}
 			else {
 				EnemySet = false;
 				EnemyMove = true;
-				EnemySaveSpeed = EnemySpeed;
-				Enemyscale = 160.0f;
+				EnemyRoundSpeed = EnemySpeed;
+				EnemySaveSpeed = EnemyRoundSpeed;
+				EnemyScale = 160.0f;
 			}
 		}
 		else if (TargetLine == 3) {
-			if (Enemyscale >= 200.0f) {
-				Enemyscale -= 5.0f;
+			if (EnemyScale >= 200.0f) {
+				EnemyScale -= 5.0f;
 			}
 			else {
 				EnemySet = false;
 				EnemyMove = true;
-				EnemySaveSpeed = EnemySpeed;
-				Enemyscale = 200.0f;
+				EnemyRoundSpeed = EnemySpeed;
+				EnemySaveSpeed = EnemyRoundSpeed;
+				EnemyScale = 200.0f;
 			}
 		}
 		else if (TargetLine == 4) {
-			if (Enemyscale >= 240.0f) {
-				Enemyscale -= 5.0f;
+			if (EnemyScale >= 240.0f) {
+				EnemyScale -= 5.0f;
 			}
 			else {
 				EnemySet = false;
 				EnemyMove = true;
-				EnemySaveSpeed = EnemySpeed;
-				Enemyscale = 240.0f;
+				EnemyRoundSpeed = EnemySpeed;
+				EnemySaveSpeed = EnemyRoundSpeed;
+				EnemyScale = 240.0f;
 			}
 		}
 	}
@@ -99,16 +103,26 @@ void Enemy::ResPorn() {
 void Enemy::Move() {
 	//敵の移動
 	if (EnemyMove && !EnemyStop) {
-		EnemySpeed += Enemyadd;
+		EnemySpeed += EnemyAdd;
+		EnemyRoundSpeed += EnemyAdd;
+	}
+
+	//0から360まで範囲を指定する
+	if (EnemySpeed > 360.0f) {
+		EnemySpeed = 0.0f;
+	}
+
+	if (EnemySpeed < 0.0f) {
+		EnemySpeed = 360.0f;
 	}
 
 	if (EnemyMove) {
-		if (EnemySpeed == EnemySaveSpeed + 360.0f) {
-			if (Enemyscale > 81.0f) {
-				Enemyscale -= 40.0f;
+		if (EnemyRoundSpeed == EnemySaveSpeed + 360.0f) {
+			if (EnemyScale > 81.0f) {
+				EnemyScale -= 40.0f;
 			}
-			EnemySpeed = EnemySpeed - 360.0f;
-			EnemySaveSpeed = EnemySpeed;
+			EnemyRoundSpeed = EnemyRoundSpeed - 360.0f;
+			EnemySaveSpeed = EnemyRoundSpeed;
 		}
 	}
 }
@@ -116,7 +130,7 @@ void Enemy::Move() {
 void Enemy::Stop(Player* player) {
 	//敵のストップ
 	if (player->GetStop()) {
-		if (player->GetScale() == Enemyscale) {
+		if (player->GetScale() == EnemyScale) {
 			EnemyStop = true;
 		}
 	}
@@ -131,19 +145,48 @@ void Enemy::Stop(Player* player) {
 	}
 }
 
-void Enemy::Draw() {
-	//止まっているかどうかで色が変わる
-	if (!EnemyStop) {
-		DrawCircle(EnemyPosX, EnemyPosY, 10, GetColor(255, 255, 0), true);
+void Enemy::InArea(Player* player) {
+	//距離を取る(絶対値にする)
+	DistanceScale = player->GetScale() - EnemyScale;
+	DistanceSpeed = player->GetSpeed() - EnemySpeed;
+
+	DistanceScale = fabs(DistanceScale);
+	DistanceSpeed = fabs(DistanceSpeed);
+
+	if ((DistanceScale <= 40) && (DistanceSpeed <= 60) && (EnemyMove)) {
+		InAttackArea = true;
 	}
 	else {
-		DrawCircle(EnemyPosX, EnemyPosY, 10, GetColor(0, 255, 255), true);
+		InAttackArea = false;
+	}
+
+}
+void Enemy::Target(Player* player) {
+	
+	//距離が近かった場合その場所にプレイヤー移動
+	if (player->GetAttack()) {
+		player->SetScale(EnemyScale);
+		player->SetSpeed(EnemySpeed);
+		EnemyAlive = false;
+		EnemyMove = false;
+	}
+}
+
+void Enemy::Draw() {
+	//止まっているかどうかで色が変わる
+	if (EnemyAlive) {
+		if (!EnemyStop) {
+			DrawCircle(EnemyPosX, EnemyPosY, 10, GetColor(255, 255, 0), true);
+		}
+		else {
+			DrawCircle(EnemyPosX, EnemyPosY, 10, GetColor(0, 255, 255), true);
+		}
 	}
 }
 
 void Enemy::FormatDraw(int EnemyCount) {
 	//stringの描画
-	//DrawFormatString(0, (20 * EnemyCount) + 40, GetColor(0, 0, 0), "Save[%d]:%f", EnemyCount, EnemySaveSpeed);
-	//DrawFormatString(0, (20 * EnemyCount) + 100, GetColor(0, 0, 0), "Speed[%d]:%f", EnemyCount, EnemySpeed);
-	//DrawFormatString(0, (20 * EnemyCount) + 180, GetColor(0, 0, 0), "Timer[%d]:%d", EnemyCount, EnemyStopTimer);
+	DrawFormatString(0, (20 * EnemyCount) + 0, GetColor(0, 0, 0), "Attack[%d]:%d", EnemyCount, InAttackArea);
+	DrawFormatString(0, (20 * EnemyCount) + 100, GetColor(0, 0, 0), "DistanceSpeed[%d]:%f", EnemyCount, DistanceSpeed);
+	DrawFormatString(0, (20 * EnemyCount) + 200, GetColor(0, 0, 0), "DistanceScale[%d]:%f", EnemyCount, DistanceScale);
 }
