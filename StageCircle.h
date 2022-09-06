@@ -11,6 +11,6 @@ public://ƒƒ“ƒoŠÖ”
 	void Draw();
 
 private:	//ƒƒ“ƒo•Ï”
-	float x = WIN_WIDTH;
+	float x = WIN_WIDTH / 2;
 	float y = WIN_HEIGHT / 2;
 };
