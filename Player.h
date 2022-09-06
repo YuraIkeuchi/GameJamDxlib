@@ -3,23 +3,25 @@
 
 class Player {
 public:
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Player();
-	//ƒfƒXƒgƒ‰ƒNƒ^
+	//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	~Player();
 
-	//XV
+	//åˆæœŸåŒ–
+	void Initialize();
+	//æ›´æ–°
 	void Update(char keys[255], char oldkeys[255]);
-	//ˆÚ“®
+	//ç§»å‹•
 	void Move(char keys[255], char oldkeys[255]);
-	//UŒ‚
+	//æ”»æ’ƒ
 	void AttackMove(char keys[255], char oldkeys[255]);
-	//•`‰æ
+	//æç”»
 	void Draw();
-	//FormatString—p
+	//FormatStringç”¨
 	void FormatDraw();
 public:
-	//getter setteriŒ‹\‘‚¦‚¿‚á‚¤‚©‚à\‚µ–ó‚È‚¢)
+	//getter setterï¼ˆçµæ§‹å¢—ãˆã¡ã‚ƒã†ã‹ã‚‚ç”³ã—è¨³ãªã„)
 	const float& GetScale() { return PlayerScale; }
 	const float& GetSpeed() { return PlayerSpeed; }
 	const bool& GetStop() { return Stop; }
@@ -34,24 +36,23 @@ public:
 
 	void SetPlayer(int _player) { this->texture = _player; }
 private:
-	//ƒƒ“ƒo•Ï”
+	//ãƒ¡ãƒ³ãƒå¤‰æ•°
 	int texture = 0;
-	//À•W
-	float playerPosX = WIN_WIDTH / 2;
-	float playerPosY = WIN_HEIGHT / 2;
-	//‰~‰^“®‚Ì‚½‚ß‚Ì•Ï”
-	float x = 0;
-	float y = 0;
-	float z = 0;
-	float PlayerRadius = 0.0f;
-	float PlayerSpeed = 0.0f;
-	float PlayerScale = 160.0f;// LaneNum‚Æˆê‚É•Ï‚¦‚é‚±‚Æ
-	float PlayerCircleX = 0.0f;
-	float PlayerCircleY = 0.0f;
-	float Add = 1.0f;
-	bool Attack = false;
-	int AttackTimer = 0;
-	//“G‚ğ~‚ß‚é‚½‚ß‚Ì•Ï”
-	bool Stop = false;
-	int StopInterval = 5;
+	//åº§æ¨™
+	float playerPosX;
+	float playerPosY;
+	//å††é‹å‹•ã®ãŸã‚ã®å¤‰æ•°
+	float x;
+	float y;
+	float PlayerRadius;
+	float PlayerSpeed;
+	float PlayerScale;// LaneNumã¨ä¸€ç·’ã«å¤‰ãˆã‚‹ã“ã¨
+	float PlayerCircleX;
+	float PlayerCircleY;
+	float Add;
+	bool Attack;
+	int AttackTimer;
+	//æ•µã‚’æ­¢ã‚ã‚‹ãŸã‚ã®å¤‰æ•°
+	bool Stop;
+	int StopInterval;
 };

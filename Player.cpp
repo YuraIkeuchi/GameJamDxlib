@@ -8,6 +8,26 @@ Player::Player() {
 Player::~Player() {
 }
 
+void Player::Initialize()
+{
+	playerPosX = WIN_WIDTH / 2;
+	playerPosY = WIN_HEIGHT / 2;
+	//‰~‰^“®‚Ì‚½‚ß‚Ì•Ï”
+	x = WIN_WIDTH / 2;
+	y = WIN_HEIGHT / 2;
+	PlayerRadius = 0.0f;
+	PlayerSpeed = 0.0f;
+	PlayerScale = 80.0f;// LaneNum‚Æˆê‚É•Ï‚¦‚é‚±‚Æ
+	PlayerCircleX = 0.0f;
+	PlayerCircleY = 0.0f;
+	Add = 1.0f;
+	Attack = false;
+	AttackTimer = 0;
+	//“G‚ğ~‚ß‚é‚½‚ß‚Ì•Ï”
+	Stop = false;
+	StopInterval = 5;
+}
+
 void Player::Update(char keys[255], char oldkeys[255]) {
 	//ˆÚ“®
 	Move(keys, oldkeys);
