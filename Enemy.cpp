@@ -86,7 +86,7 @@ void Enemy::ResPorn() {
 			}
 		}
 		else if (TargetLine == 4) {
-			if (EnemyScale >= 240.0f) {
+			if (EnemyScale >=240.0f) {
 				EnemyScale -= 5.0f;
 			}
 			else {
@@ -119,7 +119,7 @@ void Enemy::Move() {
 	if (EnemyMove) {
 		if (EnemyRoundSpeed == EnemySaveSpeed + 360.0f) {
 			if (EnemyScale > 81.0f) {
-				EnemyScale -= 40.0f;
+				EnemyScale -= 80.0f;
 			}
 			EnemyRoundSpeed = EnemyRoundSpeed - 360.0f;
 			EnemySaveSpeed = EnemyRoundSpeed;
@@ -162,7 +162,7 @@ void Enemy::InArea(Player* player) {
 
 }
 void Enemy::Target(Player* player) {
-	
+
 	//距離が近かった場合その場所にプレイヤー移動
 	if (player->GetAttack()) {
 		player->SetScale(EnemyScale);
@@ -176,10 +176,11 @@ void Enemy::Draw() {
 	//止まっているかどうかで色が変わる
 	if (EnemyAlive) {
 		if (!EnemyStop) {
-			DrawCircle(EnemyPosX, EnemyPosY, 10, GetColor(255, 255, 0), true);
+			//DrawCircle(EnemyPosX, EnemyPosY, 20, GetColor(255, 255, 0), true);
+			DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, 50.0f, 0.0f, texture, true);
 		}
 		else {
-			DrawCircle(EnemyPosX, EnemyPosY, 10, GetColor(0, 255, 255), true);
+			DrawCircle(EnemyPosX, EnemyPosY, 20, GetColor(0, 255, 255), true);
 		}
 	}
 }

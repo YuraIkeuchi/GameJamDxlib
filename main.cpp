@@ -1,4 +1,5 @@
 #include"SceneManager.h"
+#include "Vector3.h"
 
 const char TITLE[] = "学籍番号名前：タイトル";
 
@@ -37,6 +38,27 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		//画面クリア
 		ClearDrawScreen();
+
+		//カメラ
+		Vector3 cameraOrgPosition(0.0f, 10.0f, -100.0f);
+		Vector3 cameraPosition = cameraOrgPosition;
+
+		Vector3 cameraOrgUp(0.0f, 1.0f, 0.0f);
+		Vector3 cameraUp = cameraOrgUp;
+
+		Vector3 cameraTarget(0.0f, 0.0f, 0.0f);
+
+		float cameraUpAngle = 0.0f;
+
+		//クリップ面
+		SetCameraNearFar(1.0f, 10000.0f);
+		SetCameraScreenCenter(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f);
+		SetCameraPositionAndTargetAndUpVec(
+			cameraPosition,
+			cameraTarget,
+			cameraUp);
+
+
 		//---------  ここからプログラムを記述  ----------//
 
 		if (scene->GetSceneTime() == 0)

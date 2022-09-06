@@ -39,14 +39,14 @@ void Player::Move(char keys[255], char oldkeys[255]) {
 	//プレイヤー
 	//サークル変更
 	if (keys[KEY_INPUT_DOWN] == 1 && oldkeys[KEY_INPUT_DOWN] == 0) {
-		if (PlayerScale > 81.0f) {
-			PlayerScale -= 40.0f;
+		if (PlayerScale > 161.0f) {
+			PlayerScale -= 80.0f;
 		}
 	}
 
 	if (keys[KEY_INPUT_UP] == 1 && oldkeys[KEY_INPUT_UP] == 0) {
-		if (PlayerScale < 201.0f) {
-			PlayerScale += 40.0f;
+		if (PlayerScale < 401.0f) {
+			PlayerScale += 80.0f;
 		}
 	}
 
@@ -102,7 +102,8 @@ void Player::AttackMove(char keys[255], char oldkeys[255]) {
 }
 
 void Player::Draw() {
-	DrawCircle(playerPosX, playerPosY, 10, GetColor(0, 0, 0), true);
+	DrawBillboard3D(VGet(playerPosX, playerPosY, 0), 0.5f, 0.5f, 50, 0.0f, texture, true);
+	//DrawCircle(playerPosX, playerPosY, 20, GetColor(0, 0, 0), true);
 }
 
 void Player::FormatDraw() {

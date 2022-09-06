@@ -3,51 +3,56 @@
 
 class Player {
 public:
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Player();
-	//ƒfƒXƒgƒ‰ƒNƒ^
+	//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	~Player();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Initialize();
-	//XV
+	//æ›´æ–°
 	void Update(char keys[255], char oldkeys[255]);
-	//ˆÚ“®
+	//ç§»å‹•
 	void Move(char keys[255], char oldkeys[255]);
-	//UŒ‚
+	//æ”»æ’ƒ
 	void AttackMove(char keys[255], char oldkeys[255]);
-	//•`‰æ
+	//æç”»
 	void Draw();
-	//FormatString—p
+	//FormatStringç”¨
 	void FormatDraw();
 public:
-	//getter setteriŒ‹\‘‚¦‚¿‚á‚¤‚©‚à\‚µ–ó‚È‚¢)
+	//getter setterï¼ˆçµæ§‹å¢—ãˆã¡ã‚ƒã†ã‹ã‚‚ç”³ã—è¨³ãªã„)
 	const float& GetScale() { return PlayerScale; }
 	const float& GetSpeed() { return PlayerSpeed; }
 	const bool& GetStop() { return Stop; }
 	const bool& GetAttack() { return Attack; }
+	const float& GetPositionX() { return playerPosX; }
+	const float& GetPositionY() { return playerPosY; }
 
 	void SetScale(float PlayerScale) { this->PlayerScale = PlayerScale; }
 	void SetSpeed(float PlayerSpeed) { this->PlayerSpeed = PlayerSpeed; }
 	void SetStop(bool Stop) { this->Stop = Stop; }
 	void SetAttack(bool Attack) { this->Attack = Attack; }
+
+	void SetPlayer(int _player) { this->texture = _player; }
 private:
-	//ƒƒ“ƒo•Ï”
-	//À•W
+	//ãƒ¡ãƒ³ãƒå¤‰æ•°
+	int texture = 0;
+	//åº§æ¨™
 	float playerPosX;
 	float playerPosY;
-	//‰~‰^“®‚Ì‚½‚ß‚Ì•Ï”
+	//å††é‹å‹•ã®ãŸã‚ã®å¤‰æ•°
 	float x;
 	float y;
 	float PlayerRadius;
 	float PlayerSpeed;
-	float PlayerScale;// LaneNum‚Æˆê‚É•Ï‚¦‚é‚±‚Æ
+	float PlayerScale;// LaneNumã¨ä¸€ç·’ã«å¤‰ãˆã‚‹ã“ã¨
 	float PlayerCircleX;
 	float PlayerCircleY;
 	float Add;
 	bool Attack;
 	int AttackTimer;
-	//“G‚ğ~‚ß‚é‚½‚ß‚Ì•Ï”
+	//æ•µã‚’æ­¢ã‚ã‚‹ãŸã‚ã®å¤‰æ•°
 	bool Stop;
 	int StopInterval;
 };
