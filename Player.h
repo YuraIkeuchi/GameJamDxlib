@@ -12,15 +12,23 @@ public:
 	void Update(char keys[255], char oldkeys[255]);
 	//ˆÚ“®
 	void Move(char keys[255], char oldkeys[255]);
+	//UŒ‚
+	void AttackMove(char keys[255], char oldkeys[255]);
 	//•`‰æ
 	void Draw();
 	//FormatString—p
 	void FormatDraw();
 public:
-	//getter setter
-	const float& GetScale() { return Playerscale; }
+	//getter setteriŒ‹\‘‚¦‚¿‚á‚¤‚©‚à\‚µ–ó‚È‚¢)
+	const float& GetScale() { return PlayerScale; }
+	const float& GetSpeed() { return PlayerSpeed; }
 	const bool& GetStop() { return Stop; }
+	const bool& GetAttack() { return Attack; }
+
+	void SetScale(float PlayerScale) { this->PlayerScale = PlayerScale; }
+	void SetSpeed(float PlayerSpeed) { this->PlayerSpeed = PlayerSpeed; }
 	void SetStop(bool Stop) { this->Stop = Stop; }
+	void SetAttack(bool Attack) { this->Attack = Attack; }
 private:
 	//ƒƒ“ƒo•Ï”
 	//À•W
@@ -29,13 +37,14 @@ private:
 	//‰~‰^“®‚Ì‚½‚ß‚Ì•Ï”
 	float x = WIN_WIDTH / 2;
 	float y = WIN_HEIGHT / 2;
-	float Playerradius = 0.0f;
+	float PlayerRadius = 0.0f;
 	float PlayerSpeed = 0.0f;
-	float Playerscale = 80.0f;// LaneNum‚Æˆê‚É•Ï‚¦‚é‚±‚Æ
+	float PlayerScale = 80.0f;// LaneNum‚Æˆê‚É•Ï‚¦‚é‚±‚Æ
 	float PlayerCircleX = 0.0f;
 	float PlayerCircleY = 0.0f;
-	float add = 1.0f;
-
+	float Add = 1.0f;
+	bool Attack = false;
+	int AttackTimer = 0;
 	//“G‚ğ~‚ß‚é‚½‚ß‚Ì•Ï”
 	bool Stop = false;
 	int StopInterval = 5;
