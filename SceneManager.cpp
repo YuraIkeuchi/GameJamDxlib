@@ -75,6 +75,7 @@ void SceneManager::Draw()
 
 void SceneManager::TitleInit()
 {
+	player->Initialize();
 }
 
 void SceneManager::TitleUpdate(char keys[255], char oldkeys[255])
@@ -84,14 +85,24 @@ void SceneManager::TitleUpdate(char keys[255], char oldkeys[255])
 		SceneTime = 0;
 		SceneNo = static_cast<int>(NO::GameScene);
 	}
+
+	//プレイヤー
+	player->Update(keys, oldkeys);
 }
 
 void SceneManager::TitleDraw()
 {
+	//描画処理
+	//ステージ上の円
+	stagecircle->Draw();
+
+	//プレイヤー
+	player->Draw();
 }
 
 void SceneManager::GameSceneInit()
 {
+	player->Initialize();
 }
 
 void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255])

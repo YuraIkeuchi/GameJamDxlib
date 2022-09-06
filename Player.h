@@ -8,6 +8,8 @@ public:
 	//デストラクタ
 	~Player();
 
+	//初期化
+	void Initialize();
 	//更新
 	void Update(char keys[255], char oldkeys[255]);
 	//移動
@@ -32,20 +34,20 @@ public:
 private:
 	//メンバ変数
 	//座標
-	float playerPosX = WIN_WIDTH / 2;
-	float playerPosY = WIN_HEIGHT / 2;
+	float playerPosX;
+	float playerPosY;
 	//円運動のための変数
-	float x = WIN_WIDTH / 2;
-	float y = WIN_HEIGHT / 2;
-	float PlayerRadius = 0.0f;
-	float PlayerSpeed = 0.0f;
-	float PlayerScale = 80.0f;// LaneNumと一緒に変えること
-	float PlayerCircleX = 0.0f;
-	float PlayerCircleY = 0.0f;
-	float Add = 1.0f;
-	bool Attack = false;
-	int AttackTimer = 0;
+	float x;
+	float y;
+	float PlayerRadius;
+	float PlayerSpeed;
+	float PlayerScale;// LaneNumと一緒に変えること
+	float PlayerCircleX;
+	float PlayerCircleY;
+	float Add;
+	bool Attack;
+	int AttackTimer;
 	//敵を止めるための変数
-	bool Stop = false;
-	int StopInterval = 5;
+	bool Stop;
+	int StopInterval;
 };
