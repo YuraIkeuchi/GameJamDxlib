@@ -1,14 +1,7 @@
-#include "DxLib.h"
-#include "math.h"
-#include "Share.h"
-#include "Player.h"
-#include "Enemy.h"
-#include "StageCircle.h"
-#include<time.h>
+#include"SceneManager.h"
 
 const char TITLE[] = "学籍番号名前：タイトル";
 
-const int Enemy_Max = 5;
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {
 	ChangeWindowMode(TRUE);						//ウィンドウモードに設定
@@ -25,31 +18,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	//（ダブルバッファ）描画先グラフィック領域は裏面を指定
 	SetDrawScreen(DX_SCREEN_BACK);
 
-	//画像などのリソースデータの変数宣言と読み込み
-
-
-
 	//ゲームループで使う変数の宣言
 	char keys[256] = { 0 }; //最新のキーボード情報用
 	char oldkeys[256] = { 0 };//1ループ（フレーム）前のキーボード情報
-	
-	//クラス宣言
-	// 	//エネミー
-	Enemy* enemy[Enemy_Max];
-	for (int i = 0; i < Enemy_Max; i++) {
-		enemy[i] = new Enemy();
-	}
-	//プレイヤー
-	Player* player = nullptr;
-	player = new Player();
-	//ステージ上の円
-	StageCircle* stagecircle = nullptr;
-	stagecircle = new StageCircle();
 
-	float x = WIN_WIDTH / 2;
-	float y = WIN_HEIGHT / 2;
+	SceneManager *scene = new SceneManager;
+	scene->StaticInit();
 
-	srand(time(NULL));
 	// ゲームループ
 	while (1)
 	{
@@ -64,28 +39,18 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		ClearDrawScreen();
 		//---------  ここからプログラムを記述  ----------//
 
-		//更新処理
-		//プレイヤー
-		player->Update(keys, oldkeys);
-		//エネミー
-		for (int i = 0; i < Enemy_Max; i++) {
-			enemy[i]->Update(player);
+		if (scene->GetSceneTime() == 0)
+		{
+			scene->Init();
 		}
-	
-		//描画処理
-		//ステージ上の円
-		stagecircle->Draw();
 
-		//プレイヤー
-		player->Draw();
-		player->FormatDraw();
+		scene->Update(keys,oldkeys);
 
-		//エネミー
-		for (int i = 0; i < Enemy_Max; i++) {
-			enemy[i]->Draw();
-			enemy[i]->FormatDraw(i);
+		if (scene->GetSceneTime())
+		{
+			scene->Draw();
 		}
-		
+
 		//---------  ここまでにプログラムを記述  ---------//
 		ScreenFlip();//（ダブルバッファ）裏面
 		// 20ミリ秒待機（疑似60FPS）
@@ -103,6 +68,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	}
 	//Dxライブラリ終了処理
 	DxLib_End();
+	delete scene;
+	scene = nullptr;
 
 	return 0;
 }
