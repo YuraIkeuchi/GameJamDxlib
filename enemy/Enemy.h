@@ -7,7 +7,8 @@ public:
 	Enemy();
 	//デストラクタ
 	~Enemy();
-
+	//初期化
+	void Initialize();
 	//更新
 	void Update(Player* player);
 	//生成
@@ -32,41 +33,43 @@ public:
 	const bool& GetAttackArea() { return InAttackArea; }
 	void SetStop(bool Stop) { this->EnemyStop = Stop; }
 	void SetEnemyTex(int tex) { this->texture = tex; }
-	void SetEnemyStopTex(int tex) { this->stoptexture = tex; }
+	void SetEnemyStopTex(int tex) { this->Stoptexture = tex; }
+	void SetLinkEnemyTex(int tex) { this->Linktexture = tex; }
 private:
 	int texture = 0;
-	int stoptexture = 0;
+	int Linktexture = 0;
+	int Stoptexture = 0;
 	//メンバ変数
 	//座標
-	float EnemyPosX = 0.0f;
-	float EnemyPosY = 0.0f;
+	float EnemyPosX;
+	float EnemyPosY;
 	//円運動のための変数
-	float x = 0;
-	float y = 0;
-	float EnemyRadius = 0.0f;
+	float x;
+	float y;
+	float EnemyRadius;
 	//0から360までの円周
-	float EnemySpeed = 0.0f;
+	float EnemySpeed;
 	//一周したかどうかの判定を取るための円周
-	float EnemyRoundSpeed = 0.0f;
-	float EnemyScale = 500.0f;
-	float EnemyCircleX = 0.0f;
-	float EnemyCircleY = 0.0f;
-	float EnemyAdd = 0.0f;
+	float EnemyRoundSpeed;
+	float EnemyScale;
+	float EnemyCircleX;
+	float EnemyCircleY;
+	float EnemyAdd;
 	//リスポーン関係
-	bool EnemyAlive = false;
-	float EnemyTimer = 0;
-	bool EnemyMove = false;
-	bool EnemySet = false;
-	int TargetLine = 0;
+	bool EnemyAlive;
+	float EnemyTimer;
+	bool EnemyMove;
+	bool EnemySet;
+	int TargetLine;
 	//敵が止まっているか
-	bool EnemyStop = false;
-	int EnemyStopTimer = 0;
+	bool EnemyStop;
+	int EnemyStopTimer;
 	
 	//保存用変数
-	float EnemySaveSpeed = 0.0f;
+	float EnemySaveSpeed;
 	//プレイヤーと敵の位置の距離
-	float DistanceScale = 0.0f;
-	float DistanceSpeed = 0.0f;
+	float DistanceScale;
+	float DistanceSpeed;
 	//攻撃範囲
-	bool InAttackArea = false;
+	bool InAttackArea;
 };

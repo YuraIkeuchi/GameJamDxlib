@@ -7,11 +7,13 @@ void SceneManager::StaticInit()
 	int playerTex = LoadGraph("player.png");
 	int enemyTex = LoadGraph("enemy.png");
 	int enemystopTex = LoadGraph("enemystop.png");
+	int enemylinkTex = LoadGraph("LinkArea.png");
 	int stageTex = LoadGraph("stage.png");
 
 	for (int i = 0; i < Enemy_Max; i++) {
 		enemy[i] = new Enemy();
 		enemy[i]->SetEnemyTex(enemyTex);
+		enemy[i]->SetLinkEnemyTex(enemylinkTex);
 		enemy[i]->SetEnemyStopTex(enemystopTex);
 	}
 	player = new Player();
@@ -112,6 +114,9 @@ void SceneManager::TitleDraw()
 void SceneManager::GameSceneInit()
 {
 	player->Initialize();
+	for (int i = 0; i < Enemy_Max; i++) {
+		enemy[i]->Initialize();
+	}
 }
 
 void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255])
@@ -137,13 +142,13 @@ void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255])
 		}
 	}
 
-	Vector3 cameraOrgPosition(0.0f,0.0f, 400.0f);
+	Vector3 cameraOrgPosition(player->GetPositionX(),player->GetPositionY(), 400.0f);
 	Vector3 cameraPosition = cameraOrgPosition;
 
 	Vector3 cameraOrgUp(0.0f, 1.0f, 0.0f);
 	Vector3 cameraUp = cameraOrgUp;
 
-	Vector3 cameraTarget(0.0f, 0.0f, 0.0f);
+	Vector3 cameraTarget(player->GetPositionX(), player->GetPositionY(), 0.0f);
 
 	float cameraUpAngle = 0.0f;
 
