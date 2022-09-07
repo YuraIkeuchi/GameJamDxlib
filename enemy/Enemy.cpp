@@ -47,10 +47,13 @@ void Enemy::Initialize() {
 void Enemy::Update(Player* player) {
 
 	ResPorn();
-	Move();
+	Move(player);
 	InArea(player);
 	Stop(player);
 	Collide(player);
+	if (InAttackArea) {
+		Target(player);
+	}
 	EnemyRadius = EnemySpeed * PI / 180.0f;
 	EnemyCircleX = cosf(EnemyRadius) * EnemyScale;
 	EnemyCircleY = sinf(EnemyRadius) * EnemyScale;
@@ -102,7 +105,14 @@ void Enemy::ResPorn() {
 	}
 }
 
-void Enemy::Move() {
+void Enemy::Move(Player* player) {
+	//UŒ‚’†‚Í“G‚ªŽ~‚Ü‚é
+	if (player->GetAttackStart()) {
+		EnemyAdd = 0.0f;
+	}
+	else {
+		EnemyAdd = 0.5f;
+	}
 	//“G‚ÌˆÚ“®
 	if (EnemyMove && !EnemyStop) {
 		EnemySpeed += EnemyAdd;
@@ -163,36 +173,36 @@ void Enemy::InArea(Player* player) {
 
 }
 void Enemy::Target(Player* player) {
-
 	//‹——£‚ª‹ß‚©‚Á‚½ê‡‚»‚ÌêŠ‚ÉƒvƒŒƒCƒ„[ˆÚ“®
 	if (EnemyAlive) {
+		//UŒ‚ˆê‰ñ–Ú(ƒŠƒ“ƒNŽn‚Ü‚é‚Æ‚«‚Í“¯‚¶ƒŒ[ƒ“‚Ì‚Ý)
 		if (player->GetAttackCount() == 0) {
 			if (player->GetAttack() && DistanceScale == 0.0f) {
 				player->SetAttackStart(true);
 				player->SetAfterScale(EnemyScale);
 				player->SetAfterSpeed(EnemySpeed);
 				player->SetFrame(0.0f);
-			}
-			else if (player->GetAttack() && DistanceScale == 80.0f) {
-				player->SetAttackStart(true);
-				player->SetAfterScale(EnemyScale);
-				player->SetAfterSpeed(EnemySpeed);
-				player->SetFrame(0.0f);
+				//player->SetLink(true);
 			}
 		}
-		else {
+		else if(player->GetAttackCount() >= 1) {
+			//UŒ‚“ñ‰ñ–ÚˆÈ~(ƒŠƒ“ƒN’†‚Í“¯‚¶ƒŒ[ƒ“‚ð—Dæ‚µ‚ÄˆêŒÂ“à‘¤‚É‚àö‚ê‚é)
 			if (player->GetAttackInterval() != 0 && DistanceScale == 0.0f) {
-
 				player->SetAttackStart(true);
 				player->SetAfterScale(EnemyScale);
 				player->SetAfterSpeed(EnemySpeed);
 				player->SetFrame(0.0f);
+				//player->SetLink(true);
 			}
 			else if (player->GetAttackInterval() != 0 && DistanceScale == 80.0f) {
 				player->SetAttackStart(true);
 				player->SetAfterScale(EnemyScale);
 				player->SetAfterSpeed(EnemySpeed);
 				player->SetFrame(0.0f);
+				//player->SetLink(true);
+			}
+			else {
+				//player->SetLink(false);
 			}
 		}
 	}
@@ -207,6 +217,7 @@ bool Enemy::Collide(Player* player) {
 		EnemyAlive = false;
 		EnemyMove = false;
 		EnemyScale = 500.0f;
+		player->SetKnockCount(player->GetKnockCount() + 1);
 		player->SetAttackCount(player->GetAttackCount() + 1);
 		player->SetAttackInterval(10);
 		return true;
@@ -234,7 +245,7 @@ void Enemy::Draw() {
 
 void Enemy::FormatDraw(int EnemyCount) {
 	//string‚Ì•`‰æ
-	DrawFormatString(0, (20 * EnemyCount) + 0, GetColor(0, 0, 0), "EnemyScale[%d]:%f", EnemyCount, EnemyScale);
-	//DrawFormatString(0, (20 * EnemyCount) + 100, GetColor(0, 0, 0), "DistanceSpeed[%d]:%f", EnemyCount, DistanceSpeed);
-	//DrawFormatString(0, (20 * EnemyCount) + 200, GetColor(0, 0, 0), "DistanceScale[%d]:%f", EnemyCount, DistanceScale);
+	//DrawFormatString(0, (20 * EnemyCount) + 0, GetColor(0, 0, 0), "EnemyScale[%d]:%f", EnemyCount, EnemyScale);
+	//DrawFormatString(0, (20 * EnemyCount) + 80, GetColor(0, 0, 0), "DistanceSpeed[%d]:%f", EnemyCount, DistanceSpeed);
+	//DrawFormatString(0, (20 * EnemyCount) + 280, GetColor(0, 0, 0), "DistanceScale[%d]:%f", EnemyCount, DistanceScale);
 }

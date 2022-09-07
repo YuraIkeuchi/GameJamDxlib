@@ -18,6 +18,8 @@ void SceneManager::StaticInit()
 	}
 	player = new Player();
 	stagecircle = new StageCircle();
+	score = new Score();
+	score->SetPlayer(player);
 
 	player->SetPlayer(playerTex);
 	stagecircle->SetTexture(stageTex);
@@ -43,21 +45,21 @@ void SceneManager::Init()
 	}
 }
 
-void SceneManager::Update(char keys[255], char oldkeys[255])
+void SceneManager::Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput)
 {
 	switch (SceneNo)
 	{
 	case static_cast<int>(SceneManager::NO::Title):
 		SceneTime = 1;
-		TitleUpdate(keys,oldkeys);
+		TitleUpdate(keys,oldkeys,input,oldinput);
 		break;
 	case static_cast<int>(SceneManager::NO::GameScene):
 		SceneTime = 1;
-		GameSceneUpdate(keys, oldkeys);
+		GameSceneUpdate(keys, oldkeys, input, oldinput);
 		break;
 	case static_cast<int>(SceneManager::NO::End):
 		SceneTime = 1;
-		EndUpdate(keys, oldkeys);
+		EndUpdate(keys, oldkeys, input, oldinput);
 		break;
 
 	default:
@@ -87,18 +89,39 @@ void SceneManager::Draw()
 void SceneManager::TitleInit()
 {
 	player->Initialize();
+	score->Initialize();
 }
 
-void SceneManager::TitleUpdate(char keys[255], char oldkeys[255])
+void SceneManager::TitleUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput)
 {
 	//仮置き（次のシーンに行く）
-	if (keys[KEY_INPUT_N] == 1 && oldkeys[KEY_INPUT_N] == 0) {
+	if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A]) {
 		SceneTime = 0;
 		SceneNo = static_cast<int>(NO::GameScene);
 	}
 
+
+	Vector3 cameraOrgPosition(player->GetPositionX(), player->GetPositionY(), 400.0f);
+	Vector3 cameraPosition = cameraOrgPosition;
+
+	Vector3 cameraOrgUp(0.0f, 1.0f, 0.0f);
+	Vector3 cameraUp = cameraOrgUp;
+
+	Vector3 cameraTarget(player->GetPositionX(), player->GetPositionY(), 0.0f);
+
+	float cameraUpAngle = 0.0f;
+
+	//クリップ面
+	SetCameraNearFar(1.0f, 10000.0f);
+	SetCameraScreenCenter(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f);
+	SetCameraPositionAndTargetAndUpVec(
+		cameraPosition,
+		cameraTarget,
+		cameraUp);
+
+
 	//プレイヤー
-	player->Update(keys, oldkeys);
+	player->Update(keys, oldkeys, input, oldinput);
 }
 
 void SceneManager::TitleDraw()
@@ -114,34 +137,30 @@ void SceneManager::TitleDraw()
 void SceneManager::GameSceneInit()
 {
 	player->Initialize();
+	score->Initialize();
 	for (int i = 0; i < Enemy_Max; i++) {
 		enemy[i]->Initialize();
 	}
 
 }
 
-void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255])
+void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput)
 {
 	//更新処理
 	//仮置き（次のシーンに行く）
-	if (keys[KEY_INPUT_N] == 1 && oldkeys[KEY_INPUT_N] == 0) {
+	if (score->GetGameTimer() <= 0) {
 		SceneTime = 0;
 		SceneNo = static_cast<int>(NO::End);
 	}
 
 	//プレイヤー
-	player->Update(keys, oldkeys);
+	player->Update(keys, oldkeys, input, oldinput);
 	//エネミー
 	for (int i = 0; i < Enemy_Max; i++) {
 		enemy[i]->Update(player);
 	}
 
-	for (int i = 0; i < Enemy_Max; i++) {
-		if (enemy[i]->GetAttackArea()) {
-			enemy[i]->Target(player);
-			break;
-		}
-	}
+	score->Update();
 
 	Vector3 cameraOrgPosition(player->GetPositionX(),player->GetPositionY(), 400.0f);
 	Vector3 cameraPosition = cameraOrgPosition;
@@ -173,6 +192,9 @@ void SceneManager::GameSceneDraw()
 	player->Draw();
 	player->FormatDraw();
 
+	//スコア
+	score->Draw();
+	score->FormatDraw();
 	//エネミー
 	for (int i = 0; i < Enemy_Max; i++) {
 		enemy[i]->Draw();
@@ -186,10 +208,10 @@ void SceneManager::EndInit()
 {
 }
 
-void SceneManager::EndUpdate(char keys[255], char oldkeys[255])
+void SceneManager::EndUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput)
 {
 	//仮置き（次のシーンに行く）
-	if (keys[KEY_INPUT_N] == 1 && oldkeys[KEY_INPUT_N] == 0) {
+	if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A]) {
 		SceneTime = 0;
 		SceneNo = static_cast<int>(NO::Title);
 	}

@@ -22,10 +22,23 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	//ゲームループで使う変数の宣言
 	char keys[256] = { 0 }; //最新のキーボード情報用
 	char oldkeys[256] = { 0 };//1ループ（フレーム）前のキーボード情報
-
+	
 	SceneManager *scene = new SceneManager;
 	scene->StaticInit();
 
+	struct XINPUT_STICK
+	{
+		unsigned char LeftTrigger; // 左トリガー( 0～255 )
+		unsigned char RightTrigger; // 右トリガー( 0～255 )
+		short ThumbLX; // 左スティックの横軸値( -32768 ～ 32767 )
+		short ThumbLY; // 左スティックの縦軸値( -32768 ～ 32767 )
+		short ThumbRX; // 右スティックの横軸値( -32768 ～ 32767 )
+		short ThumbRY; // 右スティックの縦軸値( -32768 ～ 32767 )
+	};
+
+	//ボタン
+	XINPUT_STATE input = { 0 };
+	
 	// ゲームループ
 	while (1)
 	{
@@ -35,10 +48,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		}
 		//最新のキーボード情報を取得
 		GetHitKeyStateAll(keys);
+		//コントローラー情報
+		XINPUT_STATE oldinput = input;
+		GetJoypadXInputState(DX_INPUT_PAD1, &input);
 
 		//画面クリア
 		ClearDrawScreen();
-
+	
 		//カメラ
 		Vector3 cameraOrgPosition(0.0f, 10.0f, -100.0f);
 		Vector3 cameraPosition = cameraOrgPosition;
@@ -66,7 +82,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			scene->Init();
 		}
 
-		scene->Update(keys,oldkeys);
+		scene->Update(keys,oldkeys,input,oldinput);
 
 		if (scene->GetSceneTime())
 		{

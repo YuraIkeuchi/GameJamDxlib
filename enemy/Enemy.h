@@ -14,7 +14,7 @@ public:
 	//¶¬
 	void ResPorn();
 	//ˆÚ“®
-	void Move();
+	void Move(Player* player);
 	//UŒ‚”ÍˆÍ“à
 	void InArea(Player* player);
 	//•W“I
