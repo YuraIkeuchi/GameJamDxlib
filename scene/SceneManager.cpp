@@ -117,6 +117,7 @@ void SceneManager::GameSceneInit()
 	for (int i = 0; i < Enemy_Max; i++) {
 		enemy[i]->Initialize();
 	}
+
 }
 
 void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255])
