@@ -5,12 +5,14 @@ void SceneManager::StaticInit()
 {
 	//画像などのリソースデータの変数宣言と読み込み
 	int playerTex = LoadGraph("player.png");
-	int enemyTex = LoadGraph("player.png");
+	int enemyTex = LoadGraph("enemy.png");
+	int enemystopTex = LoadGraph("enemystop.png");
 	int stageTex = LoadGraph("stage.png");
 
 	for (int i = 0; i < Enemy_Max; i++) {
 		enemy[i] = new Enemy();
 		enemy[i]->SetEnemyTex(enemyTex);
+		enemy[i]->SetEnemyStopTex(enemystopTex);
 	}
 	player = new Player();
 	stagecircle = new StageCircle();
@@ -135,13 +137,13 @@ void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255])
 		}
 	}
 
-	Vector3 cameraOrgPosition(player->GetPositionX(),player->GetPositionY(), 400.0f);
+	Vector3 cameraOrgPosition(0.0f,0.0f, 400.0f);
 	Vector3 cameraPosition = cameraOrgPosition;
 
 	Vector3 cameraOrgUp(0.0f, 1.0f, 0.0f);
 	Vector3 cameraUp = cameraOrgUp;
 
-	Vector3 cameraTarget(player->GetPositionX(), player->GetPositionY(), 0.0f);
+	Vector3 cameraTarget(0.0f, 0.0f, 0.0f);
 
 	float cameraUpAngle = 0.0f;
 

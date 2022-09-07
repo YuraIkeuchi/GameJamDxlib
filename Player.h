@@ -26,14 +26,16 @@ public:
 	const float& GetSpeed() { return PlayerSpeed; }
 	const bool& GetStop() { return Stop; }
 	const bool& GetAttack() { return Attack; }
+	const bool& GetAttackStart() { return AttackStart; }
+	const float& GetFrame() { return frame; }
 	const float& GetPositionX() { return playerPosX; }
 	const float& GetPositionY() { return playerPosY; }
 
-	void SetScale(float PlayerScale) { this->PlayerScale = PlayerScale; }
-	void SetSpeed(float PlayerSpeed) { this->PlayerSpeed = PlayerSpeed; }
+	void SetAfterScale(float AfterScale) { this->AfterScale = AfterScale; }
+	void SetAfterSpeed(float AfterSpeed) { this->AfterSpeed = AfterSpeed; }
 	void SetStop(bool Stop) { this->Stop = Stop; }
 	void SetAttack(bool Attack) { this->Attack = Attack; }
-
+	void SetAttackStart(bool AttackStart) { this->AttackStart = AttackStart; }
 	void SetPlayer(int _player) { this->texture = _player; }
 private:
 	//メンバ変数
@@ -51,6 +53,10 @@ private:
 	float PlayerCircleY;
 	float Add;
 	bool Attack;
+	bool AttackStart;
+	float AfterScale;
+	float AfterSpeed;
+	float frame;
 	int AttackTimer;
 	//敵を止めるための変数
 	bool Stop;
