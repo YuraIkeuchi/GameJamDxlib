@@ -10,6 +10,40 @@ Enemy::~Enemy() {
 
 }
 
+void Enemy::Initialize() {
+	//À•W
+	EnemyPosX = 0.0f;
+	EnemyPosY = 0.0f;
+	//‰~‰^“®‚Ì‚½‚ß‚Ì•Ï”
+	x = 0.0f;
+	y = 0.0f;
+	EnemyRadius = 0.0f;
+	//0‚©‚ç360‚Ü‚Å‚Ì‰~Žü
+	EnemySpeed = 0.0f;
+	//ˆêŽü‚µ‚½‚©‚Ç‚¤‚©‚Ì”»’è‚ðŽæ‚é‚½‚ß‚Ì‰~Žü
+	EnemyRoundSpeed = 0.0f;
+	EnemyScale = 500.0f;
+	EnemyCircleX = 0.0f;
+	EnemyCircleY = 0.0f;
+	EnemyAdd = 0.0f;
+	//ƒŠƒXƒ|[ƒ“ŠÖŒW
+	EnemyAlive = false;
+	EnemyMove = false;
+	EnemySet = false;
+	TargetLine = 0;
+	//“G‚ªŽ~‚Ü‚Á‚Ä‚¢‚é‚©
+	EnemyStop = false;
+	EnemyStopTimer = 0;
+
+	//•Û‘¶—p•Ï”
+	EnemySaveSpeed = 0.0f;
+	//ƒvƒŒƒCƒ„[‚Æ“G‚ÌˆÊ’u‚Ì‹——£
+	DistanceScale = 0.0f;
+	DistanceSpeed = 0.0f;
+	//UŒ‚”ÍˆÍ
+	InAttackArea = false;
+}
+
 void Enemy::Update(Player* player) {
 
 	ResPorn();
@@ -86,9 +120,9 @@ void Enemy::Move() {
 
 	if (EnemyMove) {
 		if (EnemyRoundSpeed == EnemySaveSpeed + 360.0f) {
-			/*if (EnemyScale > 81.0f) {
+			if (EnemyScale > 81.0f) {
 				EnemyScale -= 80.0f;
-			}*/
+			}
 			EnemyRoundSpeed = EnemyRoundSpeed - 360.0f;
 			EnemySaveSpeed = EnemyRoundSpeed;
 		}
@@ -131,26 +165,50 @@ void Enemy::InArea(Player* player) {
 void Enemy::Target(Player* player) {
 
 	//‹——£‚ª‹ß‚©‚Á‚½ê‡‚»‚ÌêŠ‚ÉƒvƒŒƒCƒ„[ˆÚ“®
-	if (player->GetAttack() && DistanceScale == 0.0f) {
-		player->SetAttackStart(true);
-		player->SetAfterScale(EnemyScale);
-		player->SetAfterSpeed(EnemySpeed);
-	}
-	else if (player->GetAttack() && DistanceScale == 80.0f) {
-		player->SetAttackStart(true);
-		player->SetAfterScale(EnemyScale);
-		player->SetAfterSpeed(EnemySpeed);
+	if (EnemyAlive) {
+		if (player->GetAttackCount() == 0) {
+			if (player->GetAttack() && DistanceScale == 0.0f) {
+				player->SetAttackStart(true);
+				player->SetAfterScale(EnemyScale);
+				player->SetAfterSpeed(EnemySpeed);
+				player->SetFrame(0.0f);
+			}
+			else if (player->GetAttack() && DistanceScale == 80.0f) {
+				player->SetAttackStart(true);
+				player->SetAfterScale(EnemyScale);
+				player->SetAfterSpeed(EnemySpeed);
+				player->SetFrame(0.0f);
+			}
+		}
+		else {
+			if (player->GetAttackInterval() != 0 && DistanceScale == 0.0f) {
+
+				player->SetAttackStart(true);
+				player->SetAfterScale(EnemyScale);
+				player->SetAfterSpeed(EnemySpeed);
+				player->SetFrame(0.0f);
+			}
+			else if (player->GetAttackInterval() != 0 && DistanceScale == 80.0f) {
+				player->SetAttackStart(true);
+				player->SetAfterScale(EnemyScale);
+				player->SetAfterSpeed(EnemySpeed);
+				player->SetFrame(0.0f);
+			}
+		}
 	}
 }
 
 bool Enemy::Collide(Player* player) {
+	//“–‚½‚è”»’è
 	float plaPosX = player->GetPositionX();
 	float plaPosY = player->GetPositionY();
-	if (Collision::CircleCollision(EnemyPosX, EnemyPosY, 10.0f, plaPosX, plaPosY, 10.0f)
-		&& (EnemyMove) && (EnemyAlive)) {
+	if (Collision::CircleCollision(EnemyPosX, EnemyPosY, 15.0f, plaPosX, plaPosY, 15.0f)
+		&& (EnemyMove) && (EnemyAlive) && (player->GetScale() == EnemyScale) && (player->GetAttackStart())) {
 		EnemyAlive = false;
 		EnemyMove = false;
+		EnemyScale = 500.0f;
 		player->SetAttackCount(player->GetAttackCount() + 1);
+		player->SetAttackInterval(10);
 		return true;
 	}
 	else {
@@ -168,14 +226,15 @@ void Enemy::Draw() {
 			DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, 50.0f, 0.0f, texture, true);
 		}
 		else {
-			DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, 50.0f, 0.0f, stoptexture, true);
+			DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, 50.0f, 0.0f, Stoptexture, true);
 		}
+		DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, 200.0f, 0.0f, Linktexture, true);
 	}
 }
 
 void Enemy::FormatDraw(int EnemyCount) {
 	//string‚Ì•`‰æ
-	DrawFormatString(0, (20 * EnemyCount) + 0, GetColor(0, 0, 0), "Attack[%d]:%d", EnemyCount, EnemyAlive);
+	DrawFormatString(0, (20 * EnemyCount) + 0, GetColor(0, 0, 0), "EnemyScale[%d]:%f", EnemyCount, EnemyScale);
 	//DrawFormatString(0, (20 * EnemyCount) + 100, GetColor(0, 0, 0), "DistanceSpeed[%d]:%f", EnemyCount, DistanceSpeed);
 	//DrawFormatString(0, (20 * EnemyCount) + 200, GetColor(0, 0, 0), "DistanceScale[%d]:%f", EnemyCount, DistanceScale);
 }

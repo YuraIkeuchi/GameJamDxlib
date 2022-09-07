@@ -30,6 +30,7 @@ void Player::Initialize()
 	frame = 0.0f;
 	AttackTimer = 0;
 	AttackCount = 0;
+	AttackInterval = 0;
 	//ìGÇé~ÇﬂÇÈÇΩÇﬂÇÃïœêî
 	Stop = false;
 	StopInterval = 5;
@@ -76,8 +77,20 @@ void Player::Move(char keys[255], char oldkeys[255]) {
 			StopInterval = 5;
 		}
 	}
-	//à⁄ìÆó Çâ¡éZÇµÇƒÇ¢ÇÈ
-	PlayerSpeed += Add;
+	//à⁄ìÆó Çâ¡éZÇµÇƒÇ¢ÇÈ(çUåÇå„ÇÃçdíºå„à»äO)
+	if (AttackInterval == 0) {
+		PlayerSpeed += Add;
+	}
+
+	//çUåÇå„ÇÃçdíº(Ç±ÇÃä‘Ç…ÉäÉìÉNîªíËÇ∑ÇÈ)
+	if (AttackInterval > 0) {
+		AttackInterval--;
+	}
+	else {
+		//ÉäÉìÉNÇ™êÿÇÍÇÈ
+		AttackInterval = 0;
+		AttackCount = 0;
+	}
 
 	//0Ç©ÇÁ360Ç‹Ç≈îÕàÕÇéwíËÇ∑ÇÈ
 	if (PlayerSpeed > 360.0f) {
@@ -97,7 +110,7 @@ void Player::Move(char keys[255], char oldkeys[255]) {
 
 void Player::AttackMove(char keys[255], char oldkeys[255]) {
 	//ìGÇ…çUåÇÇ∑ÇÈ
-	if (keys[KEY_INPUT_S] == 1 && oldkeys[KEY_INPUT_S] == 0 && !Attack) {
+	if (keys[KEY_INPUT_S] == 1 && oldkeys[KEY_INPUT_S] == 0 && !Attack && !AttackStart) {
 		Attack = true;
 	}
 	//1ÉtÉåÅ[ÉÄÇÃÇ›ÇÃîªíË
@@ -130,5 +143,7 @@ void Player::Draw() {
 
 void Player::FormatDraw() {
 	DrawFormatString(0, 100, GetColor(0, 0, 0), "AttackCount:%d", AttackCount);
-	//DrawFormatString(0, 20, GetColor(0, 0, 0), "AttackStart:%d", AttackStart);
+	DrawFormatString(0, 140, GetColor(0, 0, 0), "Attack:%d", Attack);
+	DrawFormatString(0, 120, GetColor(0, 0, 0), "AttackInterVal:%d", AttackInterval);
+
 }

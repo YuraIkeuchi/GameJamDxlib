@@ -27,10 +27,11 @@ public:
 	const bool& GetStop() { return Stop; }
 	const bool& GetAttack() { return Attack; }
 	const bool& GetAttackStart() { return AttackStart; }
+	const float& GetAttackCount() { return AttackCount; }
+	const int& GetAttackInterval() { return AttackInterval; }
 	const float& GetFrame() { return frame; }
 	const float& GetPositionX() { return playerPosX; }
 	const float& GetPositionY() { return playerPosY; }
-	const float& GetAttackCount() { return AttackCount; }
 
 	void SetAfterScale(float AfterScale) { this->AfterScale = AfterScale; }
 	void SetAfterSpeed(float AfterSpeed) { this->AfterSpeed = AfterSpeed; }
@@ -38,7 +39,10 @@ public:
 	void SetAttack(bool Attack) { this->Attack = Attack; }
 	void SetAttackStart(bool AttackStart) { this->AttackStart = AttackStart; }
 	void SetAttackCount(int AttackCount) { this->AttackCount = AttackCount; }
+	void SetAttackInterval(int AttackInterval) { this->AttackInterval = AttackInterval; }
+	void SetFrame(float frame) { this->frame = frame; }
 	void SetPlayer(int _player) { this->texture = _player; }
+
 private:
 	//メンバ変数
 	int texture = 0;
@@ -61,8 +65,9 @@ private:
 	float AfterSpeed;
 	float frame;
 	int AttackTimer;
-	//二回目移行
+	//二回目以降
 	int AttackCount;
+	int AttackInterval;
 	//敵を止めるための変数
 	bool Stop;
 	int StopInterval;
