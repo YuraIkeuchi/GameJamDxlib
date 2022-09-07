@@ -22,15 +22,18 @@ void Player::Initialize()
 	PlayerCircleX = 0.0f;
 	PlayerCircleY = 0.0f;
 	Add = 1.0f;
+	//çUåÇä÷åW
 	Attack = false;
 	AttackStart = false;
 	AfterScale = 0.0f;
 	AfterSpeed = 0.0f;
 	frame = 0.0f;
 	AttackTimer = 0;
+	AttackCount = 0;
 	//ìGÇé~ÇﬂÇÈÇΩÇﬂÇÃïœêî
 	Stop = false;
 	StopInterval = 5;
+
 
 }
 
@@ -126,6 +129,6 @@ void Player::Draw() {
 }
 
 void Player::FormatDraw() {
-	//DrawFormatString(0, 0, GetColor(0, 0, 0), "frame:%f", frame);
+	DrawFormatString(0, 100, GetColor(0, 0, 0), "AttackCount:%d", AttackCount);
 	//DrawFormatString(0, 20, GetColor(0, 0, 0), "AttackStart:%d", AttackStart);
 }

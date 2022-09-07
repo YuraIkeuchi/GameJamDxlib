@@ -146,10 +146,11 @@ void Enemy::Target(Player* player) {
 bool Enemy::Collide(Player* player) {
 	float plaPosX = player->GetPositionX();
 	float plaPosY = player->GetPositionY();
-	if (Collision::CircleCollision(EnemyPosX, EnemyPosY, 5.0f, plaPosX, plaPosY, 5.0f)
+	if (Collision::CircleCollision(EnemyPosX, EnemyPosY, 10.0f, plaPosX, plaPosY, 10.0f)
 		&& (EnemyMove) && (EnemyAlive)) {
 		EnemyAlive = false;
 		EnemyMove = false;
+		player->SetAttackCount(player->GetAttackCount() + 1);
 		return true;
 	}
 	else {
