@@ -80,10 +80,11 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 		ChangeDir = true;
 	}
 
+	//Œü‚«‚ğ•Ï‚¦‚½‚Æ‚«™X‚É•Ï‚í‚é
 	if (ChangeDir) {
 
 		if (Speedframe < 1.0f) {
-			Speedframe += 0.05f;
+			Speedframe += 0.025f;
 		}
 		else {
 			Speedframe = 0.0f;
@@ -101,7 +102,7 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 	if (input.Buttons[XINPUT_BUTTON_B] && !oldinput.Buttons[XINPUT_BUTTON_B] && !Stop) {
 		Stop = true;
 	}
-
+	//“G‚ğ~‚ß‚Ä‚éŠÔ
 	if (Stop) {
 		StopInterval--;
 		if (StopInterval == 0) {
@@ -154,6 +155,7 @@ void Player::AttackMove(char keys[255], char oldkeys[255], XINPUT_STATE input, X
 		}
 	}
 
+	//“G‚ÌˆÊ’u‚Ü‚Åeasing
 	if (AttackStart) {
 		if (frame < 1.0f) {
 			frame += 0.1f;
@@ -175,7 +177,7 @@ void Player::Draw() {
 
 void Player::FormatDraw() {
 	DrawFormatString(0, 0, GetColor(0, 0, 0), "AttackCount:%d", AttackCount);
-	DrawFormatString(0, 20, GetColor(0, 0, 0), "Attack:%d", Attack);
-	DrawFormatString(0, 40, GetColor(0, 0, 0), "AttackInterVal:%d", AttackInterval);
-	DrawFormatString(0, 60, GetColor(0, 0, 0), "AddSpeed:%f", AddSpeed);
+	DrawFormatString(0, 60, GetColor(0, 0, 0), "KnockCount:%d", KnockCount);
+	DrawFormatString(0, 20, GetColor(0, 0, 0), "AttackStart:%d", AttackStart);
+	DrawFormatString(0, 40, GetColor(0, 0, 0), "Attack:%d", Attack);
 }

@@ -182,21 +182,27 @@ void Enemy::Target(Player* player) {
 				player->SetAfterScale(EnemyScale);
 				player->SetAfterSpeed(EnemySpeed);
 				player->SetFrame(0.0f);
+				//player->SetLink(true);
 			}
 		}
-		else {
+		else if(player->GetAttackCount() >= 1) {
 			//UŒ‚“ñ‰ñ–ÚˆÈ~(ƒŠƒ“ƒN’†‚Í“¯‚¶ƒŒ[ƒ“‚ð—Dæ‚µ‚ÄˆêŒÂ“à‘¤‚É‚àö‚ê‚é)
 			if (player->GetAttackInterval() != 0 && DistanceScale == 0.0f) {
 				player->SetAttackStart(true);
 				player->SetAfterScale(EnemyScale);
 				player->SetAfterSpeed(EnemySpeed);
 				player->SetFrame(0.0f);
+				//player->SetLink(true);
 			}
 			else if (player->GetAttackInterval() != 0 && DistanceScale == 80.0f) {
 				player->SetAttackStart(true);
 				player->SetAfterScale(EnemyScale);
 				player->SetAfterSpeed(EnemySpeed);
 				player->SetFrame(0.0f);
+				//player->SetLink(true);
+			}
+			else {
+				//player->SetLink(false);
 			}
 		}
 	}
@@ -211,6 +217,7 @@ bool Enemy::Collide(Player* player) {
 		EnemyAlive = false;
 		EnemyMove = false;
 		EnemyScale = 500.0f;
+		player->SetKnockCount(player->GetKnockCount() + 1);
 		player->SetAttackCount(player->GetAttackCount() + 1);
 		player->SetAttackInterval(10);
 		return true;

@@ -32,6 +32,8 @@ private:
 	int ScorePoint;
 	//時間制限(別クラスでもいいかも)
 	int GameTimer;
+	//倍率
+	int MultPoint;
 	//継承クラス
 	unique_ptr<Player> player = nullptr;
 };
