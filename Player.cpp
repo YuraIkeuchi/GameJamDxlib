@@ -13,8 +13,8 @@ void Player::Initialize()
 	playerPosX = WIN_WIDTH / 2;
 	playerPosY = WIN_HEIGHT / 2;
 	//‰~‰^“®‚Ì‚½‚ß‚Ì•Ï”
-	x = WIN_WIDTH / 2;
-	y = WIN_HEIGHT / 2;
+	x = 0;
+	y = 0;
 	PlayerRadius = 0.0f;
 	PlayerSpeed = 0.0f;
 	PlayerScale = 80.0f;// LaneNum‚Æˆê‚É•Ï‚¦‚é‚±‚Æ

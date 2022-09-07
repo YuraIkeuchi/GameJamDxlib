@@ -6,6 +6,7 @@ void SceneManager::StaticInit()
 	//画像などのリソースデータの変数宣言と読み込み
 	int playerTex = LoadGraph("player.png");
 	int enemyTex = LoadGraph("player.png");
+	int stageTex = LoadGraph("stage.png");
 
 	for (int i = 0; i < Enemy_Max; i++) {
 		enemy[i] = new Enemy();
@@ -15,6 +16,7 @@ void SceneManager::StaticInit()
 	stagecircle = new StageCircle();
 
 	player->SetPlayer(playerTex);
+	stagecircle->SetTexture(stageTex);
 	srand(time(NULL));
 }
 
