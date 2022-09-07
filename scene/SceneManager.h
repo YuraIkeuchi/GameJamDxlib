@@ -26,15 +26,15 @@ private:
 	int SceneTime = 0;
 #pragma region シーンごとの処理
 	void TitleInit();
-	void TitleUpdate(char keys[255], char oldkeys[255]);
+	void TitleUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput);
 	void TitleDraw();
 
 	void GameSceneInit();
-	void GameSceneUpdate(char keys[255], char oldkeys[255]);
+	void GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput);
 	void GameSceneDraw();
 
 	void EndInit();
-	void EndUpdate(char keys[255], char oldkeys[255]);
+	void EndUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput);
 	void EndDraw();
 
 	//クラス宣言
@@ -55,7 +55,7 @@ public:
 	//シーンを切り替えるたびに初期化するもの
 	void Init();
 	//Update
-	void Update(char keys[255], char oldkeys[255]);
+	void Update(char keys[255], char oldkeys[255],XINPUT_STATE input, XINPUT_STATE oldinput);
 	//Draw
 	void Draw();
 

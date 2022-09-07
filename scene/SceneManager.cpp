@@ -43,21 +43,21 @@ void SceneManager::Init()
 	}
 }
 
-void SceneManager::Update(char keys[255], char oldkeys[255])
+void SceneManager::Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput)
 {
 	switch (SceneNo)
 	{
 	case static_cast<int>(SceneManager::NO::Title):
 		SceneTime = 1;
-		TitleUpdate(keys,oldkeys);
+		TitleUpdate(keys,oldkeys,input,oldinput);
 		break;
 	case static_cast<int>(SceneManager::NO::GameScene):
 		SceneTime = 1;
-		GameSceneUpdate(keys, oldkeys);
+		GameSceneUpdate(keys, oldkeys, input, oldinput);
 		break;
 	case static_cast<int>(SceneManager::NO::End):
 		SceneTime = 1;
-		EndUpdate(keys, oldkeys);
+		EndUpdate(keys, oldkeys, input, oldinput);
 		break;
 
 	default:
@@ -89,16 +89,16 @@ void SceneManager::TitleInit()
 	player->Initialize();
 }
 
-void SceneManager::TitleUpdate(char keys[255], char oldkeys[255])
+void SceneManager::TitleUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput)
 {
 	//仮置き（次のシーンに行く）
-	if (keys[KEY_INPUT_N] == 1 && oldkeys[KEY_INPUT_N] == 0) {
+	if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A]) {
 		SceneTime = 0;
 		SceneNo = static_cast<int>(NO::GameScene);
 	}
 
 	//プレイヤー
-	player->Update(keys, oldkeys);
+	player->Update(keys, oldkeys, input, oldinput);
 }
 
 void SceneManager::TitleDraw()
@@ -120,7 +120,7 @@ void SceneManager::GameSceneInit()
 
 }
 
-void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255])
+void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput)
 {
 	//更新処理
 	//仮置き（次のシーンに行く）
@@ -130,7 +130,7 @@ void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255])
 	}
 
 	//プレイヤー
-	player->Update(keys, oldkeys);
+	player->Update(keys, oldkeys, input, oldinput);
 	//エネミー
 	for (int i = 0; i < Enemy_Max; i++) {
 		enemy[i]->Update(player);
@@ -186,10 +186,10 @@ void SceneManager::EndInit()
 {
 }
 
-void SceneManager::EndUpdate(char keys[255], char oldkeys[255])
+void SceneManager::EndUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput)
 {
 	//仮置き（次のシーンに行く）
-	if (keys[KEY_INPUT_N] == 1 && oldkeys[KEY_INPUT_N] == 0) {
+	if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A]) {
 		SceneTime = 0;
 		SceneNo = static_cast<int>(NO::Title);
 	}

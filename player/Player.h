@@ -1,6 +1,6 @@
 #pragma once
 #include "Share.h"
-
+#include "DxLib.h"
 class Player {
 public:
 	//コンストラクタ
@@ -11,11 +11,11 @@ public:
 	//初期化
 	void Initialize();
 	//更新
-	void Update(char keys[255], char oldkeys[255]);
+	void Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput);
 	//移動
-	void Move(char keys[255], char oldkeys[255]);
+	void Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput);
 	//攻撃
-	void AttackMove(char keys[255], char oldkeys[255]);
+	void AttackMove(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput);
 	//描画
 	void Draw();
 	//FormatString用
@@ -57,7 +57,6 @@ private:
 	float PlayerScale;// LaneNumと一緒に変えること
 	float PlayerCircleX;
 	float PlayerCircleY;
-	float Add;
 	//攻撃関係
 	bool Attack;
 	bool AttackStart;
@@ -71,4 +70,13 @@ private:
 	//敵を止めるための変数
 	bool Stop;
 	int StopInterval;
+	//移動関係
+	float AddSpeed;
+	float Speedframe;
+	bool ChangeDir;
+	int Dir;
+	enum MoveDir {
+		RIGHT,
+		LEFT,
+	};
 };

@@ -21,7 +21,6 @@ void Player::Initialize()
 	PlayerScale = 80.0f;// LaneNum‚Æˆê‚É•Ï‚¦‚é‚±‚Æ
 	PlayerCircleX = 0.0f;
 	PlayerCircleY = 0.0f;
-	Add = 1.0f;
 	//UŒ‚ŠÖŒW
 	Attack = false;
 	AttackStart = false;
@@ -34,39 +33,72 @@ void Player::Initialize()
 	//“G‚ðŽ~‚ß‚é‚½‚ß‚Ì•Ï”
 	Stop = false;
 	StopInterval = 5;
-
-
+	//ˆÚ“®ŠÖŒW
+	AddSpeed = 1.0f;
+	Speedframe = 0.0f;
+	ChangeDir = false;
+	Dir = RIGHT;
 }
 
-void Player::Update(char keys[255], char oldkeys[255]) {
+void Player::Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput) {
 	//ˆÚ“®
-	Move(keys, oldkeys);
+	Move(keys, oldkeys,input,oldinput);
 	//UŒ‚
-	AttackMove(keys, oldkeys);
+	AttackMove(keys, oldkeys, input, oldinput);
 }
 
-void Player::Move(char keys[255], char oldkeys[255]) {
+void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput) {
 	//ƒvƒŒƒCƒ„[
 	//ƒT[ƒNƒ‹•ÏX
-	if (keys[KEY_INPUT_DOWN] == 1 && oldkeys[KEY_INPUT_DOWN] == 0) {
+	if (input.Buttons[XINPUT_BUTTON_DPAD_DOWN] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_DOWN]) {
 		if (PlayerScale > 81.0f) {
 			PlayerScale -= 80.0f;
 		}
 	}
 
-	if (keys[KEY_INPUT_UP] == 1 && oldkeys[KEY_INPUT_UP] == 0) {
+	if (input.Buttons[XINPUT_BUTTON_DPAD_UP]&& !oldinput.Buttons[XINPUT_BUTTON_DPAD_UP]) {
 		if (PlayerScale < 319.0f) {
 			PlayerScale += 80.0f;
 		}
 	}
 
 	//ˆÚ“®•ûŒü•ÏŠ·
-	if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0) {
-		Add = -Add;
+	//(‰EŒü‚«‚É‚È‚é)
+	if (input.RightTrigger && !oldinput.RightTrigger
+		&& (Dir == LEFT)) {
+		
+		Speedframe = 0.0f;
+		Dir = RIGHT;
+		ChangeDir = true;
+	}
+
+	//(‰EŒü‚«‚É‚È‚é)
+	if (input.LeftTrigger && !oldinput.LeftTrigger
+		&& (Dir == RIGHT)) {
+		Speedframe = 0.0f;
+		Dir = LEFT;
+		ChangeDir = true;
+	}
+
+	if (ChangeDir) {
+
+		if (Speedframe < 1.0f) {
+			Speedframe += 0.05f;
+		}
+		else {
+			Speedframe = 0.0f;
+			ChangeDir = false;
+		}
+		if (Dir == RIGHT) {
+			AddSpeed = Ease(In, Cubic, Speedframe, AddSpeed, 1.0f);
+		}
+		else {
+			AddSpeed = Ease(In, Cubic, Speedframe, AddSpeed, -1.0f);
+		}
 	}
 
 	//“G‚ðŽ~‚ß‚é
-	if (keys[KEY_INPUT_A] == 1 && oldkeys[KEY_INPUT_A] == 0 && !Stop) {
+	if (input.Buttons[XINPUT_BUTTON_B] && !oldinput.Buttons[XINPUT_BUTTON_B] && !Stop) {
 		Stop = true;
 	}
 
@@ -79,7 +111,7 @@ void Player::Move(char keys[255], char oldkeys[255]) {
 	}
 	//ˆÚ“®—Ê‚ð‰ÁŽZ‚µ‚Ä‚¢‚é(UŒ‚Œã‚Ìd’¼ŒãˆÈŠO)
 	if (AttackInterval == 0) {
-		PlayerSpeed += Add;
+		PlayerSpeed += AddSpeed;
 	}
 
 	//UŒ‚Œã‚Ìd’¼(‚±‚ÌŠÔ‚ÉƒŠƒ“ƒN”»’è‚·‚é)
@@ -108,9 +140,9 @@ void Player::Move(char keys[255], char oldkeys[255]) {
 	playerPosY = PlayerCircleY + y;
 }
 
-void Player::AttackMove(char keys[255], char oldkeys[255]) {
+void Player::AttackMove(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput) {
 	//“G‚ÉUŒ‚‚·‚é
-	if (keys[KEY_INPUT_S] == 1 && oldkeys[KEY_INPUT_S] == 0 && !Attack && !AttackStart) {
+	if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A] && !Attack && !AttackStart) {
 		Attack = true;
 	}
 	//1ƒtƒŒ[ƒ€‚Ì‚Ý‚Ì”»’è
@@ -142,8 +174,8 @@ void Player::Draw() {
 }
 
 void Player::FormatDraw() {
-	DrawFormatString(0, 100, GetColor(0, 0, 0), "AttackCount:%d", AttackCount);
-	DrawFormatString(0, 140, GetColor(0, 0, 0), "Attack:%d", Attack);
-	DrawFormatString(0, 120, GetColor(0, 0, 0), "AttackInterVal:%d", AttackInterval);
-
+	DrawFormatString(0, 0, GetColor(0, 0, 0), "AttackCount:%d", AttackCount);
+	DrawFormatString(0, 20, GetColor(0, 0, 0), "Attack:%d", Attack);
+	DrawFormatString(0, 40, GetColor(0, 0, 0), "AttackInterVal:%d", AttackInterval);
+	DrawFormatString(0, 60, GetColor(0, 0, 0), "AddSpeed:%f", AddSpeed);
 }
