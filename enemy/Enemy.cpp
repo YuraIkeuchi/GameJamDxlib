@@ -51,6 +51,9 @@ void Enemy::Update(Player* player) {
 	InArea(player);
 	Stop(player);
 	Collide(player);
+	if (InAttackArea) {
+		Target(player);
+	}
 	EnemyRadius = EnemySpeed * PI / 180.0f;
 	EnemyCircleX = cosf(EnemyRadius) * EnemyScale;
 	EnemyCircleY = sinf(EnemyRadius) * EnemyScale;
@@ -170,9 +173,9 @@ void Enemy::InArea(Player* player) {
 
 }
 void Enemy::Target(Player* player) {
-
 	//‹——£‚ª‹ß‚©‚Á‚½ê‡‚»‚ÌêŠ‚ÉƒvƒŒƒCƒ„[ˆÚ“®
 	if (EnemyAlive) {
+		//UŒ‚ˆê‰ñ–Ú(ƒŠƒ“ƒNŽn‚Ü‚é‚Æ‚«‚Í“¯‚¶ƒŒ[ƒ“‚Ì‚Ý)
 		if (player->GetAttackCount() == 0) {
 			if (player->GetAttack() && DistanceScale == 0.0f) {
 				player->SetAttackStart(true);
@@ -180,16 +183,10 @@ void Enemy::Target(Player* player) {
 				player->SetAfterSpeed(EnemySpeed);
 				player->SetFrame(0.0f);
 			}
-			else if (player->GetAttack() && DistanceScale == 80.0f) {
-				player->SetAttackStart(true);
-				player->SetAfterScale(EnemyScale);
-				player->SetAfterSpeed(EnemySpeed);
-				player->SetFrame(0.0f);
-			}
 		}
 		else {
+			//UŒ‚“ñ‰ñ–ÚˆÈ~(ƒŠƒ“ƒN’†‚Í“¯‚¶ƒŒ[ƒ“‚ð—Dæ‚µ‚ÄˆêŒÂ“à‘¤‚É‚àö‚ê‚é)
 			if (player->GetAttackInterval() != 0 && DistanceScale == 0.0f) {
-
 				player->SetAttackStart(true);
 				player->SetAfterScale(EnemyScale);
 				player->SetAfterSpeed(EnemySpeed);
@@ -242,6 +239,6 @@ void Enemy::Draw() {
 void Enemy::FormatDraw(int EnemyCount) {
 	//string‚Ì•`‰æ
 	//DrawFormatString(0, (20 * EnemyCount) + 0, GetColor(0, 0, 0), "EnemyScale[%d]:%f", EnemyCount, EnemyScale);
-	DrawFormatString(0, (20 * EnemyCount) + 80, GetColor(0, 0, 0), "DistanceSpeed[%d]:%f", EnemyCount, DistanceSpeed);
-	DrawFormatString(0, (20 * EnemyCount) + 280, GetColor(0, 0, 0), "DistanceScale[%d]:%f", EnemyCount, DistanceScale);
+	//DrawFormatString(0, (20 * EnemyCount) + 80, GetColor(0, 0, 0), "DistanceSpeed[%d]:%f", EnemyCount, DistanceSpeed);
+	//DrawFormatString(0, (20 * EnemyCount) + 280, GetColor(0, 0, 0), "DistanceScale[%d]:%f", EnemyCount, DistanceScale);
 }

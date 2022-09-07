@@ -1,6 +1,7 @@
 #pragma once
 #include"Player.h"
 #include"Enemy.h"
+#include "Score.h"
 #include"StageCircle.h"
 #include "math.h"
 #include<time.h>
@@ -44,7 +45,8 @@ private:
 	Player *player = nullptr;
 	//ステージ上の円
 	StageCircle *stagecircle = nullptr;
-
+	//スコア
+	Score* score = nullptr;
 	float x = WIN_WIDTH / 2;
 	float y = WIN_HEIGHT / 2;
 
