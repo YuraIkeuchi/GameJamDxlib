@@ -53,14 +53,14 @@ private:
 	float EnemyCircleY = 0.0f;
 	float EnemyAdd = 0.0f;
 	//ƒŠƒXƒ|[ƒ“ŠÖŒW
-	float EnemyAlive = false;
+	bool EnemyAlive = false;
 	float EnemyTimer = 0;
-	float EnemyMove = false;
-	float EnemySet = false;
-	float TargetLine = 0;
+	bool EnemyMove = false;
+	bool EnemySet = false;
+	int TargetLine = 0;
 	//“G‚ª~‚Ü‚Á‚Ä‚¢‚é‚©
-	float EnemyStop = false;
-	float EnemyStopTimer = 0;
+	bool EnemyStop = false;
+	int EnemyStopTimer = 0;
 	
 	//•Û‘¶—p•Ï”
 	float EnemySaveSpeed = 0.0f;
