@@ -13,63 +13,84 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="player">
+      <UniqueIdentifier>{e8dfc279-47b6-45fc-97a1-d909ba0f8aeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="enemy">
+      <UniqueIdentifier>{a7b17dff-88cb-443f-b86d-442af0de8c9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ease">
+      <UniqueIdentifier>{ce5a1c97-700a-4105-bc6b-514971c1225d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base">
+      <UniqueIdentifier>{ddc3e553-131e-44c6-91e8-82ec9f9cff83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="collision">
+      <UniqueIdentifier>{c8c45986-1591-45d2-a6f5-86d93e1f71ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene">
+      <UniqueIdentifier>{a40e7f37-020f-485b-aef6-550da71a4ca7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="math">
+      <UniqueIdentifier>{e99fe49d-0ff3-42d2-b927-e5d0cadd7f5e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="player\Player.cpp">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\SceneManager.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="collision\Collision.cpp">
+      <Filter>collision</Filter>
+    </ClCompile>
+    <ClCompile Include="base\StageCircle.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="ease\Easing.cpp">
+      <Filter>ease</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy\Enemy.cpp">
+      <Filter>enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="math\Vector2.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\Vector3.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="StageCircle.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector2.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector3.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Easing.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Collision.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Player.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="player\Player.h">
+      <Filter>player</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="scene\SceneManager.h">
+      <Filter>scene</Filter>
     </ClInclude>
-    <ClInclude Include="Share.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="collision\Collision.h">
+      <Filter>collision</Filter>
     </ClInclude>
-    <ClInclude Include="StageCircle.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="base\Share.h">
+      <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="base\StageCircle.h">
+      <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="Vector2.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="ease\Easing.h">
+      <Filter>ease</Filter>
     </ClInclude>
-    <ClInclude Include="Vector3.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="enemy\Enemy.h">
+      <Filter>enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Easing.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="math\Vector2.h">
+      <Filter>math</Filter>
     </ClInclude>
-    <ClInclude Include="Collision.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="math\Vector3.h">
+      <Filter>math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
