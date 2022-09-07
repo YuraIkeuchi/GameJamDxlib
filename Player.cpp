@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Easing.h"
 #include <DxLib.h>
 #include "math.h"
 //コンストラクタ
@@ -22,10 +23,15 @@ void Player::Initialize()
 	PlayerCircleY = 0.0f;
 	Add = 1.0f;
 	Attack = false;
+	AttackStart = false;
+	AfterScale = 0.0f;
+	AfterSpeed = 0.0f;
+	frame = 0.0f;
 	AttackTimer = 0;
 	//敵を止めるための変数
 	Stop = false;
 	StopInterval = 5;
+
 }
 
 void Player::Update(char keys[255], char oldkeys[255]) {
@@ -39,13 +45,13 @@ void Player::Move(char keys[255], char oldkeys[255]) {
 	//プレイヤー
 	//サークル変更
 	if (keys[KEY_INPUT_DOWN] == 1 && oldkeys[KEY_INPUT_DOWN] == 0) {
-		if (PlayerScale > 161.0f) {
+		if (PlayerScale > 81.0f) {
 			PlayerScale -= 80.0f;
 		}
 	}
 
 	if (keys[KEY_INPUT_UP] == 1 && oldkeys[KEY_INPUT_UP] == 0) {
-		if (PlayerScale < 401.0f) {
+		if (PlayerScale < 319.0f) {
 			PlayerScale += 80.0f;
 		}
 	}
@@ -99,6 +105,19 @@ void Player::AttackMove(char keys[255], char oldkeys[255]) {
 			Attack = false;
 		}
 	}
+
+	if (AttackStart) {
+		if (frame < 1.0f) {
+			frame += 0.1f;
+		}
+		else {
+			frame = 0.0f;
+			AttackStart = false;
+		}
+
+		PlayerScale = Ease(In, Cubic, frame, PlayerScale, AfterScale);
+		PlayerSpeed = Ease(In, Cubic, frame, PlayerSpeed, AfterSpeed);
+	}
 }
 
 void Player::Draw() {
@@ -107,6 +126,6 @@ void Player::Draw() {
 }
 
 void Player::FormatDraw() {
-	DrawFormatString(0, 320, GetColor(0, 0, 0), "Timer:%d", AttackTimer);
-	DrawFormatString(0, 300, GetColor(0, 0, 0), "Attack:%d", Attack);
+	//DrawFormatString(0, 0, GetColor(0, 0, 0), "frame:%f", frame);
+	//DrawFormatString(0, 20, GetColor(0, 0, 0), "AttackStart:%d", AttackStart);
 }

@@ -20,6 +20,8 @@ public:
 	void Target(Player* player);
 	//’â~
 	void Stop(Player* player);
+	//“–‚½‚è”»’è
+	bool Collide(Player* player);
 	//•`‰æ
 	void Draw();
 	//FormatString—p
@@ -30,8 +32,10 @@ public:
 	const bool& GetAttackArea() { return InAttackArea; }
 	void SetStop(bool Stop) { this->EnemyStop = Stop; }
 	void SetEnemyTex(int tex) { this->texture = tex; }
+	void SetEnemyStopTex(int tex) { this->stoptexture = tex; }
 private:
 	int texture = 0;
+	int stoptexture = 0;
 	//ƒƒ“ƒo•Ï”
 	//À•W
 	float EnemyPosX = 0.0f;
