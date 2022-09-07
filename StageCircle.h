@@ -10,7 +10,10 @@ public://ƒƒ“ƒoŠÖ”
 	//‰~‚ğ•`‚­‚¾‚¯‚È‚Ì‚Å•`‰æ‚Ì‚İ
 	void Draw();
 
+	void SetTexture(int tex) { this->stageTex = tex; }
 private:	//ƒƒ“ƒo•Ï”
+	int stageTex = 0;
+
 	float x = WIN_WIDTH;
 	float y = WIN_HEIGHT / 2;
 };
