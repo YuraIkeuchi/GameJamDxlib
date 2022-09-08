@@ -6,6 +6,7 @@
 #include "math.h"
 #include<time.h>
 #include "DxLib.h"
+#include"Title.h"
 
 class SceneManager
 {
@@ -22,7 +23,7 @@ private:
 	};
 
 	//現在のシーンの番号
-	int SceneNo = static_cast<int>(NO::GameScene);
+	int SceneNo = static_cast<int>(NO::Title);
 	//初期化のための計測
 	int SceneTime = 0;
 #pragma region シーンごとの処理
@@ -45,6 +46,8 @@ private:
 	Player *player = nullptr;
 	//ステージ上の円
 	StageCircle *stagecircle = nullptr;
+	//タイトルの動き
+	Title *title = nullptr;
 	//スコア
 	Score* score = nullptr;
 	float x = WIN_WIDTH / 2;
