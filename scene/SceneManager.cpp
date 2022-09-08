@@ -4,11 +4,11 @@
 void SceneManager::StaticInit()
 {
 	//画像などのリソースデータの変数宣言と読み込み
-	int playerTex = LoadGraph("player.png");
-	int enemyTex = LoadGraph("enemy.png");
-	int enemystopTex = LoadGraph("enemystop.png");
-	int enemylinkTex = LoadGraph("LinkArea.png");
-	int stageTex = LoadGraph("stage.png");
+	int playerTex = LoadGraph("Resources/player.png");
+	int enemyTex = LoadGraph("Resources/enemy.png");
+	int enemystopTex = LoadGraph("Resources/enemystop.png");
+	int enemylinkTex = LoadGraph("Resources/LinkArea.png");
+	int stageTex = LoadGraph("Resources/stage.png");
 
 	for (int i = 0; i < Enemy_Max; i++) {
 		enemy[i] = new Enemy();
@@ -20,6 +20,7 @@ void SceneManager::StaticInit()
 	stagecircle = new StageCircle();
 	score = new Score();
 	score->SetPlayer(player);
+	title = new Title();
 
 	player->SetPlayer(playerTex);
 	stagecircle->SetTexture(stageTex);
@@ -90,48 +91,23 @@ void SceneManager::TitleInit()
 {
 	player->Initialize();
 	score->Initialize();
+	title->Initialize();
 }
 
 void SceneManager::TitleUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput)
 {
-	//仮置き（次のシーンに行く）
-	if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A]) {
+	if (title->Update(input, oldinput) == true)
+	{
 		SceneTime = 0;
 		SceneNo = static_cast<int>(NO::GameScene);
 	}
-
-
-	Vector3 cameraOrgPosition(player->GetPositionX(), player->GetPositionY(), 400.0f);
-	Vector3 cameraPosition = cameraOrgPosition;
-
-	Vector3 cameraOrgUp(0.0f, 1.0f, 0.0f);
-	Vector3 cameraUp = cameraOrgUp;
-
-	Vector3 cameraTarget(player->GetPositionX(), player->GetPositionY(), 0.0f);
-
-	float cameraUpAngle = 0.0f;
-
-	//クリップ面
-	SetCameraNearFar(1.0f, 10000.0f);
-	SetCameraScreenCenter(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f);
-	SetCameraPositionAndTargetAndUpVec(
-		cameraPosition,
-		cameraTarget,
-		cameraUp);
-
-
-	//プレイヤー
-	player->Update(keys, oldkeys, input, oldinput);
 }
 
 void SceneManager::TitleDraw()
 {
 	//描画処理
-	//ステージ上の円
-	stagecircle->Draw();
-
-	//プレイヤー
-	player->Draw();
+	//タイトル
+	title->Draw();
 }
 
 void SceneManager::GameSceneInit()
