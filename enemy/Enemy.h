@@ -1,6 +1,8 @@
 #pragma once
 #include "Share.h"
 #include "Player.h"
+#include "AttackEffect.h"
+
 class Enemy {
 public:
 	//コンストラクタ
@@ -72,4 +74,6 @@ private:
 	float DistanceSpeed;
 	//攻撃範囲
 	bool InAttackArea;
+
+	AttackEffect* effects = nullptr;
 };

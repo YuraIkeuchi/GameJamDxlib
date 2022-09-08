@@ -1,12 +1,30 @@
 #include "AttackEffect.h"
 
-void AttackEffect::Update(FLOAT3 _pos)
+AttackEffect::AttackEffect()
+{
+	Emitter();
+	pos = FLOAT3{ 0,0,0 };
+	size = 100;
+	angle = 0;
+	alpha = 255;
+
+	count = 0;
+}
+
+void AttackEffect::active(FLOAT3 _pos)
+{
+	Emitter::activate();
+	SetEmitPos(_pos);
+}
+
+void AttackEffect::Update()
 {
 	if (isAlive == true) {
-		size = FLOAT2{ size.u + 1,size.v + 1 };
-
+		size += 1;
 		if (count >= 3.0f) {
 			isAlive = false;
+			count = 0;
+			size = 100;
 		}
 
 		count += 1.0f / 60.0f;
@@ -15,5 +33,7 @@ void AttackEffect::Update(FLOAT3 _pos)
 
 void AttackEffect::Draw()
 {
-	DrawBillboard3D(pos, 0.5f, 0.5f, 100, angle, texture, true);
+	if (isAlive == true) {
+		DrawBillboard3D(pos, 0.5f, 0.5f, size, angle, texture, true);
+	}
 }

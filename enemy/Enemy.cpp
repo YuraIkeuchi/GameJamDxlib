@@ -42,6 +42,11 @@ void Enemy::Initialize() {
 	DistanceSpeed = 0.0f;
 	//UŒ‚”ÍˆÍ
 	InAttackArea = false;
+
+	int EffectTex = LoadGraph("Resources/attackEffect.png");
+
+	effects = new AttackEffect();
+	effects->SetTexture(EffectTex);
 }
 
 void Enemy::Update(Player* player) {
@@ -54,11 +59,14 @@ void Enemy::Update(Player* player) {
 	if (InAttackArea) {
 		Target(player);
 	}
+
 	EnemyRadius = EnemySpeed * PI / 180.0f;
 	EnemyCircleX = cosf(EnemyRadius) * EnemyScale;
 	EnemyCircleY = sinf(EnemyRadius) * EnemyScale;
 	EnemyPosX = EnemyCircleX + x;
 	EnemyPosY = EnemyCircleY + y;
+
+	effects->Update();
 }
 
 void Enemy::ResPorn() {
@@ -185,7 +193,7 @@ void Enemy::Target(Player* player) {
 				//player->SetLink(true);
 			}
 		}
-		else if(player->GetAttackCount() >= 1) {
+		else if (player->GetAttackCount() >= 1) {
 			//UŒ‚“ñ‰ñ–ÚˆÈ~(ƒŠƒ“ƒN’†‚Í“¯‚¶ƒŒ[ƒ“‚ð—Dæ‚µ‚ÄˆêŒÂ“à‘¤‚É‚àö‚ê‚é)
 			if (player->GetAttackInterval() != 0 && DistanceScale == 0.0f) {
 				player->SetAttackStart(true);
@@ -216,6 +224,7 @@ bool Enemy::Collide(Player* player) {
 		&& (EnemyMove) && (EnemyAlive) && (player->GetScale() == EnemyScale) && (player->GetAttackStart())) {
 		EnemyAlive = false;
 		EnemyMove = false;
+		effects->active(FLOAT3{ EnemyPosX ,EnemyPosY ,0.0f });
 		EnemyScale = 500.0f;
 		player->SetKnockCount(player->GetKnockCount() + 1);
 		player->SetAttackCount(player->GetAttackCount() + 1);
@@ -240,7 +249,9 @@ void Enemy::Draw() {
 			DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, 50.0f, 0.0f, Stoptexture, true);
 		}
 		DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, 200.0f, 0.0f, Linktexture, true);
+
 	}
+	effects->Draw();
 }
 
 void Enemy::FormatDraw(int EnemyCount) {
