@@ -14,6 +14,7 @@ class MoveEffect : public Emitter {
 	float count;//出現時間（仮）
 
 	int texture;//テクスチャ
+
 public:
 	//setter
 	void SetEmitPos(FLOAT3 _pos) { this->pos = _pos; }
