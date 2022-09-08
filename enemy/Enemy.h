@@ -23,8 +23,10 @@ public:
 	void Target(Player* player);
 	//停止
 	void Stop(Player* player);
-	//当たり判定
+	//当たり判定(エネミーが死ぬ)
 	bool Collide(Player* player);
+	//当たり判定(プレイヤーがスタンする)
+	bool PlayerCollide(Player* player);
 	//描画
 	void Draw();
 	//FormatString用
@@ -59,7 +61,7 @@ private:
 	float EnemyAdd;
 	//リスポーン関係
 	bool EnemyAlive;
-	float EnemyTimer;
+	int EnemyTimer;
 	bool EnemyMove;
 	bool EnemySet;
 	int TargetLine;

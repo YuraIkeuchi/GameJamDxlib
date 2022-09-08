@@ -32,6 +32,7 @@
     <ClCompile Include="player\Player.cpp" />
     <ClCompile Include="scene\SceneManager.cpp" />
     <ClCompile Include="score\Score.cpp" />
+    <ClCompile Include="Title\Title.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\Share.h" />
@@ -47,6 +48,7 @@
     <ClInclude Include="player\Player.h" />
     <ClInclude Include="scene\SceneManager.h" />
     <ClInclude Include="score\Score.h" />
+    <ClInclude Include="Title\Title.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -106,7 +108,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)collision;$(ProjectDir)math;$(ProjectDir)ease;$(ProjectDir)score;$(ProjectDir)effect;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)collision;$(ProjectDir)ease;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)math</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)collision;$(ProjectDir)math;$(ProjectDir)ease;$(ProjectDir)score;$(ProjectDir)Title;$(ProjectDir)effect;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)collision;$(ProjectDir)ease;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)math</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -119,7 +121,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)collision;$(ProjectDir)math;$(ProjectDir)ease;$(ProjectDir)score;$(ProjectDir)effect;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)collision;$(ProjectDir)math;$(ProjectDir)ease;$(ProjectDir)score;$(ProjectDir)Title;$(ProjectDir)effect;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,7 +135,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)collision;$(ProjectDir)math;$(ProjectDir)ease;$(ProjectDir)score;$(ProjectDir)effect;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)collision;$(ProjectDir)ease;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)math</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)collision;$(ProjectDir)math;$(ProjectDir)ease;$(ProjectDir)score;$(ProjectDir)Title;$(ProjectDir)effect;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)collision;$(ProjectDir)ease;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)math</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -150,7 +152,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)collision;$(ProjectDir)math;$(ProjectDir)ease;$(ProjectDir)score;$(ProjectDir)effect;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)collision;$(ProjectDir)math;$(ProjectDir)ease;$(ProjectDir)score;$(ProjectDir)Title;$(ProjectDir)effect;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

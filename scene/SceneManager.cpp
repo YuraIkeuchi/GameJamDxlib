@@ -3,10 +3,6 @@
 
 void SceneManager::StaticInit()
 {
-	//‰æ‘œ‚È‚Ç‚ÌƒŠƒ\[ƒXƒf[ƒ^‚Ì•Ï”éŒ¾‚Æ“Ç‚İ‚İ
-	int playerTex = LoadGraph("Resources/player.png");
-	int enemyTex = LoadGraph("Resources/enemy.png");
-	int enemystopTex = LoadGraph("Resources/enemystop.png");
 	int enemylinkTex = LoadGraph("LinkArea.png");
 	int stageTex = LoadGraph("Resources/stage.png");
 
@@ -20,8 +16,10 @@ void SceneManager::StaticInit()
 	stagecircle = new StageCircle();
 	score = new Score();
 	score->SetPlayer(player);
+	title = new Title();
 
 	player->SetPlayer(playerTex);
+	player->SetTargetArea(targetTex);
 	stagecircle->SetTexture(stageTex);
 	srand(time(NULL));
 }
@@ -90,16 +88,18 @@ void SceneManager::TitleInit()
 {
 	player->Initialize();
 	score->Initialize();
+	title->Initialize();
 }
 
 void SceneManager::TitleUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput)
 {
-	//‰¼’u‚«iŸ‚ÌƒV[ƒ“‚És‚­j
-	if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A]) {
+	if (title->Update(input, oldinput) == true)
+	{
 		SceneTime = 0;
 		SceneNo = static_cast<int>(NO::GameScene);
 	}
-
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
+	player->Update(keys, oldkeys, input, oldinput);
 
 	Vector3 cameraOrgPosition(player->GetPositionX(), player->GetPositionY(), 500.0f);
 	Vector3 cameraPosition = cameraOrgPosition;
@@ -111,7 +111,7 @@ void SceneManager::TitleUpdate(char keys[255], char oldkeys[255], XINPUT_STATE i
 
 	float cameraUpAngle = 0.0f;
 
-	//ƒNƒŠƒbƒv–Ê
+	//ã‚¯ãƒªãƒƒãƒ—é¢
 	SetCameraNearFar(1.0f, 10000.0f);
 	SetCameraScreenCenter(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f);
 	SetCameraPositionAndTargetAndUpVec(
@@ -119,19 +119,20 @@ void SceneManager::TitleUpdate(char keys[255], char oldkeys[255], XINPUT_STATE i
 		cameraTarget,
 		cameraUp);
 
-
-	//ƒvƒŒƒCƒ„[
-	player->Update(keys, oldkeys, input, oldinput);
 }
 
 void SceneManager::TitleDraw()
 {
-	//•`‰æˆ—
-	//ƒXƒe[ƒWã‚Ì‰~
+	//æç”»å‡¦ç†
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ä¸Šã®å††
 	stagecircle->Draw();
 
-	//ƒvƒŒƒCƒ„[
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	player->Draw();
+
+	//ã‚¿ã‚¤ãƒˆãƒ«
+	title->Draw();
+
 }
 
 void SceneManager::GameSceneInit()
@@ -146,16 +147,16 @@ void SceneManager::GameSceneInit()
 
 void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput)
 {
-	//XVˆ—
-	//‰¼’u‚«iŸ‚ÌƒV[ƒ“‚És‚­j
+	//æ›´æ–°å‡¦ç†
+	//ä»®ç½®ãï¼ˆæ¬¡ã®ã‚·ãƒ¼ãƒ³ã«è¡Œãï¼‰
 	if (score->GetGameTimer() <= 0) {
 		SceneTime = 0;
 		SceneNo = static_cast<int>(NO::End);
 	}
 
-	//ƒvƒŒƒCƒ„[
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	player->Update(keys, oldkeys, input, oldinput);
-	//ƒGƒlƒ~[
+	//ã‚¨ãƒãƒŸãƒ¼
 	for (int i = 0; i < Enemy_Max; i++) {
 		enemy[i]->Update(player);
 	}
@@ -172,7 +173,7 @@ void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STA
 
 	float cameraUpAngle = 0.0f;
 
-	//ƒNƒŠƒbƒv–Ê
+	//ã‚¯ãƒªãƒƒãƒ—é¢
 	SetCameraNearFar(1.0f, 10000.0f);
 	SetCameraScreenCenter(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f);
 	SetCameraPositionAndTargetAndUpVec(
@@ -184,18 +185,18 @@ void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STA
 
 void SceneManager::GameSceneDraw()
 {
-	//•`‰æˆ—
-	//ƒXƒe[ƒWã‚Ì‰~
+	//æç”»å‡¦ç†
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ä¸Šã®å††
 	stagecircle->Draw();
 
-	//ƒvƒŒƒCƒ„[
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	player->Draw();
 	player->FormatDraw();
 
-	//ƒXƒRƒA
+	//ã‚¹ã‚³ã‚¢
 	score->Draw();
 	score->FormatDraw();
-	//ƒGƒlƒ~[
+	//ã‚¨ãƒãƒŸãƒ¼
 	for (int i = 0; i < Enemy_Max; i++) {
 		enemy[i]->Draw();
 		enemy[i]->FormatDraw(i);
@@ -210,7 +211,7 @@ void SceneManager::EndInit()
 
 void SceneManager::EndUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput)
 {
-	//‰¼’u‚«iŸ‚ÌƒV[ƒ“‚És‚­j
+	//ä»®ç½®ãï¼ˆæ¬¡ã®ã‚·ãƒ¼ãƒ³ã«è¡Œãï¼‰
 	if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A]) {
 		SceneTime = 0;
 		SceneNo = static_cast<int>(NO::Title);

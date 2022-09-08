@@ -30,6 +30,9 @@ void Player::Initialize()
 	AttackTimer = 0;
 	AttackCount = 0;
 	AttackInterval = 0;
+	KnockCount = 0;
+	LockOnTexArea = 0.0f;
+	LockOnArea = 0.0f;
 	//敵を止めるための変数
 	Stop = false;
 	StopInterval = 5;
@@ -38,13 +41,22 @@ void Player::Initialize()
 	Speedframe = 0.0f;
 	ChangeDir = false;
 	Dir = RIGHT;
+	//ダメージ関係
+	Stun = false;
+	StunTimer = 100;
+	Invisible = false;
+	InvisibleTimer = 100;
 }
 
 void Player::Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput) {
-	//移動
-	Move(keys, oldkeys,input,oldinput);
-	//攻撃
-	AttackMove(keys, oldkeys, input, oldinput);
+	if (!Stun) {
+		//移動
+		Move(keys, oldkeys, input, oldinput);
+		//攻撃
+		AttackMove(keys, oldkeys, input, oldinput);
+	}
+	//スタン関係
+	PlayerStun();
 }
 
 void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput) {
@@ -60,6 +72,19 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 		if (PlayerScale < 319.0f) {
 			PlayerScale += 80.0f;
 		}
+	}
+
+	if (PlayerScale == 80.0f) {
+		LockOnTexArea = 200.0f;
+	}
+	else if (PlayerScale == 160.0f) {
+		LockOnTexArea = 300.0f;
+	}
+	else if (PlayerScale == 240.0f) {
+		LockOnTexArea = 400.0f;
+	}
+	else if (PlayerScale == 320.0f) {
+		LockOnTexArea = 500.0f;
 	}
 
 	//移動方向変換
@@ -170,14 +195,34 @@ void Player::AttackMove(char keys[255], char oldkeys[255], XINPUT_STATE input, X
 	}
 }
 
+void Player::PlayerStun() {
+	//ダメージ食らったとき動けない
+	if (Stun) {
+		StunTimer--;
+		if (StunTimer <= 0) {
+			StunTimer = 100;
+			Stun = false;
+			Invisible = true;
+		}
+	}
+	//スタン終わったとき一定時間無敵
+	if (Invisible) {
+		InvisibleTimer--;
+		if (InvisibleTimer <= 0) {
+			InvisibleTimer = 100;
+			Invisible = false;
+		}
+	}
+}
 void Player::Draw() {
 	DrawBillboard3D(VGet(playerPosX, playerPosY, 0), 0.5f, 0.5f, 50, 0.0f, texture, true);
+	DrawBillboard3D(VGet(playerPosX, playerPosY, 0), 0.5f, 0.5f, LockOnTexArea, 0.0f, targettexture, true);
 	//DrawCircle(playerPosX, playerPosY, 20, GetColor(0, 0, 0), true);
 }
 
 void Player::FormatDraw() {
-	DrawFormatString(0, 0, GetColor(0, 0, 0), "AttackCount:%d", AttackCount);
-	DrawFormatString(0, 60, GetColor(0, 0, 0), "KnockCount:%d", KnockCount);
-	DrawFormatString(0, 20, GetColor(0, 0, 0), "AttackStart:%d", AttackStart);
-	DrawFormatString(0, 40, GetColor(0, 0, 0), "Attack:%d", Attack);
+	DrawFormatString(0, 0, GetColor(0, 0, 0), "Stun:%d", Stun);
+	DrawFormatString(0, 60, GetColor(0, 0, 0), "Invisible:%d", Invisible);
+	//DrawFormatString(0, 20, GetColor(0, 0, 0), "AttackStart:%d", AttackStart);
+	//DrawFormatString(0, 40, GetColor(0, 0, 0), "Attack:%d", Attack);
 }
