@@ -101,13 +101,41 @@ void SceneManager::TitleUpdate(char keys[255], char oldkeys[255], XINPUT_STATE i
 		SceneTime = 0;
 		SceneNo = static_cast<int>(NO::GameScene);
 	}
+	//プレイヤー
+	player->Update(keys, oldkeys, input, oldinput);
+
+	Vector3 cameraOrgPosition(player->GetPositionX(), player->GetPositionY(), 400.0f);
+	Vector3 cameraPosition = cameraOrgPosition;
+
+	Vector3 cameraOrgUp(0.0f, 1.0f, 0.0f);
+	Vector3 cameraUp = cameraOrgUp;
+
+	Vector3 cameraTarget(player->GetPositionX(), player->GetPositionY(), 0.0f);
+
+	float cameraUpAngle = 0.0f;
+
+	//クリップ面
+	SetCameraNearFar(1.0f, 10000.0f);
+	SetCameraScreenCenter(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f);
+	SetCameraPositionAndTargetAndUpVec(
+		cameraPosition,
+		cameraTarget,
+		cameraUp);
+
 }
 
 void SceneManager::TitleDraw()
 {
 	//描画処理
+	//ステージ上の円
+	stagecircle->Draw();
+
+	//プレイヤー
+	player->Draw();
+
 	//タイトル
 	title->Draw();
+
 }
 
 void SceneManager::GameSceneInit()
