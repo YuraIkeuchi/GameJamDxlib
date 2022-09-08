@@ -204,8 +204,6 @@ void Enemy::Target(Player* player) {
 					//player->SetLink(true);
 				}
 			}
-		}
-	
 			else if (player->GetAttackCount() >= 1) {
 				//攻撃二回目以降(リンク中は同じレーンを優先して一個内側にも潜れる)
 				if (player->GetAttackInterval() != 0 && DistanceScale == 0.0f) {
@@ -261,6 +259,8 @@ void Enemy::Target(Player* player) {
 		}
 	}
 }
+
+
 
 bool Enemy::Collide(Player* player) {
 	//当たり判定
