@@ -3,7 +3,13 @@
 
 void SceneManager::StaticInit()
 {
-	int enemylinkTex = LoadGraph("LinkArea.png");
+
+
+	int playerTex = LoadGraph("Resources/player.png");
+	int targetTex = LoadGraph("Resources/TargetArea.png");
+	int enemyTex = LoadGraph("Resources/enemy.png");
+	int enemystopTex = LoadGraph("Resources/enemystop.png");
+	int enemylinkTex = LoadGraph("Resources/LinkArea.png");
 	int stageTex = LoadGraph("Resources/stage.png");
 
 	for (int i = 0; i < Enemy_Max; i++) {
