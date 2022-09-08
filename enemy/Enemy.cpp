@@ -3,7 +3,6 @@
 #include "Collision.h"
 #include "DxLib.h"
 Enemy::Enemy() {
-	EnemyTimer = rand() % 800 + 100;
 }
 
 Enemy::~Enemy() {
@@ -11,6 +10,7 @@ Enemy::~Enemy() {
 }
 
 void Enemy::Initialize() {
+	EnemyTimer = rand() % 800 + 100;
 	//ç¿ïW
 	EnemyPosX = 0.0f;
 	EnemyPosY = 0.0f;
@@ -51,6 +51,7 @@ void Enemy::Update(Player* player) {
 	InArea(player);
 	Stop(player);
 	Collide(player);
+	PlayerCollide(player);
 	if (InAttackArea) {
 		Target(player);
 	}
@@ -66,7 +67,6 @@ void Enemy::ResPorn() {
 	if (!EnemyAlive) {
 		EnemyTimer--;
 		if (EnemyTimer == 0) {
-			EnemyScale = rand() % 400 + 200;
 			EnemySpeed = rand() % 360;
 			EnemyAdd = 0.5f;
 			TargetLine = rand() % 2;
@@ -163,46 +163,90 @@ void Enemy::InArea(Player* player) {
 	DistanceSpeed = player->GetSpeed() - EnemySpeed;
 
 	DistanceSpeed = fabs(DistanceSpeed);
-
-	if ((DistanceScale <= 80) && (DistanceSpeed <= 60) && (EnemyMove)) {
-		InAttackArea = true;
+	//àÍî‘íÜêSÇÃâ~Ç∆ÇªÇÍà»äOÇÃâ~Ç≈èàóùÇ™ï 
+	if (player->GetScale() != 80.0f) {
+		if ((DistanceScale <= 80) && (DistanceSpeed <= 60) && (EnemyMove)) {
+			InAttackArea = true;
+		}
+		else {
+			InAttackArea = false;
+		}
 	}
 	else {
-		InAttackArea = false;
+		if ((DistanceScale >= -80) && (DistanceSpeed <= 60) && (EnemyMove)) {
+			InAttackArea = true;
+		}
+		else {
+			InAttackArea = false;
+		}
 	}
-
 }
 void Enemy::Target(Player* player) {
 	//ãóó£Ç™ãﬂÇ©Ç¡ÇΩèÍçáÇªÇÃèÍèäÇ…ÉvÉåÉCÉÑÅ[à⁄ìÆ
 	if (EnemyAlive) {
-		//çUåÇàÍâÒñ⁄(ÉäÉìÉNénÇ‹ÇÈÇ∆Ç´ÇÕìØÇ∂ÉåÅ[ÉìÇÃÇ›)
-		if (player->GetAttackCount() == 0) {
-			if (player->GetAttack() && DistanceScale == 0.0f) {
-				player->SetAttackStart(true);
-				player->SetAfterScale(EnemyScale);
-				player->SetAfterSpeed(EnemySpeed);
-				player->SetFrame(0.0f);
-				//player->SetLink(true);
+		//àÍî‘íÜêSÇÃâ~Ç∆ÇªÇÍà»äOÇÃâ~Ç≈èàóùÇ™ï 
+		if (player->GetScale() != 80.0f) {
+			//çUåÇàÍâÒñ⁄(ÉäÉìÉNénÇ‹ÇÈÇ∆Ç´ÇÕìØÇ∂ÉåÅ[ÉìÇÃÇ›)
+			if (player->GetAttackCount() == 0) {
+				if (player->GetAttack() && DistanceScale == 0.0f) {
+					player->SetAttackStart(true);
+					player->SetAfterScale(EnemyScale);
+					player->SetAfterSpeed(EnemySpeed);
+					player->SetFrame(0.0f);
+					//player->SetLink(true);
+				}
+			}
+			else if (player->GetAttackCount() >= 1) {
+				//çUåÇìÒâÒñ⁄à»ç~(ÉäÉìÉNíÜÇÕìØÇ∂ÉåÅ[ÉìÇóDêÊÇµÇƒàÍå¬ì‡ë§Ç…Ç‡êˆÇÍÇÈ)
+				if (player->GetAttackInterval() != 0 && DistanceScale == 0.0f) {
+					player->SetAttackStart(true);
+					player->SetAfterScale(EnemyScale);
+					player->SetAfterSpeed(EnemySpeed);
+					player->SetFrame(0.0f);
+					//player->SetLink(true);
+				}
+				else if (player->GetAttackInterval() != 0 && DistanceScale == 80.0f) {
+					player->SetAttackStart(true);
+					player->SetAfterScale(EnemyScale);
+					player->SetAfterSpeed(EnemySpeed);
+					player->SetFrame(0.0f);
+					//player->SetLink(true);
+				}
+				else {
+					//player->SetLink(false);
+				}
 			}
 		}
-		else if(player->GetAttackCount() >= 1) {
-			//çUåÇìÒâÒñ⁄à»ç~(ÉäÉìÉNíÜÇÕìØÇ∂ÉåÅ[ÉìÇóDêÊÇµÇƒàÍå¬ì‡ë§Ç…Ç‡êˆÇÍÇÈ)
-			if (player->GetAttackInterval() != 0 && DistanceScale == 0.0f) {
-				player->SetAttackStart(true);
-				player->SetAfterScale(EnemyScale);
-				player->SetAfterSpeed(EnemySpeed);
-				player->SetFrame(0.0f);
-				//player->SetLink(true);
+		else {
+			//çUåÇàÍâÒñ⁄(ÉäÉìÉNénÇ‹ÇÈÇ∆Ç´ÇÕìØÇ∂ÉåÅ[ÉìÇÃÇ›)
+			if (player->GetAttackCount() == 0) {
+				if (player->GetAttack() && DistanceScale == 0.0f) {
+					player->SetAttackStart(true);
+					player->SetAfterScale(EnemyScale);
+					player->SetAfterSpeed(EnemySpeed);
+					player->SetFrame(0.0f);
+					//player->SetLink(true);
+				}
 			}
-			else if (player->GetAttackInterval() != 0 && DistanceScale == 80.0f) {
-				player->SetAttackStart(true);
-				player->SetAfterScale(EnemyScale);
-				player->SetAfterSpeed(EnemySpeed);
-				player->SetFrame(0.0f);
-				//player->SetLink(true);
-			}
-			else {
-				//player->SetLink(false);
+			else if (player->GetAttackCount() >= 1) {
+				//çUåÇìÒâÒñ⁄à»ç~(ÉäÉìÉNíÜÇÕìØÇ∂ÉåÅ[ÉìÇóDêÊÇµÇƒàÍå¬ì‡ë§Ç…Ç‡êˆÇÍÇÈ)
+				if (player->GetAttackInterval() != 0 && DistanceScale == 0.0f) {
+					player->SetAttackStart(true);
+					player->SetAfterScale(EnemyScale);
+					player->SetAfterSpeed(EnemySpeed);
+					player->SetFrame(0.0f);
+					//player->SetLink(true);
+				}
+				else if (player->GetAttackInterval() != 0 && DistanceScale == -80.0f) {
+					player->SetAttackStart(true);
+					player->SetAfterScale(EnemyScale);
+					player->SetAfterSpeed(EnemySpeed);
+					player->SetFrame(0.0f);
+					//player->SetLink(true);
+				}
+				else {
+					//player->SetLink(false);
+				}
 			}
 		}
 	}
@@ -229,6 +273,25 @@ bool Enemy::Collide(Player* player) {
 	return true;
 }
 
+
+bool Enemy::PlayerCollide(Player* player) {
+	//ìñÇΩÇËîªíË
+	float plaPosX = player->GetPositionX();
+	float plaPosY = player->GetPositionY();
+	if (Collision::CircleCollision(EnemyPosX, EnemyPosY, 15.0f, plaPosX, plaPosY, 15.0f)
+		&& (EnemyMove) && (EnemyAlive) && (player->GetScale() == EnemyScale)
+		&& (!player->GetAttackStart()) && (!player->GetInvisible())) {
+		player->SetStun(true);
+		return true;
+	}
+	else {
+		return false;
+	}
+
+	return true;
+}
+
+
 void Enemy::Draw() {
 	//é~Ç‹Ç¡ÇƒÇ¢ÇÈÇ©Ç«Ç§Ç©Ç≈êFÇ™ïœÇÌÇÈ
 	if (EnemyAlive) {
@@ -246,6 +309,6 @@ void Enemy::Draw() {
 void Enemy::FormatDraw(int EnemyCount) {
 	//stringÇÃï`âÊ
 	//DrawFormatString(0, (20 * EnemyCount) + 0, GetColor(0, 0, 0), "EnemyScale[%d]:%f", EnemyCount, EnemyScale);
-	//DrawFormatString(0, (20 * EnemyCount) + 80, GetColor(0, 0, 0), "DistanceSpeed[%d]:%f", EnemyCount, DistanceSpeed);
-	//DrawFormatString(0, (20 * EnemyCount) + 280, GetColor(0, 0, 0), "DistanceScale[%d]:%f", EnemyCount, DistanceScale);
+	//DrawFormatString(0, (20 * EnemyCount) + 120, GetColor(0, 0, 0), "Timer[%d]:%d", EnemyCount, EnemyTimer);
+	DrawFormatString(0, (20 * EnemyCount) + 200, GetColor(0, 0, 0), "DistanceScale[%d]:%f", EnemyCount, DistanceScale);
 }
