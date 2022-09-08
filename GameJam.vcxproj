@@ -19,30 +19,32 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AttackEffect.cpp" />
     <ClCompile Include="base\StageCircle.cpp" />
     <ClCompile Include="collision\Collision.cpp" />
     <ClCompile Include="ease\Easing.cpp" />
-    <ClCompile Include="Emitter.cpp" />
+    <ClCompile Include="effect\AttackEffect.cpp" />
+    <ClCompile Include="effect\Emitter.cpp" />
     <ClCompile Include="enemy\Enemy.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="math\Vector2.cpp" />
     <ClCompile Include="math\Vector3.cpp" />
     <ClCompile Include="player\Player.cpp" />
     <ClCompile Include="scene\SceneManager.cpp" />
+    <ClCompile Include="score\Score.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AttackEffect.h" />
     <ClInclude Include="base\Share.h" />
     <ClInclude Include="base\StageCircle.h" />
     <ClInclude Include="collision\Collision.h" />
     <ClInclude Include="ease\Easing.h" />
-    <ClInclude Include="Emitter.h" />
+    <ClInclude Include="effect\AttackEffect.h" />
+    <ClInclude Include="effect\Emitter.h" />
     <ClInclude Include="enemy\Enemy.h" />
     <ClInclude Include="math\Vector2.h" />
     <ClInclude Include="math\Vector3.h" />
     <ClInclude Include="player\Player.h" />
     <ClInclude Include="scene\SceneManager.h" />
+    <ClInclude Include="score\Score.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -102,7 +104,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)collision;$(ProjectDir)math;$(ProjectDir)ease;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)collision;$(ProjectDir)ease;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)math</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)collision;$(ProjectDir)math;$(ProjectDir)ease;$(ProjectDir)score;$(ProjectDir)effect;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)collision;$(ProjectDir)ease;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)math</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -115,7 +117,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)collision;$(ProjectDir)math;$(ProjectDir)ease;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)collision;$(ProjectDir)math;$(ProjectDir)ease;$(ProjectDir)score;$(ProjectDir)effect;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -129,7 +131,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)collision;$(ProjectDir)math;$(ProjectDir)ease;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)collision;$(ProjectDir)ease;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)math</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)collision;$(ProjectDir)math;$(ProjectDir)ease;$(ProjectDir)score;$(ProjectDir)effect;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)collision;$(ProjectDir)ease;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)math</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -146,7 +148,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)collision;$(ProjectDir)math;$(ProjectDir)ease;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)collision;$(ProjectDir)math;$(ProjectDir)ease;$(ProjectDir)score;$(ProjectDir)effect;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

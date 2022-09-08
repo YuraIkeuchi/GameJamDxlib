@@ -34,6 +34,12 @@
     <Filter Include="math">
       <UniqueIdentifier>{e99fe49d-0ff3-42d2-b927-e5d0cadd7f5e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="score">
+      <UniqueIdentifier>{f3188c46-8c8d-45fd-b18d-5b93cc923168}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="effect">
+      <UniqueIdentifier>{a5a1ca22-b1f4-4c5d-98dd-0bf20d4a0e6b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="player\Player.cpp">
@@ -63,11 +69,14 @@
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Emitter.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="effect\AttackEffect.cpp">
+      <Filter>effect</Filter>
     </ClCompile>
-    <ClCompile Include="AttackEffect.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="effect\Emitter.cpp">
+      <Filter>effect</Filter>
+    </ClCompile>
+    <ClCompile Include="score\Score.cpp">
+      <Filter>score</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -98,11 +107,14 @@
     <ClInclude Include="math\Vector3.h">
       <Filter>math</Filter>
     </ClInclude>
-    <ClInclude Include="Emitter.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="effect\AttackEffect.h">
+      <Filter>effect</Filter>
     </ClInclude>
-    <ClInclude Include="AttackEffect.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="effect\Emitter.h">
+      <Filter>effect</Filter>
+    </ClInclude>
+    <ClInclude Include="score\Score.h">
+      <Filter>score</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
