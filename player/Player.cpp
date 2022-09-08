@@ -18,7 +18,7 @@ void Player::Initialize()
 	y = 0;
 	PlayerRadius = 0.0f;
 	PlayerSpeed = 0.0f;
-	PlayerScale = 80.0f;// LaneNum‚Æˆê‚É•Ï‚¦‚é‚±‚Æ
+	PlayerScale = 320.0f;
 	PlayerCircleX = 0.0f;
 	PlayerCircleY = 0.0f;
 	//UŒ‚ŠÖŒW
@@ -33,11 +33,15 @@ void Player::Initialize()
 	KnockCount = 0;
 	LockOnTexArea = 0.0f;
 	LockOnArea = 0.0f;
+	//ˆê‰ñ“à‘¤‚É“ü‚Á‚½‚©‚Ç‚¤‚©
+	InArea = false;
+	InAreaStart = false;
 	//“G‚ğ~‚ß‚é‚½‚ß‚Ì•Ï”
 	Stop = false;
 	StopInterval = 5;
 	//ˆÚ“®ŠÖŒW
 	AddSpeed = 1.0f;
+	AddVelocity = 0.0f;
 	Speedframe = 0.0f;
 	ChangeDir = false;
 	Dir = RIGHT;
@@ -74,24 +78,48 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 		}
 	}
 
+	//‚Ç‚ÌƒT[ƒNƒ‹‚É‚¢‚é‚©‚Å•ÏX‚·‚é‚à‚Ì‚ª‚ ‚é
 	if (PlayerScale == 80.0f) {
 		LockOnTexArea = 200.0f;
+		if(Dir == RIGHT){
+			AddVelocity = 0.75f;
+		}
+		else {
+			AddVelocity = -0.75f;
+		}
 	}
 	else if (PlayerScale == 160.0f) {
 		LockOnTexArea = 300.0f;
+		if (Dir == RIGHT) {
+			AddVelocity = 0.5f;
+		}
+		else {
+			AddVelocity = -0.5f;
+		}
 	}
 	else if (PlayerScale == 240.0f) {
 		LockOnTexArea = 400.0f;
+		if (Dir == RIGHT) {
+			AddVelocity = 0.25f;
+		}
+		else {
+			AddVelocity = -0.25f;
+		}
 	}
 	else if (PlayerScale == 320.0f) {
 		LockOnTexArea = 500.0f;
+		if (Dir == RIGHT) {
+			AddVelocity = 0.0f;
+		}
+		else {
+			AddVelocity = 0.0f;
+		}
 	}
 
 	//ˆÚ“®•ûŒü•ÏŠ·
 	//(‰EŒü‚«‚É‚È‚é)
 	if (input.RightTrigger && !oldinput.RightTrigger
 		&& (Dir == LEFT)) {
-		
 		Speedframe = 0.0f;
 		Dir = RIGHT;
 		ChangeDir = true;
@@ -107,7 +135,6 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 
 	//Œü‚«‚ğ•Ï‚¦‚½‚Æ‚«™X‚É•Ï‚í‚é
 	if (ChangeDir) {
-
 		if (Speedframe < 1.0f) {
 			Speedframe += 0.025f;
 		}
@@ -137,7 +164,7 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 	}
 	//ˆÚ“®—Ê‚ğ‰ÁZ‚µ‚Ä‚¢‚é(UŒ‚Œã‚Ìd’¼ŒãˆÈŠO)
 	if (AttackInterval == 0) {
-		PlayerSpeed += AddSpeed;
+		PlayerSpeed += AddSpeed + AddVelocity;
 	}
 
 	//UŒ‚Œã‚Ìd’¼(‚±‚ÌŠÔ‚ÉƒŠƒ“ƒN”»’è‚·‚é)
@@ -221,8 +248,9 @@ void Player::Draw() {
 }
 
 void Player::FormatDraw() {
-	DrawFormatString(0, 0, GetColor(0, 0, 0), "Stun:%d", Stun);
-	DrawFormatString(0, 60, GetColor(0, 0, 0), "Invisible:%d", Invisible);
+	DrawFormatString(0, 0, GetColor(0, 0, 0), "InArea:%d", InArea);
+	DrawFormatString(0, 60, GetColor(0, 0, 0), "AddSpeed:%f", AddSpeed);
+	DrawFormatString(0, 80, GetColor(0, 0, 0), "AddVelocity:%f", AddVelocity);
 	//DrawFormatString(0, 20, GetColor(0, 0, 0), "AttackStart:%d", AttackStart);
 	//DrawFormatString(0, 40, GetColor(0, 0, 0), "Attack:%d", Attack);
 }

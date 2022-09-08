@@ -24,11 +24,11 @@
     <ClCompile Include="ease\Easing.cpp" />
     <ClCompile Include="effect\AttackEffect.cpp" />
     <ClCompile Include="effect\Emitter.cpp" />
+    <ClCompile Include="effect\MoveEffect.cpp" />
     <ClCompile Include="enemy\Enemy.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="math\Vector2.cpp" />
     <ClCompile Include="math\Vector3.cpp" />
-    <ClCompile Include="MoveEffect.cpp" />
     <ClCompile Include="player\Player.cpp" />
     <ClCompile Include="scene\SceneManager.cpp" />
     <ClCompile Include="score\Score.cpp" />
@@ -41,10 +41,10 @@
     <ClInclude Include="ease\Easing.h" />
     <ClInclude Include="effect\AttackEffect.h" />
     <ClInclude Include="effect\Emitter.h" />
+    <ClInclude Include="effect\MoveEffect.h" />
     <ClInclude Include="enemy\Enemy.h" />
     <ClInclude Include="math\Vector2.h" />
     <ClInclude Include="math\Vector3.h" />
-    <ClInclude Include="MoveEffect.h" />
     <ClInclude Include="player\Player.h" />
     <ClInclude Include="scene\SceneManager.h" />
     <ClInclude Include="score\Score.h" />
