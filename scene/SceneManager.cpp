@@ -3,14 +3,8 @@
 
 void SceneManager::StaticInit()
 {
-	//画像などのリソースデータの変数宣言と読み込み
-
-	int playerTex = LoadGraph("player.png");
-	int targetTex = LoadGraph("TargetArea.png");
-	int enemyTex = LoadGraph("enemy.png");
-	int enemystopTex = LoadGraph("enemystop.png");
 	int enemylinkTex = LoadGraph("LinkArea.png");
-	int stageTex = LoadGraph("stage.png");
+	int stageTex = LoadGraph("Resources/stage.png");
 
 	for (int i = 0; i < Enemy_Max; i++) {
 		enemy[i] = new Enemy();
@@ -107,7 +101,7 @@ void SceneManager::TitleUpdate(char keys[255], char oldkeys[255], XINPUT_STATE i
 	//プレイヤー
 	player->Update(keys, oldkeys, input, oldinput);
 
-	Vector3 cameraOrgPosition(player->GetPositionX(), player->GetPositionY(), 400.0f);
+	Vector3 cameraOrgPosition(player->GetPositionX(), player->GetPositionY(), 500.0f);
 	Vector3 cameraPosition = cameraOrgPosition;
 
 	Vector3 cameraOrgUp(0.0f, 1.0f, 0.0f);
@@ -169,7 +163,7 @@ void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STA
 
 	score->Update();
 
-	Vector3 cameraOrgPosition(player->GetPositionX(),player->GetPositionY(), 400.0f);
+	Vector3 cameraOrgPosition(player->GetPositionX(),player->GetPositionY(), 500.0f);
 	Vector3 cameraPosition = cameraOrgPosition;
 
 	Vector3 cameraOrgUp(0.0f, 1.0f, 0.0f);

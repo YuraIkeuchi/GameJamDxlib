@@ -4,23 +4,24 @@
 constexpr auto ALPHA_MAX = 255;
 constexpr auto DEFALUT_SIZE = 100;
 
-class AttackEffect : public Emitter {
+class MoveEffect : public Emitter {
 
-	FLOAT3 pos;
-	float size;
-	float angle;
-	float alpha;
+	FLOAT3 pos;//発生位置
+	float size;//サイズ
+	float angle;//角度
+	float alpha;//透明度
 
-	float count;
+	float count;//出現時間（仮）
 
-	int texture;
+	int texture;//テクスチャ
+
 public:
 	//setter
 	void SetEmitPos(FLOAT3 _pos) { this->pos = _pos; }
 	void SetTexture(int tex) { this->texture = tex; }
 
 	//コンストラクタ
-	AttackEffect();
+	MoveEffect();
 
 	/// <summary>
 	/// 発生時

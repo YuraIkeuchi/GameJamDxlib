@@ -81,6 +81,8 @@
     <ClCompile Include="score\Score.cpp">
       <Filter>score</Filter>
     </ClCompile>
+    <ClCompile Include="MoveEffect.cpp">
+      <Filter>ソース ファイル</Filter>
     <ClCompile Include="Title\Title.cpp">
       <Filter>Title</Filter>
     </ClCompile>
@@ -122,6 +124,8 @@
     <ClInclude Include="score\Score.h">
       <Filter>score</Filter>
     </ClInclude>
+    <ClInclude Include="MoveEffect.h">
+      <Filter>effect</Filter>
     <ClInclude Include="Title\Title.h">
       <Filter>Title</Filter>
     </ClInclude>

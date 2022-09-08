@@ -28,6 +28,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="math\Vector2.cpp" />
     <ClCompile Include="math\Vector3.cpp" />
+    <ClCompile Include="MoveEffect.cpp" />
     <ClCompile Include="player\Player.cpp" />
     <ClCompile Include="scene\SceneManager.cpp" />
     <ClCompile Include="score\Score.cpp" />
@@ -43,6 +44,7 @@
     <ClInclude Include="enemy\Enemy.h" />
     <ClInclude Include="math\Vector2.h" />
     <ClInclude Include="math\Vector3.h" />
+    <ClInclude Include="MoveEffect.h" />
     <ClInclude Include="player\Player.h" />
     <ClInclude Include="scene\SceneManager.h" />
     <ClInclude Include="score\Score.h" />
