@@ -5,6 +5,7 @@ void SceneManager::StaticInit()
 {
 	//画像などのリソースデータの変数宣言と読み込み
 	int playerTex = LoadGraph("player.png");
+	int targetTex = LoadGraph("TargetArea.png");
 	int enemyTex = LoadGraph("enemy.png");
 	int enemystopTex = LoadGraph("enemystop.png");
 	int enemylinkTex = LoadGraph("LinkArea.png");
@@ -22,6 +23,7 @@ void SceneManager::StaticInit()
 	score->SetPlayer(player);
 
 	player->SetPlayer(playerTex);
+	player->SetTargetArea(targetTex);
 	stagecircle->SetTexture(stageTex);
 	srand(time(NULL));
 }

@@ -16,6 +16,8 @@ public:
 	void Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput);
 	//攻撃
 	void AttackMove(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput);
+	//スタン
+	void PlayerStun();
 	//描画
 	void Draw();
 	//FormatString用
@@ -26,10 +28,12 @@ public:
 	const float& GetSpeed() { return PlayerSpeed; }
 	const bool& GetStop() { return Stop; }
 	const bool& GetAttack() { return Attack; }
+	const bool& GetInvisible() { return Invisible; }
 	const bool& GetAttackStart() { return AttackStart; }
-	const float& GetAttackCount() { return AttackCount; }
+	const int& GetAttackCount() { return AttackCount; }
 	const int& GetAttackInterval() { return AttackInterval; }
 	const int& GetKnockCount() { return KnockCount; }
+	const float& GetLockOnArea() { return LockOnArea; }
 	const float& GetPositionX() { return playerPosX; }
 	const float& GetPositionY() { return playerPosY; }
 
@@ -41,10 +45,13 @@ public:
 	void SetKnockCount(int KnockCount) { this->KnockCount = KnockCount; }
 	void SetFrame(float frame) { this->frame = frame; }
 	void SetPlayer(int _player) { this->texture = _player; }
+	void SetTargetArea(int _targetarea) { this->targettexture = _targetarea; }
+	void SetStun(bool Stun) { this->Stun = Stun; }
 
 private:
 	//メンバ変数
 	int texture = 0;
+	int targettexture = 0;
 	//座標
 	float playerPosX;
 	float playerPosY;
@@ -66,8 +73,12 @@ private:
 	//二回目以降
 	int AttackCount;
 	int AttackInterval;
+	//ロックオン範囲(デバッグ表示用)
+	float LockOnTexArea;
+	//実際の表示エリア
+	float LockOnArea;
 	//敵を倒した数
-	int KnockCount = 0;
+	int KnockCount;
 	//敵を止めるための変数
 	bool Stop;
 	int StopInterval;
@@ -80,5 +91,9 @@ private:
 		RIGHT,
 		LEFT,
 	};
-	
+	//ダメージ関係
+	bool Stun;
+	int StunTimer;
+	bool Invisible;
+	int InvisibleTimer;
 };
