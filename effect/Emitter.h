@@ -1,6 +1,8 @@
 #pragma once
+#include "DxLib.h"
+
 class Emitter {
-private:
+protected:
 	//’e‚Ì•`‰æ
 	int circleX;
 	int circleY;
