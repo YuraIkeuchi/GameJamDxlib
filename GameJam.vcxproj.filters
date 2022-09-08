@@ -1,67 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ソース ファイル">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="player">
-      <UniqueIdentifier>{e8dfc279-47b6-45fc-97a1-d909ba0f8aeb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="enemy">
-      <UniqueIdentifier>{a7b17dff-88cb-443f-b86d-442af0de8c9a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ease">
-      <UniqueIdentifier>{ce5a1c97-700a-4105-bc6b-514971c1225d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="base">
-      <UniqueIdentifier>{ddc3e553-131e-44c6-91e8-82ec9f9cff83}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="collision">
-      <UniqueIdentifier>{c8c45986-1591-45d2-a6f5-86d93e1f71ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="scene">
-      <UniqueIdentifier>{a40e7f37-020f-485b-aef6-550da71a4ca7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="math">
-      <UniqueIdentifier>{e99fe49d-0ff3-42d2-b927-e5d0cadd7f5e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="score">
-      <UniqueIdentifier>{f3188c46-8c8d-45fd-b18d-5b93cc923168}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="effect">
-      <UniqueIdentifier>{a5a1ca22-b1f4-4c5d-98dd-0bf20d4a0e6b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Title">
-      <UniqueIdentifier>{75fce2b8-8fed-4ec5-8b99-2c01352969cd}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="player\Player.cpp">
-      <Filter>player</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\SceneManager.cpp">
-      <Filter>scene</Filter>
-    </ClCompile>
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="collision\Collision.cpp">
       <Filter>collision</Filter>
-    </ClCompile>
-    <ClCompile Include="base\StageCircle.cpp">
-      <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="ease\Easing.cpp">
       <Filter>ease</Filter>
     </ClCompile>
+    <ClCompile Include="player\Player.cpp">
+      <Filter>player</Filter>
+    </ClCompile>
     <ClCompile Include="enemy\Enemy.cpp">
       <Filter>enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\SceneManager.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Title\Title.cpp">
+      <Filter>title</Filter>
+    </ClCompile>
+    <ClCompile Include="score\Score.cpp">
+      <Filter>score</Filter>
     </ClCompile>
     <ClCompile Include="math\Vector2.cpp">
       <Filter>math</Filter>
@@ -69,8 +29,11 @@
     <ClCompile Include="math\Vector3.cpp">
       <Filter>math</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="base\StageCircle.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="effect\MoveEffect.cpp">
+      <Filter>effect</Filter>
     </ClCompile>
     <ClCompile Include="effect\AttackEffect.cpp">
       <Filter>effect</Filter>
@@ -78,36 +41,28 @@
     <ClCompile Include="effect\Emitter.cpp">
       <Filter>effect</Filter>
     </ClCompile>
-    <ClCompile Include="score\Score.cpp">
-      <Filter>score</Filter>
-    </ClCompile>
-    <ClCompile Include="MoveEffect.cpp">
-      <Filter>ソース ファイル</Filter>
-    <ClCompile Include="Title\Title.cpp">
-      <Filter>Title</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="player\Player.h">
-      <Filter>player</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\SceneManager.h">
-      <Filter>scene</Filter>
-    </ClInclude>
     <ClInclude Include="collision\Collision.h">
       <Filter>collision</Filter>
-    </ClInclude>
-    <ClInclude Include="base\Share.h">
-      <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="base\StageCircle.h">
-      <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="ease\Easing.h">
       <Filter>ease</Filter>
     </ClInclude>
+    <ClInclude Include="player\Player.h">
+      <Filter>player</Filter>
+    </ClInclude>
     <ClInclude Include="enemy\Enemy.h">
       <Filter>enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\SceneManager.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Title\Title.h">
+      <Filter>title</Filter>
+    </ClInclude>
+    <ClInclude Include="score\Score.h">
+      <Filter>score</Filter>
     </ClInclude>
     <ClInclude Include="math\Vector2.h">
       <Filter>math</Filter>
@@ -115,19 +70,52 @@
     <ClInclude Include="math\Vector3.h">
       <Filter>math</Filter>
     </ClInclude>
+    <ClInclude Include="base\StageCircle.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="effect\MoveEffect.h">
+      <Filter>effect</Filter>
+    </ClInclude>
     <ClInclude Include="effect\AttackEffect.h">
       <Filter>effect</Filter>
     </ClInclude>
     <ClInclude Include="effect\Emitter.h">
       <Filter>effect</Filter>
     </ClInclude>
-    <ClInclude Include="score\Score.h">
-      <Filter>score</Filter>
+    <ClInclude Include="base\Share.h">
+      <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="MoveEffect.h">
-      <Filter>effect</Filter>
-    <ClInclude Include="Title\Title.h">
-      <Filter>Title</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="player">
+      <UniqueIdentifier>{0c4360ef-de28-4d01-93a6-337738400aa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="enemy">
+      <UniqueIdentifier>{799b407e-2523-49bd-b8e3-7e078f59635c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="score">
+      <UniqueIdentifier>{4c8931ce-c452-4264-9339-d01aefe8bc86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene">
+      <UniqueIdentifier>{2777d3c1-43c6-4134-9fd5-32b56e2f1ca9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base">
+      <UniqueIdentifier>{d21edc60-0a55-40bc-9a05-3680516a083b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="effect">
+      <UniqueIdentifier>{5f3f2e35-89e3-4468-b12a-1e5854f26c19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="math">
+      <UniqueIdentifier>{b8c29942-f677-4a8c-8ca5-415ecb6a33b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="title">
+      <UniqueIdentifier>{89c3bb87-1ea9-4fe6-a85b-24a2d63ada5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ease">
+      <UniqueIdentifier>{2fec6c92-687b-4bb5-8c02-58ea91335d98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="collision">
+      <UniqueIdentifier>{4411848a-610c-437b-b76b-96f7b4d30b69}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

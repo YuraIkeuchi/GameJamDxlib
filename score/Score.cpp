@@ -30,9 +30,11 @@ void Score::Update() {
 		else{
 			MultPoint = 1;
 		}
-
+		//ƒŠƒ“ƒN‚ª“rØ‚ê‚½‚Æ‚«‚Éƒ|ƒCƒ“ƒg‚Ì‰ÁŽZ‚È‚Ç‚ð‚µ‚Ä‚¢‚é
 		ScorePoint += player->GetKnockCount() * MultPoint;
 		player->SetKnockCount(0);
+		player->SetInArea(false);
+		player->SetInAreaStart(false);
 	}
 }
 

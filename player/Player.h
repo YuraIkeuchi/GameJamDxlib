@@ -27,6 +27,8 @@ public:
 	const float& GetScale() { return PlayerScale; }
 	const float& GetSpeed() { return PlayerSpeed; }
 	const bool& GetStop() { return Stop; }
+	const bool& GetInArea() { return InArea; }
+	const bool& GetInAreaStart() { return InAreaStart; }
 	const bool& GetAttack() { return Attack; }
 	const bool& GetInvisible() { return Invisible; }
 	const bool& GetAttackStart() { return AttackStart; }
@@ -44,10 +46,11 @@ public:
 	void SetAttackInterval(int AttackInterval) { this->AttackInterval = AttackInterval; }
 	void SetKnockCount(int KnockCount) { this->KnockCount = KnockCount; }
 	void SetFrame(float frame) { this->frame = frame; }
-	void SetPlayer(int _player) { this->texture = _player; }
 	void SetTargetArea(int _targetarea) { this->targettexture = _targetarea; }
 	void SetStun(bool Stun) { this->Stun = Stun; }
-
+	void SetInArea(bool InArea) { this->InArea = InArea; }
+	void SetInAreaStart(bool InAreaStart) { this->InAreaStart = InAreaStart; }
+	void SetPlayer(int _player) { this->texture = _player; }
 private:
 	//メンバ変数
 	int texture = 0;
@@ -70,6 +73,9 @@ private:
 	float AfterSpeed;
 	float frame;
 	int AttackTimer;
+	//一回内側に入ったかどうか
+	bool InArea;
+	bool InAreaStart;
 	//二回目以降
 	int AttackCount;
 	int AttackInterval;
@@ -84,6 +90,7 @@ private:
 	int StopInterval;
 	//移動関係
 	float AddSpeed;
+	float AddVelocity;
 	float Speedframe;
 	bool ChangeDir;
 	int Dir;

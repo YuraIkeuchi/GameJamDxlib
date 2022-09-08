@@ -165,6 +165,9 @@ void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STA
 	//エネミー
 	for (int i = 0; i < Enemy_Max; i++) {
 		enemy[i]->Update(player);
+		if (enemy[i]->GetAttackArea()) {
+			enemy[i]->Target(player);
+		}
 	}
 
 	score->Update();

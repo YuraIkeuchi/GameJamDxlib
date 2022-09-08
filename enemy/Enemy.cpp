@@ -34,7 +34,7 @@ void Enemy::Initialize() {
 	//敵が止まっているか
 	EnemyStop = false;
 	EnemyStopTimer = 0;
-
+	Dir = RIGHT;
 	//保存用変数
 	EnemySaveSpeed = 0.0f;
 	//プレイヤーと敵の位置の距離
@@ -57,9 +57,9 @@ void Enemy::Update(Player* player) {
 	Stop(player);
 	Collide(player);
 	PlayerCollide(player);
-	if (InAttackArea) {
-		Target(player);
-	}
+	//if (InAttackArea) {
+	//	Target(player);
+	//}
 
 	EnemyRadius = EnemySpeed * PI / 180.0f;
 	EnemyCircleX = cosf(EnemyRadius) * EnemyScale;
@@ -76,8 +76,14 @@ void Enemy::ResPorn() {
 		EnemyTimer--;
 		if (EnemyTimer == 0) {
 			EnemySpeed = rand() % 360;
-			EnemyAdd = 0.5f;
 			TargetLine = rand() % 2;
+			Dir = rand() % 2;
+			if (Dir == RIGHT) {
+				EnemyAdd = 0.5f;
+			}
+			else {
+				EnemyAdd = -0.5f;
+			}
 			EnemyAlive = true;
 			EnemyTimer = rand() % 800;
 			EnemySet = true;
@@ -119,12 +125,52 @@ void Enemy::Move(Player* player) {
 		EnemyAdd = 0.0f;
 	}
 	else {
-		EnemyAdd = 0.5f;
+		if (Dir == RIGHT) {
+			EnemyAdd = 0.5f;
+		}
+		else {
+			EnemyAdd = -0.5f;
+		}
 	}
+
+	//どのサークルにいるかで変更するものがある
+	if (EnemyScale == 80.0f) {
+		if (Dir == RIGHT) {
+			AddVelocity = 0.75f;
+		}
+		else {
+			AddVelocity = -0.75f;
+		}
+	}
+	else if (EnemyScale == 160.0f) {
+		if (Dir == RIGHT) {
+			AddVelocity = 0.5f;
+		}
+		else {
+			AddVelocity = -0.5f;
+		}
+	}
+	else if (EnemyScale == 240.0f) {
+		if (Dir == RIGHT) {
+			AddVelocity = 0.25f;
+		}
+		else {
+			AddVelocity = -0.25f;
+		}
+	}
+	else if (EnemyScale == 320.0f) {
+		if (Dir == RIGHT) {
+			AddVelocity = 0.0f;
+		}
+		else {
+			AddVelocity = 0.0f;
+		}
+	}
+
 	//敵の移動
 	if (EnemyMove && !EnemyStop) {
-		EnemySpeed += EnemyAdd;
-		EnemyRoundSpeed += EnemyAdd;
+		EnemySpeed += EnemyAdd + AddVelocity;
+		EnemyRoundSpeed += EnemyAdd + AddVelocity;
 	}
 
 	//0から360まで範囲を指定する
@@ -218,10 +264,17 @@ void Enemy::Target(Player* player) {
 					player->SetAfterScale(EnemyScale);
 					player->SetAfterSpeed(EnemySpeed);
 					player->SetFrame(0.0f);
+					player->SetInAreaStart(true);
 					//player->SetLink(true);
 				}
-				else {
-					//player->SetLink(false);
+				//一回も内側にいかなかった場合外側にも行ける
+				else if (player->GetAttackInterval() != 0 && DistanceScale == -80.0f) {
+					if (!player->GetInArea()) {
+						player->SetAttackStart(true);
+						player->SetAfterScale(EnemyScale);
+						player->SetAfterSpeed(EnemySpeed);
+						player->SetFrame(0.0f);
+					}
 				}
 			}
 		}
@@ -275,6 +328,9 @@ bool Enemy::Collide(Player* player) {
 		player->SetKnockCount(player->GetKnockCount() + 1);
 		player->SetAttackCount(player->GetAttackCount() + 1);
 		player->SetAttackInterval(10);
+		if (player->GetInAreaStart()) {
+			player->SetInArea(true);
+		}
 		return true;
 	}
 	else {

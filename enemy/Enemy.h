@@ -59,6 +59,7 @@ private:
 	float EnemyCircleX;
 	float EnemyCircleY;
 	float EnemyAdd;
+	float AddVelocity;
 	//ƒŠƒXƒ|[ƒ“ŠÖŒW
 	bool EnemyAlive;
 	int EnemyTimer;
@@ -76,6 +77,12 @@ private:
 	float DistanceSpeed;
 	//UŒ‚”ÍˆÍ
 	bool InAttackArea;
+
+	int Dir;
+	enum MoveDir {
+		RIGHT,
+		LEFT,
+	};
 
 	AttackEffect* effects = nullptr;
 };
