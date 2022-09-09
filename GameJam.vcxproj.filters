@@ -41,6 +41,9 @@
     <ClCompile Include="effect\Emitter.cpp">
       <Filter>effect</Filter>
     </ClCompile>
+    <ClCompile Include="Effect\BreakEffect.cpp">
+      <Filter>effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="collision\Collision.h">
@@ -84,6 +87,9 @@
     </ClInclude>
     <ClInclude Include="base\Share.h">
       <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect\BreakEffect.h">
+      <Filter>effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

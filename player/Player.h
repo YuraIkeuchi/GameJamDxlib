@@ -1,6 +1,10 @@
 #pragma once
 #include "Share.h"
 #include "DxLib.h"
+#include "MoveEffect.h"
+
+constexpr int EFFECTS_MAX = 31;
+
 class Player {
 public:
 	//コンストラクタ
@@ -114,5 +118,6 @@ private:
 	float AttackSpeed;
 	float AttackCircleX;
 	float AttackCircleY;
-
+  
+	MoveEffect* Effects[EFFECTS_MAX] = {};
 };

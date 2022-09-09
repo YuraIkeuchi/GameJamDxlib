@@ -2,6 +2,8 @@
 
 constexpr auto INCREASE_SIZE = 8;
 constexpr auto STEP_COUNT = 1.0f / 60.0f;
+constexpr auto ALPHA_MAX = 255;
+constexpr auto DEFALUT_SIZE = 100;
 
 AttackEffect::AttackEffect()
 {

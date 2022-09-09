@@ -81,13 +81,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		{
 			scene->Init();
 		}
-
-		scene->Update(keys,oldkeys,input,oldinput);
-
-		if (scene->GetSceneTime())
-		{
-			scene->Draw();
-		}
+		scene->Update(keys, oldkeys, input, oldinput);
+		scene->Draw();
 
 		//---------  ここまでにプログラムを記述  ---------//
 		ScreenFlip();//（ダブルバッファ）裏面

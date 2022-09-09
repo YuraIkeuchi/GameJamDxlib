@@ -2,10 +2,10 @@
 #include "Easing.h"
 #include <DxLib.h>
 #include "math.h"
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 Player::Player() {
 }
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 Player::~Player() {
 }
 
@@ -13,7 +13,7 @@ void Player::Initialize()
 {
 	playerPosX = WIN_WIDTH / 2;
 	playerPosY = WIN_HEIGHT / 2;
-	//‰~‰^“®‚Ì‚½‚ß‚Ì•Ï”
+	//å††é‹å‹•ã®ãŸã‚ã®å¤‰æ•°
 	x = 0;
 	y = 0;
 	PlayerRadius = 0.0f;
@@ -21,7 +21,7 @@ void Player::Initialize()
 	PlayerScale = 320.0f;
 	PlayerCircleX = 0.0f;
 	PlayerCircleY = 0.0f;
-	//UŒ‚ŠÖŒW
+	//æ”»æ’ƒé–¢ä¿‚
 	Attack = false;
 	AttackStart = false;
 	AfterScale = 0.0f;
@@ -33,19 +33,19 @@ void Player::Initialize()
 	KnockCount = 0;
 	LockOnTexArea = 0.0f;
 	LockOnArea = 0.0f;
-	//ˆê‰ñ“à‘¤‚É“ü‚Á‚½‚©‚Ç‚¤‚©
+	//ä¸€å›å†…å´ã«å…¥ã£ãŸã‹ã©ã†ã‹
 	InArea = false;
 	InAreaStart = false;
-	//“G‚ğ~‚ß‚é‚½‚ß‚Ì•Ï”
+	//æ•µã‚’æ­¢ã‚ã‚‹ãŸã‚ã®å¤‰æ•°
 	Stop = false;
 	StopInterval = 5;
-	//ˆÚ“®ŠÖŒW
+	//ç§»å‹•é–¢ä¿‚
 	AddSpeed = 1.0f;
 	AddVelocity = 0.0f;
 	Speedframe = 0.0f;
 	ChangeDir = false;
 	Dir = RIGHT;
-	//ƒ_ƒ[ƒWŠÖŒW
+	//ãƒ€ãƒ¡ãƒ¼ã‚¸é–¢ä¿‚
 	Stun = false;
 	StunTimer = 100;
 	Invisible = false;
@@ -57,39 +57,55 @@ void Player::Initialize()
 	AttackSpeed = 0.0f;
 	AttackCircleX = 0.0f;
 	AttackCircleY = 0.0f;
+	for (int i = 0; i < EFFECTS_MAX; i++) {
+		Effects[i] = new MoveEffect();
+		Effects[i]->SetTexture(texture);
+	}
 }
 
 void Player::Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput) {
 	if (!Stun) {
-		//ˆÚ“®
+		//ç§»å‹•
 		Move(keys, oldkeys, input, oldinput);
-		//UŒ‚
+		//æ”»æ’ƒ
 		AttackMove(keys, oldkeys, input, oldinput);
 	}
-	//ƒXƒ^ƒ“ŠÖŒW
+	//ã‚¹ã‚¿ãƒ³é–¢ä¿‚
 	PlayerStun();
 	AttackArea();
+
+	for (int i = 0; i < EFFECTS_MAX; i++)
+	{
+		if (Effects[i]->getIsAlive() != true) {
+			Effects[i]->active(VGet(playerPosX, playerPosY, 0));
+			break;
+		}
+	}
+	for (int i = 0; i < EFFECTS_MAX; i++)
+	{
+		Effects[i]->Update();
+	}
 }
 
 void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput) {
-	//ƒvƒŒƒCƒ„[
-	//ƒT[ƒNƒ‹•ÏX
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
+	//ã‚µãƒ¼ã‚¯ãƒ«å¤‰æ›´
 	if (input.Buttons[XINPUT_BUTTON_DPAD_DOWN] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_DOWN]) {
 		if (PlayerScale > 81.0f) {
 			PlayerScale -= 80.0f;
 		}
 	}
 
-	if (input.Buttons[XINPUT_BUTTON_DPAD_UP]&& !oldinput.Buttons[XINPUT_BUTTON_DPAD_UP]) {
+	if (input.Buttons[XINPUT_BUTTON_DPAD_UP] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_UP]) {
 		if (PlayerScale < 319.0f) {
 			PlayerScale += 80.0f;
 		}
 	}
 
-	//‚Ç‚ÌƒT[ƒNƒ‹‚É‚¢‚é‚©‚Å•ÏX‚·‚é‚à‚Ì‚ª‚ ‚é
+	//ã©ã®ã‚µãƒ¼ã‚¯ãƒ«ã«ã„ã‚‹ã‹ã§å¤‰æ›´ã™ã‚‹ã‚‚ã®ãŒã‚ã‚‹
 	if (PlayerScale == 80.0f) {
 		LockOnTexArea = 200.0f;
-		if(Dir == RIGHT){
+		if (Dir == RIGHT) {
 			AddVelocity = 0.75f;
 		}
 		else {
@@ -124,8 +140,8 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 		}
 	}
 
-	//ˆÚ“®•ûŒü•ÏŠ·
-	//(‰EŒü‚«‚É‚È‚é)
+	//ç§»å‹•æ–¹å‘å¤‰æ›
+	//(å³å‘ãã«ãªã‚‹)
 	if (input.RightTrigger && !oldinput.RightTrigger
 		&& (Dir == LEFT)) {
 		Speedframe = 0.0f;
@@ -133,7 +149,7 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 		ChangeDir = true;
 	}
 
-	//(‰EŒü‚«‚É‚È‚é)
+	//(å³å‘ãã«ãªã‚‹)
 	if (input.LeftTrigger && !oldinput.LeftTrigger
 		&& (Dir == RIGHT)) {
 		Speedframe = 0.0f;
@@ -141,7 +157,7 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 		ChangeDir = true;
 	}
 
-	//Œü‚«‚ğ•Ï‚¦‚½‚Æ‚«™X‚É•Ï‚í‚é
+	//å‘ãã‚’å¤‰ãˆãŸã¨ãå¾ã€…ã«å¤‰ã‚ã‚‹
 	if (ChangeDir) {
 		if (Speedframe < 1.0f) {
 			Speedframe += 0.025f;
@@ -158,11 +174,11 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 		}
 	}
 
-	//“G‚ğ~‚ß‚é
+	//æ•µã‚’æ­¢ã‚ã‚‹
 	if (input.Buttons[XINPUT_BUTTON_B] && !oldinput.Buttons[XINPUT_BUTTON_B] && !Stop) {
 		Stop = true;
 	}
-	//“G‚ğ~‚ß‚Ä‚éŠÔ
+	//æ•µã‚’æ­¢ã‚ã¦ã‚‹æ™‚é–“
 	if (Stop) {
 		StopInterval--;
 		if (StopInterval == 0) {
@@ -170,22 +186,22 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 			StopInterval = 5;
 		}
 	}
-	//ˆÚ“®—Ê‚ğ‰ÁZ‚µ‚Ä‚¢‚é(UŒ‚Œã‚Ìd’¼ŒãˆÈŠO)
+	//ç§»å‹•é‡ã‚’åŠ ç®—ã—ã¦ã„ã‚‹(æ”»æ’ƒå¾Œã®ç¡¬ç›´å¾Œä»¥å¤–)
 	if (AttackInterval == 0) {
 		PlayerSpeed += AddSpeed + AddVelocity;
 	}
 
-	//UŒ‚Œã‚Ìd’¼(‚±‚ÌŠÔ‚ÉƒŠƒ“ƒN”»’è‚·‚é)
+	//æ”»æ’ƒå¾Œã®ç¡¬ç›´(ã“ã®é–“ã«ãƒªãƒ³ã‚¯åˆ¤å®šã™ã‚‹)
 	if (AttackInterval > 0) {
 		AttackInterval--;
 	}
 	else {
-		//ƒŠƒ“ƒN‚ªØ‚ê‚é
+		//ãƒªãƒ³ã‚¯ãŒåˆ‡ã‚Œã‚‹
 		AttackInterval = 0;
 		AttackCount = 0;
 	}
 
-	//0‚©‚ç360‚Ü‚Å”ÍˆÍ‚ğw’è‚·‚é
+	//0ã‹ã‚‰360ã¾ã§ç¯„å›²ã‚’æŒ‡å®šã™ã‚‹
 	if (PlayerSpeed > 360.0f) {
 		PlayerSpeed = 0.0f;
 	}
@@ -193,7 +209,7 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 	if (PlayerSpeed < 0.0f) {
 		PlayerSpeed = 360.0f;
 	}
-	//ˆÊ’u‚ğ‹‚ß‚Ä‚¢‚é
+	//ä½ç½®ã‚’æ±‚ã‚ã¦ã„ã‚‹
 	PlayerRadius = PlayerSpeed * PI / 180.0f;
 	PlayerCircleX = cosf(PlayerRadius) * PlayerScale;
 	PlayerCircleY = sinf(PlayerRadius) * PlayerScale;
@@ -202,11 +218,11 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 }
 
 void Player::AttackMove(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput) {
-	//“G‚ÉUŒ‚‚·‚é
+	//æ•µã«æ”»æ’ƒã™ã‚‹
 	if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A] && !Attack && !AttackStart) {
 		Attack = true;
 	}
-	//1ƒtƒŒ[ƒ€‚Ì‚İ‚Ì”»’è
+	//1ãƒ•ãƒ¬ãƒ¼ãƒ ã®ã¿ã®åˆ¤å®š
 	if (Attack) {
 		AttackTimer++;
 		if (AttackTimer == 2) {
@@ -215,7 +231,7 @@ void Player::AttackMove(char keys[255], char oldkeys[255], XINPUT_STATE input, X
 		}
 	}
 
-	//“G‚ÌˆÊ’u‚Ü‚Åeasing
+	//æ•µã®ä½ç½®ã¾ã§easing
 	if (AttackStart) {
 		if (frame < 1.0f) {
 			frame += 0.1f;
@@ -231,7 +247,7 @@ void Player::AttackMove(char keys[255], char oldkeys[255], XINPUT_STATE input, X
 }
 
 void Player::AttackArea() {
-	//ˆÊ’u‚ğ‹‚ß‚Ä‚¢‚é
+	//ä½ç½®ã‚’æ±‚ã‚ã¦ã„ã‚‹
 	AttackRadius = AttackSpeed * PI / 180.0f;
 	AttackCircleX = cosf(AttackRadius) * AttackScale;
 	AttackCircleY = sinf(AttackRadius) * AttackScale;
@@ -240,7 +256,7 @@ void Player::AttackArea() {
 }
 
 void Player::PlayerStun() {
-	//ƒ_ƒ[ƒWH‚ç‚Á‚½‚Æ‚«“®‚¯‚È‚¢
+	//ãƒ€ãƒ¡ãƒ¼ã‚¸é£Ÿã‚‰ã£ãŸã¨ãå‹•ã‘ãªã„
 	if (Stun) {
 		StunTimer--;
 		if (StunTimer <= 0) {
@@ -249,7 +265,7 @@ void Player::PlayerStun() {
 			Invisible = true;
 		}
 	}
-	//ƒXƒ^ƒ“I‚í‚Á‚½‚Æ‚«ˆê’èŠÔ–³“G
+	//ã‚¹ã‚¿ãƒ³çµ‚ã‚ã£ãŸã¨ãä¸€å®šæ™‚é–“ç„¡æ•µ
 	if (Invisible) {
 		InvisibleTimer--;
 		if (InvisibleTimer <= 0) {
@@ -261,7 +277,6 @@ void Player::PlayerStun() {
 void Player::Draw() {
 	DrawBillboard3D(VGet(playerPosX, playerPosY, 0), 0.5f, 0.5f, 50, 0.0f, texture, true);
 	DrawBillboard3D(VGet(AttackAreaX, AttackAreaY, 0), 0.5f, 0.5f, 100, 0.0f, targettexture, true);
-	//DrawCircle(playerPosX, playerPosY, 20, GetColor(0, 0, 0), true);
 }
 
 void Player::FormatDraw() {

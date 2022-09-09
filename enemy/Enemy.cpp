@@ -44,9 +44,13 @@ void Enemy::Initialize() {
 	InAttackArea = false;
 
 	int EffectTex = LoadGraph("Resources/attackEffect.png");
+	int breakEffectTex = LoadGraph("breakEffect.png");
 
 	effects = new AttackEffect();
 	effects->SetTexture(EffectTex);
+	breakEffects = new BreakEffect();
+	breakEffects->SetTexture(breakEffectTex);
+
 }
 
 void Enemy::Update(Player* player) {
@@ -68,6 +72,7 @@ void Enemy::Update(Player* player) {
 	EnemyPosY = EnemyCircleY + y;
 
 	effects->Update();
+	breakEffects->Update();
 }
 
 void Enemy::ResPorn() {
@@ -335,6 +340,7 @@ bool Enemy::Collide(Player* player) {
 		EnemyAlive = false;
 		EnemyMove = false;
 		effects->active(FLOAT3{ EnemyPosX ,EnemyPosY ,0.0f });
+		breakEffects->active(FLOAT3{ EnemyPosX ,EnemyPosY ,0.0f });
 		EnemyScale = 500.0f;
 		player->SetKnockCount(player->GetKnockCount() + 1);
 		player->SetAttackCount(player->GetAttackCount() + 1);
@@ -372,6 +378,7 @@ bool Enemy::PlayerCollide(Player* player) {
 
 void Enemy::Draw() {
 	//止まっているかどうかで色が変わる
+//止まっているかどうかで色が変わる
 	if (EnemyAlive) {
 		if (!InAttackArea) {
 			if (!EnemyStop) {
@@ -388,6 +395,7 @@ void Enemy::Draw() {
 		}
 	}
 	effects->Draw();
+	breakEffects->Draw();
 }
 
 void Enemy::FormatDraw(int EnemyCount) {
