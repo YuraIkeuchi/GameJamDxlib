@@ -20,6 +20,8 @@ public:
 	void Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput);
 	//攻撃
 	void AttackMove(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput);
+	//攻撃エリア
+	void AttackArea();
 	//スタン
 	void PlayerStun();
 	//描画
@@ -108,5 +110,14 @@ private:
 	bool Invisible;
 	int InvisibleTimer;
 
+	//攻撃エリア関係(ほんとは別クラスにやりたい)
+	float AttackRadius;
+	float AttackAreaX;
+	float AttackAreaY;
+	float AttackScale;
+	float AttackSpeed;
+	float AttackCircleX;
+	float AttackCircleY;
+  
 	MoveEffect* Effects[EFFECTS_MAX] = {};
 };

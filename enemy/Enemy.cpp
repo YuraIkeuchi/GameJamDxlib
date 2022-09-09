@@ -174,8 +174,8 @@ void Enemy::Move(Player* player) {
 
 	//敵の移動
 	if (EnemyMove && !EnemyStop) {
-		EnemySpeed += EnemyAdd + AddVelocity;
-		EnemyRoundSpeed += EnemyAdd + AddVelocity;
+		EnemySpeed += EnemyAdd;
+		EnemyRoundSpeed += EnemyAdd;
 	}
 
 	//0から360まで範囲を指定する
@@ -188,12 +188,23 @@ void Enemy::Move(Player* player) {
 	}
 
 	if (EnemyMove) {
-		if (EnemyRoundSpeed == EnemySaveSpeed + 360.0f) {
-			if (EnemyScale > 81.0f) {
-				EnemyScale -= 80.0f;
+		if (Dir == RIGHT) {
+			if (EnemyRoundSpeed == EnemySaveSpeed + 360.0f) {
+				if (EnemyScale > 81.0f) {
+					EnemyScale -= 80.0f;
+				}
+				EnemyRoundSpeed = EnemyRoundSpeed - 360.0f;
+				EnemySaveSpeed = EnemyRoundSpeed;
 			}
-			EnemyRoundSpeed = EnemyRoundSpeed - 360.0f;
-			EnemySaveSpeed = EnemyRoundSpeed;
+		}
+		else {
+			if (EnemyRoundSpeed == EnemySaveSpeed - 360.0f) {
+				if (EnemyScale > 81.0f) {
+					EnemyScale -= 80.0f;
+				}
+				EnemyRoundSpeed = EnemyRoundSpeed + 360.0f;
+				EnemySaveSpeed = EnemyRoundSpeed;
+			}
 		}
 	}
 }
@@ -324,7 +335,7 @@ bool Enemy::Collide(Player* player) {
 	//当たり判定
 	float plaPosX = player->GetPositionX();
 	float plaPosY = player->GetPositionY();
-	if (Collision::CircleCollision(EnemyPosX, EnemyPosY, 15.0f, plaPosX, plaPosY, 15.0f)
+	if (Collision::CircleCollision(EnemyPosX, EnemyPosY, 25.0f, plaPosX, plaPosY, 25.0f)
 		&& (EnemyMove) && (EnemyAlive) && (player->GetScale() == EnemyScale) && (player->GetAttackStart())) {
 		EnemyAlive = false;
 		EnemyMove = false;
@@ -351,9 +362,9 @@ bool Enemy::PlayerCollide(Player* player) {
 	//当たり判定
 	float plaPosX = player->GetPositionX();
 	float plaPosY = player->GetPositionY();
-	if (Collision::CircleCollision(EnemyPosX, EnemyPosY, 15.0f, plaPosX, plaPosY, 15.0f)
+	if (Collision::CircleCollision(EnemyPosX, EnemyPosY, 10.0f, plaPosX, plaPosY, 10.0f)
 		&& (EnemyMove) && (EnemyAlive) && (player->GetScale() == EnemyScale)
-		&& (!player->GetAttackStart()) && (!player->GetInvisible())) {
+		&& (player->GetKnockCount() == 0) && (!player->GetInvisible())) {
 		player->SetStun(true);
 		return true;
 	}
@@ -367,16 +378,21 @@ bool Enemy::PlayerCollide(Player* player) {
 
 void Enemy::Draw() {
 	//止まっているかどうかで色が変わる
+//止まっているかどうかで色が変わる
 	if (EnemyAlive) {
-		DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, 200.0f, 0.0f, Linktexture, true);
-		if (!EnemyStop) {
-			//DrawCircle(EnemyPosX, EnemyPosY, 20, GetColor(255, 255, 0), true);
-			DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, 50.0f, 0.0f, texture, true);
+		if (!InAttackArea) {
+			if (!EnemyStop) {
+				//DrawCircle(EnemyPosX, EnemyPosY, 20, GetColor(255, 255, 0), true);
+				DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, 50.0f, 0.0f, texture, true);
+			}
+			else {
+				DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, 50.0f, 0.0f, Stoptexture, true);
+			}
+			//DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, 200.0f, 0.0f, Linktexture, true);
 		}
 		else {
-			DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, 50.0f, 0.0f, Stoptexture, true);
+			DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, 50.0f, 0.0f, Targettexture, true);
 		}
-
 	}
 	effects->Draw();
 	breakEffects->Draw();

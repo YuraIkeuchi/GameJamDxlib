@@ -40,10 +40,12 @@ public:
 	void SetEnemyTex(int tex) { this->texture = tex; }
 	void SetEnemyStopTex(int tex) { this->Stoptexture = tex; }
 	void SetLinkEnemyTex(int tex) { this->Linktexture = tex; }
+	void SetTargetEnemyTex(int tex) { this->Targettexture = tex; }
 private:
 	int texture = 0;
 	int Linktexture = 0;
 	int Stoptexture = 0;
+	int Targettexture = 0;
 	//ƒƒ“ƒo•Ï”
 	//À•W
 	float EnemyPosX;
