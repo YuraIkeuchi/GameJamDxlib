@@ -10,6 +10,7 @@ void SceneManager::StaticInit()
 	int enemyTex = LoadGraph("Resources/enemy.png");
 	int enemystopTex = LoadGraph("Resources/enemystop.png");
 	int enemylinkTex = LoadGraph("Resources/LinkArea.png");
+	int enemytargetTex = LoadGraph("Resources/enemytarget.png");
 	int stageTex = LoadGraph("Resources/stage.png");
 
 	for (int i = 0; i < Enemy_Max; i++) {
@@ -17,6 +18,7 @@ void SceneManager::StaticInit()
 		enemy[i]->SetEnemyTex(enemyTex);
 		enemy[i]->SetLinkEnemyTex(enemylinkTex);
 		enemy[i]->SetEnemyStopTex(enemystopTex);
+		enemy[i]->SetTargetEnemyTex(enemytargetTex);
 	}
 	player = new Player();
 	stagecircle = new StageCircle();

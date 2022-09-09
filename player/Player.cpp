@@ -249,8 +249,9 @@ void Player::Draw() {
 
 void Player::FormatDraw() {
 	DrawFormatString(0, 0, GetColor(0, 0, 0), "InArea:%d", InArea);
-	DrawFormatString(0, 60, GetColor(0, 0, 0), "AddSpeed:%f", AddSpeed);
-	DrawFormatString(0, 80, GetColor(0, 0, 0), "AddVelocity:%f", AddVelocity);
+	DrawFormatString(0, 20, GetColor(0, 0, 0), "InAreaStart:%d", InAreaStart);
+	//DrawFormatString(0, 60, GetColor(0, 0, 0), "AddSpeed:%f", AddSpeed);
+	//DrawFormatString(0, 80, GetColor(0, 0, 0), "AddVelocity:%f", AddVelocity);
 	//DrawFormatString(0, 20, GetColor(0, 0, 0), "AttackStart:%d", AttackStart);
 	//DrawFormatString(0, 40, GetColor(0, 0, 0), "Attack:%d", Attack);
 }
