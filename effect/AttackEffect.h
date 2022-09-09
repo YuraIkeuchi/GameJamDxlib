@@ -1,9 +1,6 @@
 #pragma once
 #include "Emitter.h"
 
-constexpr auto ALPHA_MAX = 255;
-constexpr auto DEFALUT_SIZE = 100;
-
 class AttackEffect : public Emitter {
 
 	FLOAT3 pos;

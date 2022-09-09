@@ -1,11 +1,11 @@
-#include "AttackEffect.h"
+#include "BreakEffect.h"
 
 constexpr auto INCREASE_SIZE = 8;
 constexpr auto STEP_COUNT = 1.0f / 60.0f;
 constexpr auto ALPHA_MAX = 255;
 constexpr auto DEFALUT_SIZE = 100;
 
-AttackEffect::AttackEffect()
+BreakEffect::BreakEffect()
 {
 	Emitter();
 	pos = FLOAT3{ 0,0,0 };
@@ -16,14 +16,14 @@ AttackEffect::AttackEffect()
 	count = 0;
 }
 
-void AttackEffect::active(FLOAT3 _pos)
+void BreakEffect::active(FLOAT3 _pos)
 {
 	Emitter::activate();
 	SetEmitPos(_pos);
 	angle = rand() % 360;
 }
 
-void AttackEffect::Update()
+void BreakEffect::Update()
 {
 	if (isAlive == true) {
 		size += INCREASE_SIZE;
@@ -39,7 +39,7 @@ void AttackEffect::Update()
 	}
 }
 
-void AttackEffect::Draw()
+void BreakEffect::Draw()
 {
 	if (isAlive == true) {
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);		//ブレンドモードをα(128/255)に設定

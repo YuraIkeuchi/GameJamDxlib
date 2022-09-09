@@ -1,24 +1,23 @@
 #pragma once
 #include "Emitter.h"
 
-class MoveEffect : public Emitter {
+class BreakEffect : public Emitter {
 
-	FLOAT3 pos;//発生位置
-	float size;//サイズ
-	float angle;//角度
-	float alpha;//透明度
+	FLOAT3 pos;
+	float size;
+	float angle;
+	float alpha;
 
-	float count;//出現時間（仮）
+	float count;
 
-	int texture;//テクスチャ
-
+	int texture;
 public:
 	//setter
 	void SetEmitPos(FLOAT3 _pos) { this->pos = _pos; }
 	void SetTexture(int tex) { this->texture = tex; }
 
 	//コンストラクタ
-	MoveEffect();
+	BreakEffect();
 
 	/// <summary>
 	/// 発生時
