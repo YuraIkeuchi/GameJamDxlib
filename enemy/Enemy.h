@@ -2,6 +2,7 @@
 #include "Share.h"
 #include "Player.h"
 #include "AttackEffect.h"
+#include "BreakEffect.h"
 
 class Enemy {
 public:
@@ -85,4 +86,5 @@ private:
 	};
 
 	AttackEffect* effects = nullptr;
+	BreakEffect* breakEffects = nullptr;
 };

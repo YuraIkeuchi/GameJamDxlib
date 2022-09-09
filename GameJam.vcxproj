@@ -23,6 +23,7 @@
     <ClCompile Include="collision\Collision.cpp" />
     <ClCompile Include="ease\Easing.cpp" />
     <ClCompile Include="effect\AttackEffect.cpp" />
+    <ClCompile Include="Effect\BreakEffect.cpp" />
     <ClCompile Include="effect\Emitter.cpp" />
     <ClCompile Include="effect\MoveEffect.cpp" />
     <ClCompile Include="enemy\Enemy.cpp" />
@@ -40,6 +41,7 @@
     <ClInclude Include="collision\Collision.h" />
     <ClInclude Include="ease\Easing.h" />
     <ClInclude Include="effect\AttackEffect.h" />
+    <ClInclude Include="Effect\BreakEffect.h" />
     <ClInclude Include="effect\Emitter.h" />
     <ClInclude Include="effect\MoveEffect.h" />
     <ClInclude Include="enemy\Enemy.h" />
