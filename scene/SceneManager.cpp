@@ -140,7 +140,6 @@ void SceneManager::TitleDraw()
 
 	//タイトル
 	title->Draw();
-
 }
 
 void SceneManager::GameSceneInit()

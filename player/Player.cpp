@@ -50,6 +50,13 @@ void Player::Initialize()
 	StunTimer = 100;
 	Invisible = false;
 	InvisibleTimer = 100;
+
+	AttackAreaX = 0.0f;
+	AttackAreaY = 0.0f;
+	AttackScale = 60.0f;
+	AttackSpeed = 0.0f;
+	AttackCircleX = 0.0f;
+	AttackCircleY = 0.0f;
 }
 
 void Player::Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput) {
@@ -61,6 +68,7 @@ void Player::Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPU
 	}
 	//スタン関係
 	PlayerStun();
+	AttackArea();
 }
 
 void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput) {
@@ -222,6 +230,15 @@ void Player::AttackMove(char keys[255], char oldkeys[255], XINPUT_STATE input, X
 	}
 }
 
+void Player::AttackArea() {
+	//位置を求めている
+	AttackRadius = AttackSpeed * PI / 180.0f;
+	AttackCircleX = cosf(AttackRadius) * AttackScale;
+	AttackCircleY = sinf(AttackRadius) * AttackScale;
+	AttackAreaX = AttackCircleX + playerPosX;
+	AttackAreaY = AttackCircleY + playerPosY;
+}
+
 void Player::PlayerStun() {
 	//ダメージ食らったとき動けない
 	if (Stun) {
@@ -243,7 +260,7 @@ void Player::PlayerStun() {
 }
 void Player::Draw() {
 	DrawBillboard3D(VGet(playerPosX, playerPosY, 0), 0.5f, 0.5f, 50, 0.0f, texture, true);
-	DrawBillboard3D(VGet(playerPosX, playerPosY, 0), 0.5f, 0.5f, LockOnTexArea, 0.0f, targettexture, true);
+	DrawBillboard3D(VGet(AttackAreaX, AttackAreaY, 0), 0.5f, 0.5f, 100, 0.0f, targettexture, true);
 	//DrawCircle(playerPosX, playerPosY, 20, GetColor(0, 0, 0), true);
 }
 
