@@ -276,6 +276,12 @@ void Player::PlayerStun() {
 }
 void Player::Draw() {
 	DrawBillboard3D(VGet(playerPosX, playerPosY, 0), 0.5f, 0.5f, 50, 0.0f, texture, true);
+
+	for (int i = 0; i < EFFECTS_MAX; i++)
+	{
+		Effects[i]->Draw();
+	}
+
 	DrawBillboard3D(VGet(AttackAreaX, AttackAreaY, 0), 0.5f, 0.5f, 100, 0.0f, targettexture, true);
 }
 
