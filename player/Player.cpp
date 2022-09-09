@@ -50,6 +50,11 @@ void Player::Initialize()
 	StunTimer = 100;
 	Invisible = false;
 	InvisibleTimer = 100;
+
+	for (int i = 0; i < EFFECTS_MAX; i++) {
+		Effects[i] = new MoveEffect();
+		Effects[i]->SetTexture(texture);
+	}
 }
 
 void Player::Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput) {
@@ -61,6 +66,19 @@ void Player::Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPU
 	}
 	//スタン関係
 	PlayerStun();
+
+	for (int i = 0; i < EFFECTS_MAX; i++)
+	{
+		if (Effects[i]->getIsAlive() != true) {
+			Effects[i]->active(VGet(playerPosX, playerPosY, 0));
+			break;
+		}
+	}
+	for (int i = 0; i < EFFECTS_MAX; i++)
+	{
+		Effects[i]->Update();
+	}
+
 }
 
 void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput) {
@@ -72,7 +90,7 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 		}
 	}
 
-	if (input.Buttons[XINPUT_BUTTON_DPAD_UP]&& !oldinput.Buttons[XINPUT_BUTTON_DPAD_UP]) {
+	if (input.Buttons[XINPUT_BUTTON_DPAD_UP] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_UP]) {
 		if (PlayerScale < 319.0f) {
 			PlayerScale += 80.0f;
 		}
@@ -81,7 +99,7 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 	//どのサークルにいるかで変更するものがある
 	if (PlayerScale == 80.0f) {
 		LockOnTexArea = 200.0f;
-		if(Dir == RIGHT){
+		if (Dir == RIGHT) {
 			AddVelocity = 0.75f;
 		}
 		else {
@@ -242,9 +260,16 @@ void Player::PlayerStun() {
 	}
 }
 void Player::Draw() {
-	DrawBillboard3D(VGet(playerPosX, playerPosY, 0), 0.5f, 0.5f, 50, 0.0f, texture, true);
 	DrawBillboard3D(VGet(playerPosX, playerPosY, 0), 0.5f, 0.5f, LockOnTexArea, 0.0f, targettexture, true);
+
+	for (int i = 0; i < EFFECTS_MAX; i++)
+	{
+		Effects[i]->Draw();
+	}
+
+	DrawBillboard3D(VGet(playerPosX, playerPosY, 0), 0.5f, 0.5f, 50, 0.0f, texture, true);
 	//DrawCircle(playerPosX, playerPosY, 20, GetColor(0, 0, 0), true);
+
 }
 
 void Player::FormatDraw() {
