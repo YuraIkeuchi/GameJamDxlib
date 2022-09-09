@@ -28,7 +28,6 @@ void Player::Initialize()
 	AfterSpeed = 0.0f;
 	frame = 0.0f;
 	AttackTimer = 0;
-	AttackCount = 0;
 	AttackInterval = 0;
 	KnockCount = 0;
 	LockOnTexArea = 0.0f;
@@ -61,6 +60,10 @@ void Player::Initialize()
 		Effects[i] = new MoveEffect();
 		Effects[i]->SetTexture(texture);
 	}
+
+	inputX = 0.0f;
+	inputY = 0.0f;
+	joyangle = 0.0f;
 }
 
 void Player::Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput) {
@@ -88,6 +91,14 @@ void Player::Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPU
 }
 
 void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput) {
+	/*float X = (float)input.ThumbLX;
+	float Y = -(float)input.ThumbLY;
+	joyangle = atan2((float)X, (float)Y) - PI / 2;*/
+
+	inputX = (float)input.ThumbLX / 32768;
+	inputY = (float)input.ThumbLY / 32768;
+	joyangle = ((atan2(inputX, inputY) * (180.0f / PI))) + 90;
+	AttackSpeed = joyangle;
 	//プレイヤー
 	//サークル変更
 	if (input.Buttons[XINPUT_BUTTON_DPAD_DOWN] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_DOWN]) {
@@ -198,7 +209,6 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 	else {
 		//リンクが切れる
 		AttackInterval = 0;
-		AttackCount = 0;
 	}
 
 	//0から360まで範囲を指定する
@@ -247,6 +257,7 @@ void Player::AttackMove(char keys[255], char oldkeys[255], XINPUT_STATE input, X
 }
 
 void Player::AttackArea() {
+	
 	//位置を求めている
 	AttackRadius = AttackSpeed * PI / 180.0f;
 	AttackCircleX = cosf(AttackRadius) * AttackScale;
@@ -288,8 +299,12 @@ void Player::Draw() {
 void Player::FormatDraw() {
 	DrawFormatString(0, 0, GetColor(0, 0, 0), "InArea:%d", InArea);
 	DrawFormatString(0, 20, GetColor(0, 0, 0), "InAreaStart:%d", InAreaStart);
+	DrawFormatString(0, 40, GetColor(0, 0, 0), "inputX:%f", inputX);
+	DrawFormatString(0, 60, GetColor(0, 0, 0), "inputY:%f", inputY);
+	DrawFormatString(0, 80, GetColor(0, 0, 0), "joyangle:%f", joyangle);
+	DrawFormatString(0, 100, GetColor(0, 0, 0), "Speed:%f", PlayerSpeed);
 	//DrawFormatString(0, 60, GetColor(0, 0, 0), "AddSpeed:%f", AddSpeed);
 	//DrawFormatString(0, 80, GetColor(0, 0, 0), "AddVelocity:%f", AddVelocity);
-	//DrawFormatString(0, 20, GetColor(0, 0, 0), "AttackStart:%d", AttackStart);
-	//DrawFormatString(0, 40, GetColor(0, 0, 0), "Attack:%d", Attack);
+	DrawFormatString(0, 120, GetColor(0, 0, 0), "AttackStart:%d", AttackStart);
+	DrawFormatString(0, 140, GetColor(0, 0, 0), "Attack:%d", Attack);
 }
