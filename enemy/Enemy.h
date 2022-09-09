@@ -28,6 +28,8 @@ public:
 	bool Collide(Player* player);
 	//当たり判定(プレイヤーがスタンする)
 	bool PlayerCollide(Player* player);
+	//ロックオン当たり判定(プレイヤーがスタンする)
+	bool LockOnCollide(Player* player);
 	//描画
 	void Draw();
 	//FormatString用

@@ -81,7 +81,7 @@ void Enemy::ResPorn() {
 		EnemyTimer--;
 		if (EnemyTimer == 0) {
 			EnemySpeed = rand() % 360;
-			TargetLine = rand() % 2;
+			TargetLine = 0;
 			Dir = rand() % 2;
 			if (Dir == RIGHT) {
 				EnemyAdd = 0.5f;
@@ -233,21 +233,42 @@ void Enemy::InArea(Player* player) {
 	DistanceSpeed = player->GetSpeed() - EnemySpeed;
 
 	DistanceSpeed = fabs(DistanceSpeed);
-	//一番中心の円とそれ以外の円で処理が別
-	if (player->GetScale() != 80.0f) {
-		if ((DistanceScale <= 80) && (DistanceSpeed <= 60) && (EnemyMove)) {
-			InAttackArea = true;
+	//一回目の攻撃のときと二回目のときの判定の広さが変わる
+	if (player->GetKnockCount() == 0) {
+		//一番中心の円とそれ以外の円で処理が別
+		if (player->GetScale() != 80.0f) {
+			if ((DistanceScale <= 80) && LockOnCollide(player) && (EnemyMove)) {
+				InAttackArea = true;
+			}
+			else {
+				InAttackArea = false;
+			}
 		}
 		else {
-			InAttackArea = false;
+			if ((DistanceScale >= -80) && LockOnCollide(player) && (EnemyMove)) {
+				InAttackArea = true;
+			}
+			else {
+				InAttackArea = false;
+			}
 		}
 	}
 	else {
-		if ((DistanceScale >= -80) && (DistanceSpeed <= 60) && (EnemyMove)) {
-			InAttackArea = true;
+		if (player->GetScale() != 80.0f) {
+			if ((DistanceScale <= 80) && (DistanceSpeed <= 60) && (EnemyMove)) {
+				InAttackArea = true;
+			}
+			else {
+				InAttackArea = false;
+			}
 		}
 		else {
-			InAttackArea = false;
+			if ((DistanceScale >= -80) && (DistanceSpeed <= 60) && (EnemyMove)) {
+				InAttackArea = true;
+			}
+			else {
+				InAttackArea = false;
+			}
 		}
 	}
 }
@@ -257,7 +278,7 @@ void Enemy::Target(Player* player) {
 		//一番中心の円とそれ以外の円で処理が別
 		if (player->GetScale() != 80.0f) {
 			//攻撃一回目(リンク始まるときは同じレーンのみ)
-			if (player->GetAttackCount() == 0) {
+			if (player->GetKnockCount() == 0) {
 				if (player->GetAttack() && DistanceScale == 0.0f) {
 					player->SetAttackStart(true);
 					player->SetAfterScale(EnemyScale);
@@ -266,7 +287,7 @@ void Enemy::Target(Player* player) {
 					//player->SetLink(true);
 				}
 			}
-			else if (player->GetAttackCount() >= 1) {
+			else if (player->GetKnockCount() >= 1) {
 				//攻撃二回目以降(リンク中は同じレーンを優先して一個内側にも潜れる)
 				if (player->GetAttackInterval() != 0 && DistanceScale == 0.0f) {
 					player->SetAttackStart(true);
@@ -296,7 +317,7 @@ void Enemy::Target(Player* player) {
 		}
 		else {
 			//攻撃一回目(リンク始まるときは同じレーンのみ)
-			if (player->GetAttackCount() == 0) {
+			if (player->GetKnockCount() == 0) {
 				if (player->GetAttack() && DistanceScale == 0.0f) {
 					player->SetAttackStart(true);
 					player->SetAfterScale(EnemyScale);
@@ -305,7 +326,7 @@ void Enemy::Target(Player* player) {
 					//player->SetLink(true);
 				}
 			}
-			else if (player->GetAttackCount() >= 1) {
+			else if (player->GetKnockCount() >= 1) {
 				//攻撃二回目以降(リンク中は同じレーンを優先して一個内側にも潜れる)
 				if (player->GetAttackInterval() != 0 && DistanceScale == 0.0f) {
 					player->SetAttackStart(true);
@@ -343,7 +364,6 @@ bool Enemy::Collide(Player* player) {
 		breakEffects->active(FLOAT3{ EnemyPosX ,EnemyPosY ,0.0f });
 		EnemyScale = 500.0f;
 		player->SetKnockCount(player->GetKnockCount() + 1);
-		player->SetAttackCount(player->GetAttackCount() + 1);
 		player->SetAttackInterval(10);
 		if (player->GetInAreaStart()) {
 			player->SetInArea(true);
@@ -375,6 +395,20 @@ bool Enemy::PlayerCollide(Player* player) {
 	return true;
 }
 
+bool Enemy::LockOnCollide(Player* player) {
+	//当たり判定
+	float AttackPosX = player->GetAttackAreaX();
+	float AttackPosY = player->GetAttackAreaY();
+	if (Collision::CircleCollision(EnemyPosX, EnemyPosY, 30.0f, AttackPosX, AttackPosY, 30.0f)
+		&& (EnemyMove) && (EnemyAlive)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+
+	return true;
+}
 
 void Enemy::Draw() {
 	//止まっているかどうかで色が変わる
@@ -402,5 +436,5 @@ void Enemy::FormatDraw(int EnemyCount) {
 	//stringの描画
 	//DrawFormatString(0, (20 * EnemyCount) + 0, GetColor(0, 0, 0), "EnemyScale[%d]:%f", EnemyCount, EnemyScale);
 	//DrawFormatString(0, (20 * EnemyCount) + 120, GetColor(0, 0, 0), "Timer[%d]:%d", EnemyCount, EnemyTimer);
-	DrawFormatString(0, (20 * EnemyCount) + 200, GetColor(0, 0, 0), "DistanceScale[%d]:%f", EnemyCount, DistanceScale);
+	DrawFormatString(0, (20 * EnemyCount) + 200, GetColor(0, 0, 0), "EnemySpeed[%d]:%f", EnemyCount, EnemySpeed);
 }

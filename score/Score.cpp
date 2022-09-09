@@ -43,6 +43,6 @@ void Score::Draw() {
 }
 
 void Score::FormatDraw() {
-	DrawFormatString(0, 100, GetColor(0, 0, 0), "GameTimer::%d",GameTimer);
-	DrawFormatString(0, 120, GetColor(0, 0, 0), "Score::%d", ScorePoint);
+	//DrawFormatString(0, 100, GetColor(0, 0, 0), "GameTimer::%d",GameTimer);
+	//DrawFormatString(0, 120, GetColor(0, 0, 0), "Score::%d", ScorePoint);
 }

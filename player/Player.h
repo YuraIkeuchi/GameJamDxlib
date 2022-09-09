@@ -38,17 +38,17 @@ public:
 	const bool& GetAttack() { return Attack; }
 	const bool& GetInvisible() { return Invisible; }
 	const bool& GetAttackStart() { return AttackStart; }
-	const int& GetAttackCount() { return AttackCount; }
 	const int& GetAttackInterval() { return AttackInterval; }
 	const int& GetKnockCount() { return KnockCount; }
 	const float& GetLockOnArea() { return LockOnArea; }
 	const float& GetPositionX() { return playerPosX; }
 	const float& GetPositionY() { return playerPosY; }
+	const float& GetAttackAreaX() { return AttackAreaX; }
+	const float& GetAttackAreaY() { return AttackAreaY; }
 
 	void SetAfterScale(float AfterScale) { this->AfterScale = AfterScale; }
 	void SetAfterSpeed(float AfterSpeed) { this->AfterSpeed = AfterSpeed; }
 	void SetAttackStart(bool AttackStart) { this->AttackStart = AttackStart; }
-	void SetAttackCount(int AttackCount) { this->AttackCount = AttackCount; }
 	void SetAttackInterval(int AttackInterval) { this->AttackInterval = AttackInterval; }
 	void SetKnockCount(int KnockCount) { this->KnockCount = KnockCount; }
 	void SetFrame(float frame) { this->frame = frame; }
@@ -83,7 +83,6 @@ private:
 	bool InArea;
 	bool InAreaStart;
 	//二回目以降
-	int AttackCount;
 	int AttackInterval;
 	//ロックオン範囲(デバッグ表示用)
 	float LockOnTexArea;
@@ -119,5 +118,8 @@ private:
 	float AttackCircleX;
 	float AttackCircleY;
   
+	float inputX;
+	float inputY;
+	float joyangle;
 	MoveEffect* Effects[EFFECTS_MAX] = {};
 };
