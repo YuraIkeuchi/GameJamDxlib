@@ -11,6 +11,16 @@ private:
 	int TitleTex4;
 	int TitleTex5;
 	int TitleTex6;
+	int TitleTex7;
+	int TitleTex8;
+	int TitleTex9[6];
+	int tex9Num;
+	int soundBolume;
+
+	int TitleSound1;
+	int TitleSe1;
+	int TitleSe2;
+
 	int curPosX;
 	int curPosY;
 
@@ -31,9 +41,13 @@ private:
 	int alpha;
 
 	bool settingFlag;
+	bool endFlag;
 public:
 	Title();
 	void Initialize();
 	bool Update(XINPUT_STATE input, XINPUT_STATE oldinput);
 	void Draw();
+
+	//İ’è‚Å’²ß‚µ‚½‰¹—Ê‚ğæ“¾
+	int &GetVolume() { return soundBolume; }
 };
