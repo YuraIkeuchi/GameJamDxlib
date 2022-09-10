@@ -30,7 +30,7 @@ void Player::Initialize()
 	frame = 0.0f;
 	AttackTimer = 0;
 	AttackInterval = 0;
-	KnockCount = 1;
+	KnockCount = 0;
 	LockOnTexArea = 0.0f;
 	LockOnArea = 0.0f;
 	//一回内側に入ったかどうか
@@ -244,7 +244,7 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 			PlayerSpeed = 360.0f;
 		}
 	}
-
+	
 	//位置を求めている
 	PlayerRadius = PlayerSpeed * PI / 180.0f;
 	PlayerCircleX = cosf(PlayerRadius) * PlayerScale;
@@ -327,8 +327,9 @@ void Player::Draw() {
 
 void Player::FormatDraw() {
 	DrawFormatString(0, 0, GetColor(0, 0, 0), "Speed:%f", PlayerSpeed);
-	DrawFormatString(0, 20, GetColor(0, 0, 0), "InputY:%f", InputY);
-	DrawFormatString(0, 40, GetColor(0, 0, 0), "PlayerRot:%f", PlayerRot);
-	DrawFormatString(0, 60, GetColor(0, 0, 0), "Knock:%d", KnockCount);
-	DrawFormatString(0, 80, GetColor(0, 0, 0), "InterVal:%d", AttackInterval);
+	DrawFormatString(0, 20, GetColor(0, 0, 0), "Speed:%f", AfterSpeed);
+	DrawFormatString(0, 40, GetColor(0, 0, 0), "frame:%f", frame);
+	DrawFormatString(0, 60, GetColor(0, 0, 0), "PlayerRot:%f", PlayerRot);
+	DrawFormatString(0, 80, GetColor(0, 0, 0), "Knock:%d", KnockCount);
+	DrawFormatString(0, 100, GetColor(0, 0, 0), "AttackStart:%d", AttackStart);
 }

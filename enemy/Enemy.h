@@ -40,7 +40,10 @@ public:
 	const float& GetPositionX() { return EnemyPosX; }
 	const float& GetPositionY() { return EnemyPosY; }
 	const bool& GetAttackArea() { return InAttackArea; }
+	const bool& GetDeathEnemy() { return DeathEnemy; }
 	void SetStop(bool Stop) { this->EnemyStop = Stop; }
+	void SetSpeed(float EnemySpeed) { this->EnemySpeed = EnemySpeed; }
+	void SetDeathEnemy(bool DeathEnemy) { this->DeathEnemy = DeathEnemy; }
 	void SetEnemyTex(int tex) { this->texture = tex; }
 	void SetEnemyStopTex(int tex) { this->Stoptexture = tex; }
 	void SetLinkEnemyTex(int tex) { this->Linktexture = tex; }
@@ -69,6 +72,7 @@ private:
 	float AddVelocity;
 	//ƒŠƒXƒ|[ƒ“ŠÖŒW
 	bool EnemyAlive;
+	bool DeathEnemy;
 	int EnemyTimer;
 	bool EnemyMove;
 	bool EnemySet;

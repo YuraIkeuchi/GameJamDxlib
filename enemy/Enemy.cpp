@@ -10,7 +10,7 @@ Enemy::~Enemy() {
 }
 
 void Enemy::Initialize() {
-	EnemyTimer = rand() % 800 + 100;
+	EnemyTimer = 100;
 	//座標
 	EnemyPosX = 0.0f;
 	EnemyPosY = 0.0f;
@@ -28,6 +28,7 @@ void Enemy::Initialize() {
 	EnemyAdd = 0.0f;
 	//リスポーン関係
 	EnemyAlive = false;
+	DeathEnemy = false;
 	EnemyMove = false;
 	EnemySet = false;
 	TargetLine = 0;
@@ -80,7 +81,6 @@ void Enemy::ResPorn() {
 	if (!EnemyAlive) {
 		EnemyTimer--;
 		if (EnemyTimer == 0) {
-			EnemySpeed = rand() % 360;
 			TargetLine = 0;
 			Dir = rand() % 2;
 			if (Dir == RIGHT) {
@@ -90,7 +90,7 @@ void Enemy::ResPorn() {
 				EnemyAdd = -0.5f;
 			}
 			EnemyAlive = true;
-			EnemyTimer = rand() % 800;
+			EnemyTimer = 100;
 			EnemySet = true;
 		}
 	}
@@ -174,8 +174,8 @@ void Enemy::Move(Player* player) {
 
 	//敵の移動
 	if (EnemyMove && !EnemyStop) {
-		EnemySpeed += EnemyAdd;
-		EnemyRoundSpeed += EnemyAdd;
+		//EnemySpeed += EnemyAdd;
+		//EnemyRoundSpeed += EnemyAdd;
 	}
 
 	//0から360まで範囲を指定する
@@ -272,6 +272,7 @@ void Enemy::InArea(Player* player) {
 		}
 	}
 }
+
 void Enemy::Target(Player* player) {
 	//距離が近かった場合その場所にプレイヤー移動
 	if (EnemyAlive) {
@@ -280,10 +281,6 @@ void Enemy::Target(Player* player) {
 			//攻撃一回目(リンク始まるときは同じレーンのみ)
 			if (player->GetKnockCount() == 0) {
 				if (player->GetAttack() && DistanceScale == 0.0f) {
-					player->SetAttackStart(true);
-					player->SetAfterScale(EnemyScale);
-					player->SetAfterSpeed(EnemySpeed);
-					player->SetFrame(0.0f);
 					//0度と360度の境目の差をなくす
 					if (player->GetSpeed() <= 30.0f && EnemySpeed >= 330.0f) {
 						player->SetAround(true);
@@ -293,12 +290,11 @@ void Enemy::Target(Player* player) {
 						player->SetAround(true);
 						player->SetSpeed(player->GetSpeed() - 360.0f);
 					}
-					if (EnemySpeed < player->GetSpeed()) {
-						player->SetRotDir(PLAYERLEFT);
-					}
-					else {
-						player->SetRotDir(PLAYERRIGHT);
-					}
+					player->SetAttackStart(true);
+					player->SetAfterScale(EnemyScale);
+					player->SetAfterSpeed(EnemySpeed);
+					player->SetFrame(0.0f);
+					
 					//player->SetLink(true);
 				}
 			}
@@ -319,12 +315,6 @@ void Enemy::Target(Player* player) {
 					//	player->SetSpeed(player->GetSpeed() - 360.0f);
 					//}
 					//player->SetLink(true);
-					if (EnemySpeed < player->GetSpeed()) {
-						player->SetRotDir(PLAYERLEFT);
-					}
-					else {
-						player->SetRotDir(PLAYERRIGHT);
-					}
 				}
 				else if (player->GetAttackInterval() != 0 && DistanceScale == 80.0f) {
 					player->SetAttackStart(true);
@@ -342,12 +332,6 @@ void Enemy::Target(Player* player) {
 					//	player->SetSpeed(player->GetSpeed() - 360.0f);
 					//}
 					//player->SetLink(true);
-					if (EnemySpeed < player->GetSpeed()) {
-						player->SetRotDir(PLAYERLEFT);
-					}
-					else {
-						player->SetRotDir(PLAYERRIGHT);
-					}
 				}
 				//一回も内側にいかなかった場合外側にも行ける
 				else if (player->GetAttackInterval() != 0 && DistanceScale == -80.0f) {
@@ -365,12 +349,6 @@ void Enemy::Target(Player* player) {
 						//	player->SetAround(true);
 						//	player->SetSpeed(player->GetSpeed() - 360.0f);
 						//}
-						if (EnemySpeed < player->GetSpeed()) {
-							player->SetRotDir(PLAYERLEFT);
-						}
-						else {
-							player->SetRotDir(PLAYERRIGHT);
-						}
 					}
 				}
 			}
@@ -392,12 +370,6 @@ void Enemy::Target(Player* player) {
 						player->SetAround(true);
 						player->SetSpeed(player->GetSpeed() - 360.0f);
 					}
-					if (EnemySpeed < player->GetSpeed()) {
-						player->SetRotDir(PLAYERLEFT);
-					}
-					else {
-						player->SetRotDir(PLAYERRIGHT);
-					}
 					//player->SetLink(true);
 				}
 			}
@@ -418,12 +390,6 @@ void Enemy::Target(Player* player) {
 					//	player->SetSpeed(player->GetSpeed() - 360.0f);
 					//}
 					//player->SetLink(true);
-					if (EnemySpeed < player->GetSpeed()) {
-						player->SetRotDir(PLAYERLEFT);
-					}
-					else {
-						player->SetRotDir(PLAYERRIGHT);
-					}
 				}
 				else if (player->GetAttackInterval() != 0 && DistanceScale == -80.0f) {
 					player->SetAttackStart(true);
@@ -440,12 +406,6 @@ void Enemy::Target(Player* player) {
 					//	player->SetSpeed(player->GetSpeed() - 360.0f);
 					//}
 					//player->SetLink(true);
-					if (EnemySpeed < player->GetSpeed()) {
-						player->SetRotDir(PLAYERLEFT);
-					}
-					else {
-						player->SetRotDir(PLAYERRIGHT);
-					}
 				}
 				else {
 					//player->SetLink(false);
@@ -461,15 +421,18 @@ bool Enemy::Collide(Player* player) {
 	//当たり判定
 	float plaPosX = player->GetPositionX();
 	float plaPosY = player->GetPositionY();
-	if (Collision::CircleCollision(EnemyPosX, EnemyPosY, 25.0f, plaPosX, plaPosY, 25.0f)
+	if (Collision::CircleCollision(EnemyPosX, EnemyPosY, 8.0f, plaPosX, plaPosY, 8.0f)
 		&& (EnemyMove) && (EnemyAlive) && (player->GetScale() == EnemyScale) && (player->GetAttackStart())) {
 		EnemyAlive = false;
 		EnemyMove = false;
 		effects->active(FLOAT3{ EnemyPosX ,EnemyPosY ,0.0f });
 		breakEffects->active(FLOAT3{ EnemyPosX ,EnemyPosY ,0.0f });
 		EnemyScale = 500.0f;
+		DeathEnemy = true;
 		player->SetKnockCount(player->GetKnockCount() + 1);
 		player->SetAttackInterval(10);
+		/*player->SetAttackStart(false);
+		player->SetFrame(0.0f);*/
 		player->SetAround(false);
 		if (player->GetInAreaStart()) {
 			player->SetInArea(true);
@@ -542,5 +505,5 @@ void Enemy::FormatDraw(int EnemyCount) {
 	//stringの描画
 	//DrawFormatString(0, (20 * EnemyCount) + 0, GetColor(0, 0, 0), "EnemyScale[%d]:%f", EnemyCount, EnemyScale);
 	//DrawFormatString(0, (20 * EnemyCount) + 120, GetColor(0, 0, 0), "Timer[%d]:%d", EnemyCount, EnemyTimer);
-	DrawFormatString(0, (20 * EnemyCount) + 200, GetColor(0, 0, 0), "DistanceSpeed[%d]:%f", EnemyCount, DistanceSpeed);
+	DrawFormatString(0, (20 * EnemyCount) + 200, GetColor(0, 0, 0), "DistanceSpeed[%d]:%f", EnemyCount, EnemySpeed);
 }
