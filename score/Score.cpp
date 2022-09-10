@@ -1,7 +1,6 @@
 #include "Score.h"
 
 Score::Score() {
-
 }
 
 Score::~Score() {
@@ -10,12 +9,18 @@ Score::~Score() {
 
 void Score::Initialize() {
 	ScorePoint = 0;
-	GameTimer = 5000;
+	GameTimer = 100;
 	MultPoint = 0;
+	scorePosX = 900;
+	scorePosY = 600;
 }
 
-void Score::Update() {
+bool Score::Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput) {
 	GameTimer--;
+	if (GameTimer <= 0)
+	{
+		return true;
+	}
 	//ì|ÇµÇΩìGÅ@* ç≈èIínì_ÇÃÉXÉRÉAâ¡éZ
 	if (!player->GetAttackStart() && player->GetKnockCount() != 0) {
 		if (player->GetScale() == 80.0f) {
@@ -36,6 +41,8 @@ void Score::Update() {
 		player->SetInArea(false);
 		player->SetInAreaStart(false);
 	}
+
+	return false;
 }
 
 void Score::Draw() {
@@ -44,5 +51,8 @@ void Score::Draw() {
 
 void Score::FormatDraw() {
 	//DrawFormatString(0, 100, GetColor(0, 0, 0), "GameTimer::%d",GameTimer);
-	//DrawFormatString(0, 120, GetColor(0, 0, 0), "Score::%d", ScorePoint);
+	ChangeFont("ÇlÇr ñæí©");
+	SetFontSize(64);
+	DrawFormatString(scorePosX, scorePosY, GetColor(0, 0, 0), "ÉXÉRÉA %-10d", ScorePoint);
+	SetFontSize(20);
 }
