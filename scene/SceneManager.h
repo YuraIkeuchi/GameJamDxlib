@@ -7,6 +7,7 @@
 #include<time.h>
 #include "DxLib.h"
 #include"Title.h"
+#include"End.h"
 
 class SceneManager
 {
@@ -48,6 +49,8 @@ private:
 	StageCircle *stagecircle = nullptr;
 	//タイトルの動き
 	Title *title = nullptr;
+	//エンドの動き
+	End *end = nullptr;
 	//スコア
 	Score* score = nullptr;
 	float x = WIN_WIDTH / 2;
