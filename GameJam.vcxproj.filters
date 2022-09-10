@@ -44,6 +44,9 @@
     <ClCompile Include="Effect\BreakEffect.cpp">
       <Filter>effect</Filter>
     </ClCompile>
+    <ClCompile Include="End\End.cpp">
+      <Filter>End</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="collision\Collision.h">
@@ -91,6 +94,9 @@
     <ClInclude Include="Effect\BreakEffect.h">
       <Filter>effect</Filter>
     </ClInclude>
+    <ClInclude Include="End\End.h">
+      <Filter>End</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="player">
@@ -122,6 +128,9 @@
     </Filter>
     <Filter Include="collision">
       <UniqueIdentifier>{4411848a-610c-437b-b76b-96f7b4d30b69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="End">
+      <UniqueIdentifier>{0db4139a-3661-4b3b-80a8-aafa581e5dc5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -15,7 +15,7 @@ public:
 	//初期化
 	void Initialize();
 	//更新
-	void Update();
+	bool Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput);
 	//描画
 	void Draw();
 	//FormatString用
@@ -36,4 +36,7 @@ private:
 	int MultPoint;
 	//継承クラス
 	unique_ptr<Player> player = nullptr;
+
+	float scorePosX;
+	float scorePosY;
 };

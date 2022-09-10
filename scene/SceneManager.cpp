@@ -3,8 +3,6 @@
 
 void SceneManager::StaticInit()
 {
-
-
 	int playerTex = LoadGraph("Resources/player.png");
 	int targetTex = LoadGraph("Resources/TargetArea.png");
 	int enemyTex = LoadGraph("Resources/enemy.png");
@@ -25,6 +23,7 @@ void SceneManager::StaticInit()
 	score = new Score();
 	score->SetPlayer(player);
 	title = new Title();
+	end = new End();
 
 	player->SetPlayer(playerTex);
 	player->SetTargetArea(targetTex);
@@ -152,25 +151,25 @@ void SceneManager::GameSceneInit()
 
 void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput)
 {
-	//更新処理
-	//仮置き（次のシーンに行く）
-	if (input.Buttons[XINPUT_BUTTON_Y] && !oldinput.Buttons[XINPUT_BUTTON_Y]) {
+	//プレイヤー
+	if (score->GetGameTimer() > 0)
+	{
+		player->Update(keys, oldkeys, input, oldinput);
+		//エネミー
+		for (int i = 0; i < Enemy_Max; i++) {
+			enemy[i]->Update(player);
+			if (enemy[i]->GetAttackArea()) {
+				enemy[i]->Target(player);
+			}
+		}
+	}
+
+	if (score->Update(keys, oldkeys, input, oldinput) == true)
+	{
 		SceneTime = 0;
 		EndInit();
 		SceneNo = static_cast<int>(NO::End);
 	}
-
-	//プレイヤー
-	player->Update(keys, oldkeys, input, oldinput);
-	//エネミー
-	for (int i = 0; i < Enemy_Max; i++) {
-		enemy[i]->Update(player);
-		if (enemy[i]->GetAttackArea()) {
-			enemy[i]->Target(player);
-		}
-	}
-
-	score->Update();
 
 	Vector3 cameraOrgPosition(player->GetPositionX(),player->GetPositionY(), 500.0f);
 	Vector3 cameraPosition = cameraOrgPosition;
@@ -216,18 +215,55 @@ void SceneManager::GameSceneDraw()
 
 void SceneManager::EndInit()
 {
+	end->Initialize();
 }
 
 void SceneManager::EndUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput)
 {
 	//仮置き（次のシーンに行く）
-	if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A]) {
+	if (end->Update(input, oldinput) == true) {
 		SceneTime = 0;
 		TitleInit();
 		SceneNo = static_cast<int>(NO::Title);
 	}
+
+	Vector3 cameraOrgPosition(player->GetPositionX(), player->GetPositionY(), 500.0f);
+	Vector3 cameraPosition = cameraOrgPosition;
+
+	Vector3 cameraOrgUp(0.0f, 1.0f, 0.0f);
+	Vector3 cameraUp = cameraOrgUp;
+
+	Vector3 cameraTarget(player->GetPositionX(), player->GetPositionY(), 0.0f);
+
+	float cameraUpAngle = 0.0f;
+
+	//クリップ面
+	SetCameraNearFar(1.0f, 10000.0f);
+	SetCameraScreenCenter(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f);
+	SetCameraPositionAndTargetAndUpVec(
+		cameraPosition,
+		cameraTarget,
+		cameraUp);
 }
 
 void SceneManager::EndDraw()
 {
+	//描画処理
+//ステージ上の円
+	stagecircle->Draw();
+
+	//プレイヤー
+	player->Draw();
+	player->FormatDraw();
+
+	//スコア
+	score->Draw();
+	score->FormatDraw();
+	//エネミー
+	for (int i = 0; i < Enemy_Max; i++) {
+		enemy[i]->Draw();
+		enemy[i]->FormatDraw(i);
+	}
+
+	end->Draw(score->GetScorePoint());
 }
