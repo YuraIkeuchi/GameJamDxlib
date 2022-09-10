@@ -76,6 +76,72 @@ void Enemy::Update(Player* player) {
 	breakEffects->Update();
 }
 
+void Enemy::TutorialInitialize() {
+	EnemyTimer = 100;
+	//座標
+	EnemyPosX = 0.0f;
+	EnemyPosY = 0.0f;
+	//円運動のための変数
+	x = 0.0f;
+	y = 0.0f;
+	EnemyRadius = 0.0f;
+	//0から360までの円周
+	EnemySpeed = 0.0f;
+	//一周したかどうかの判定を取るための円周
+	EnemyRoundSpeed = 0.0f;
+	EnemyScale = 500.0f;
+	EnemyCircleX = 0.0f;
+	EnemyCircleY = 0.0f;
+	EnemyAdd = 0.0f;
+	//リスポーン関係
+	EnemyAlive = false;
+	DeathEnemy = false;
+	EnemyMove = false;
+	EnemySet = false;
+	TargetLine = 0;
+	//敵が止まっているか
+	EnemyStop = false;
+	EnemyStopTimer = 0;
+	Dir = RIGHT;
+	//保存用変数
+	EnemySaveSpeed = 0.0f;
+	//プレイヤーと敵の位置の距離
+	DistanceScale = 0.0f;
+	DistanceSpeed = 0.0f;
+	//攻撃範囲
+	InAttackArea = false;
+
+	int EffectTex = LoadGraph("Resources/attackEffect.png");
+	int breakEffectTex = LoadGraph("breakEffect.png");
+
+	effects = new AttackEffect();
+	effects->SetTexture(EffectTex);
+	breakEffects = new BreakEffect();
+	breakEffects->SetTexture(breakEffectTex);
+
+}
+
+void Enemy::TutorialUpdate(Player* player) {
+
+	ResPorn();
+	//Move(player);
+	InArea(player);
+	Stop(player);
+	Collide(player);
+	//PlayerCollide(player);
+	//if (InAttackArea) {
+	//	Target(player);
+	//}
+
+	EnemyRadius = EnemySpeed * PI / 180.0f;
+	EnemyCircleX = cosf(EnemyRadius) * EnemyScale;
+	EnemyCircleY = sinf(EnemyRadius) * EnemyScale;
+	EnemyPosX = EnemyCircleX + x;
+	EnemyPosY = EnemyCircleY + y;
+
+	effects->Update();
+	breakEffects->Update();
+}
 void Enemy::ResPorn() {
 	//リスポーンする
 	if (!EnemyAlive) {
@@ -90,7 +156,7 @@ void Enemy::ResPorn() {
 				EnemyAdd = -0.5f;
 			}
 			EnemyAlive = true;
-			EnemyTimer = 100;
+			EnemyTimer = -1;//2回目からはリスポーンしない
 			EnemySet = true;
 		}
 	}
@@ -174,8 +240,8 @@ void Enemy::Move(Player* player) {
 
 	//敵の移動
 	if (EnemyMove && !EnemyStop) {
-		//EnemySpeed += EnemyAdd;
-		//EnemyRoundSpeed += EnemyAdd;
+		EnemySpeed += EnemyAdd;
+		EnemyRoundSpeed += EnemyAdd;
 	}
 
 	//0から360まで範囲を指定する
@@ -421,7 +487,7 @@ bool Enemy::Collide(Player* player) {
 	//当たり判定
 	float plaPosX = player->GetPositionX();
 	float plaPosY = player->GetPositionY();
-	if (Collision::CircleCollision(EnemyPosX, EnemyPosY, 8.0f, plaPosX, plaPosY, 8.0f)
+	if (Collision::CircleCollision(EnemyPosX, EnemyPosY, 15.0f, plaPosX, plaPosY, 15.0f)
 		&& (EnemyMove) && (EnemyAlive) && (player->GetScale() == EnemyScale) && (player->GetAttackStart())) {
 		EnemyAlive = false;
 		EnemyMove = false;

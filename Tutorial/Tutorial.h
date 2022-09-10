@@ -3,8 +3,20 @@
 
 class Tutorial
 {
-private:
+public:
+	//getter setter
+	const int& GetTutorialNumber() { return TutorialNumber; }
+	const int& GetTutorialTimer() { return TutorialTimer; }
 
+	void SetTutorialNumber(int TutorialNumber) { this->TutorialNumber = TutorialNumber; }
+
+private:
+	int TutorialNumber = 0;
+	int TutorialTimer = 400;
+
+	bool FirstTutorial = false;
+	bool SecondTutorial = false;
+	bool ThirdTutorial = false;
 public:
 	Tutorial();
 	void Initialize();

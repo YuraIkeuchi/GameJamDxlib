@@ -156,6 +156,7 @@ void SceneManager::TitleDraw()
 
 void SceneManager::TutorialInit()
 {
+	//score->Initialize();
 	score->Initialize();
 	tutorial->Initialize();
 	//for (int i = 0; i < Enemy_Max; i++) {
@@ -172,7 +173,9 @@ void SceneManager::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STAT
 	int enemytargetTex = LoadGraph("Resources/enemytarget.png");
 
 	//特定のフレームで敵を生成する
-	if (score->GetGameTimer() == 900 || score->GetGameTimer() == 899) {
+	if (tutorial->GetTutorialTimer() == 380 || tutorial->GetTutorialTimer() == 280
+		|| tutorial->GetTutorialTimer() == 250 || tutorial->GetTutorialTimer() == 130
+		|| tutorial->GetTutorialTimer() == 120 || tutorial->GetTutorialTimer() == 110) {
 		BirthEnemyCount++;
 		EnemyArgment = true;
 	}
@@ -184,23 +187,35 @@ void SceneManager::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STAT
 		newEnemy->SetLinkEnemyTex(enemylinkTex);
 		newEnemy->SetEnemyStopTex(enemystopTex);
 		newEnemy->SetTargetEnemyTex(enemytargetTex);
-		newEnemy->Initialize();
+		newEnemy->TutorialInitialize();
 		if (BirthEnemyCount == 1) {
 			newEnemy->SetSpeed(358.0f);
 		}
 		else if (BirthEnemyCount == 2) {
 			newEnemy->SetSpeed(180.0f);
 		}
+		else if (BirthEnemyCount == 2) {
+			newEnemy->SetSpeed(160.0f);
+		}
+		else if (BirthEnemyCount == 3) {
+			newEnemy->SetSpeed(200.0f);
+		}
+		else if (BirthEnemyCount == 4) {
+			newEnemy->SetSpeed(220.0f);
+		}
+		else if (BirthEnemyCount == 5) {
+			newEnemy->SetSpeed(240.0f);
+		}
 		enemy.push_back(std::move(newEnemy));
 		EnemyArgment = false;
 	}
 	//プレイヤー
-	if (score->GetGameTimer() > 0)
+	if (tutorial->GetTutorialTimer() > 0)
 	{
 		player->Update(keys, oldkeys, input, oldinput);
 		for (unique_ptr<Enemy>& newEnemy : enemy) {
 			if (newEnemy != nullptr) {
-				newEnemy->Update(player);
+				newEnemy->TutorialUpdate(player);
 				if (newEnemy->GetAttackArea()) {
 					newEnemy->Target(player);
 				}
@@ -219,12 +234,14 @@ void SceneManager::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STAT
 		SceneNo = static_cast<int>(NO::GameScene);
 	}
 
-	if (score->Update(keys, oldkeys, input, oldinput) == true)
+	score->TutorialUpdate(keys, oldkeys, input, oldinput);
+
+	/*if (score->Update(keys, oldkeys, input, oldinput) == true)
 	{
 		SceneTime = 0;
 		EndInit();
 		SceneNo = static_cast<int>(NO::End);
-	}
+	}*/
 
 	Vector3 cameraOrgPosition(player->GetPositionX(), player->GetPositionY(), 500.0f);
 	Vector3 cameraPosition = cameraOrgPosition;

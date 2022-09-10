@@ -14,6 +14,10 @@ public:
 	void Initialize();
 	//更新
 	void Update(Player* player);
+	//チュートリアル初期化
+	void TutorialInitialize();
+	//チュートリアル更新
+	void TutorialUpdate(Player* player);
 	//生成
 	void ResPorn();
 	//移動

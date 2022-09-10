@@ -69,6 +69,7 @@ private:
 	float y = WIN_HEIGHT / 2;
 	int BirthEnemyCount = 0;
 	int TutorialCount = 0;
+	int TutorialTimer = 100;
 public:
 	//Å‰‚É‰Šú‰»‚·‚é‚à‚Ì
 	void StaticInit();
