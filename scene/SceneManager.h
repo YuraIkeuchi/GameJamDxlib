@@ -13,7 +13,7 @@ class SceneManager
 {
 private:
 	//ŒÅ’è’l
-	static const int Enemy_Max = 2;
+	static const int Enemy_Max = 10;
 private:
 	//ƒV[ƒ“‚Ìí—Ş
 	enum class NO

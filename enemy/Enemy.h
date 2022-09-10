@@ -91,6 +91,10 @@ private:
 		LEFT,
 	};
 
+	enum PlayerDir {
+		PLAYERRIGHT,
+		PLAYERLEFT,
+	};
 	AttackEffect* effects = nullptr;
 	BreakEffect* breakEffects = nullptr;
 };
