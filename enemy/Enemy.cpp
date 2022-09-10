@@ -60,7 +60,7 @@ void Enemy::Update(Player* player) {
 	InArea(player);
 	Stop(player);
 	Collide(player);
-	PlayerCollide(player);
+	//PlayerCollide(player);
 	//if (InAttackArea) {
 	//	Target(player);
 	//}
@@ -255,7 +255,7 @@ void Enemy::InArea(Player* player) {
 	}
 	else {
 		if (player->GetScale() != 80.0f) {
-			if ((DistanceScale <= 80) && (DistanceSpeed <= 60) && (EnemyMove)) {
+			if ((DistanceScale <= 80) && (DistanceSpeed <= 60 || DistanceSpeed >= 300) && (EnemyMove)) {
 				InAttackArea = true;
 			}
 			else {
@@ -263,7 +263,7 @@ void Enemy::InArea(Player* player) {
 			}
 		}
 		else {
-			if ((DistanceScale >= -80) && (DistanceSpeed <= 60) && (EnemyMove)) {
+			if ((DistanceScale >= -80) && (DistanceSpeed <= 60 || DistanceSpeed >= 300) && (EnemyMove)) {
 				InAttackArea = true;
 			}
 			else {
@@ -284,6 +284,15 @@ void Enemy::Target(Player* player) {
 					player->SetAfterScale(EnemyScale);
 					player->SetAfterSpeed(EnemySpeed);
 					player->SetFrame(0.0f);
+					//0度と360度の境目の差をなくす
+					if (player->GetSpeed() <= 30.0f && EnemySpeed >= 330.0f) {
+						player->SetAround(true);
+						player->SetSpeed(player->GetSpeed() + 360.0f);
+					}
+					else if (EnemySpeed <= 30.0f && player->GetSpeed() >= 330.0f) {
+						player->SetAround(true);
+						player->SetSpeed(player->GetSpeed() - 360.0f);
+					}
 					//player->SetLink(true);
 				}
 			}
@@ -294,7 +303,15 @@ void Enemy::Target(Player* player) {
 					player->SetAfterScale(EnemyScale);
 					player->SetAfterSpeed(EnemySpeed);
 					player->SetFrame(0.0f);
-					//player->SetLink(true);
+					////0度と360度の境目の差をなくす
+					//if (player->GetSpeed() <= 30.0f && EnemySpeed >= 330.0f) {
+					//	player->SetAround(true);
+					//	player->SetSpeed(player->GetSpeed() + 360.0f);
+					//}
+					//else if (EnemySpeed <= 30.0f && player->GetSpeed() >= 330.0f) {
+					//	player->SetAround(true);
+					//	player->SetSpeed(player->GetSpeed() - 360.0f);
+					//}
 				}
 				else if (player->GetAttackInterval() != 0 && DistanceScale == 80.0f) {
 					player->SetAttackStart(true);
@@ -302,7 +319,14 @@ void Enemy::Target(Player* player) {
 					player->SetAfterSpeed(EnemySpeed);
 					player->SetFrame(0.0f);
 					player->SetInAreaStart(true);
-					//player->SetLink(true);
+				/*	if (player->GetSpeed() <= 30.0f && EnemySpeed >= 330.0f) {
+						player->SetAround(true);
+						player->SetSpeed(player->GetSpeed() + 360.0f);
+					}
+					else if (EnemySpeed <= 30.0f && player->GetSpeed() >= 330.0f) {
+						player->SetAround(true);
+						player->SetSpeed(player->GetSpeed() - 360.0f);
+					}*/
 				}
 				//一回も内側にいかなかった場合外側にも行ける
 				else if (player->GetAttackInterval() != 0 && DistanceScale == -80.0f) {
@@ -311,6 +335,14 @@ void Enemy::Target(Player* player) {
 						player->SetAfterScale(EnemyScale);
 						player->SetAfterSpeed(EnemySpeed);
 						player->SetFrame(0.0f);
+					/*	if (player->GetSpeed() <= 30.0f && EnemySpeed >= 330.0f) {
+							player->SetAround(true);
+							player->SetSpeed(player->GetSpeed() + 360.0f);
+						}
+						else if (EnemySpeed <= 30.0f && player->GetSpeed() >= 330.0f) {
+							player->SetAround(true);
+							player->SetSpeed(player->GetSpeed() - 360.0f);
+						}*/
 					}
 				}
 			}
@@ -323,7 +355,14 @@ void Enemy::Target(Player* player) {
 					player->SetAfterScale(EnemyScale);
 					player->SetAfterSpeed(EnemySpeed);
 					player->SetFrame(0.0f);
-					//player->SetLink(true);
+					/*if (player->GetSpeed() <= 30.0f && EnemySpeed >= 330.0f) {
+						player->SetAround(true);
+						player->SetSpeed(player->GetSpeed() + 360.0f);
+					}
+					else if (EnemySpeed <= 30.0f && player->GetSpeed() >= 330.0f) {
+						player->SetAround(true);
+						player->SetSpeed(player->GetSpeed() - 360.0f);
+					}*/
 				}
 			}
 			else if (player->GetKnockCount() >= 1) {
@@ -333,17 +372,28 @@ void Enemy::Target(Player* player) {
 					player->SetAfterScale(EnemyScale);
 					player->SetAfterSpeed(EnemySpeed);
 					player->SetFrame(0.0f);
-					//player->SetLink(true);
+				/*	if (player->GetSpeed() <= 30.0f && EnemySpeed >= 330.0f) {
+						player->SetAround(true);
+						player->SetSpeed(player->GetSpeed() + 360.0f);
+					}
+					else if (EnemySpeed <= 30.0f && player->GetSpeed() >= 330.0f) {
+						player->SetAround(true);
+						player->SetSpeed(player->GetSpeed() - 360.0f);
+					}*/
 				}
 				else if (player->GetAttackInterval() != 0 && DistanceScale == -80.0f) {
 					player->SetAttackStart(true);
 					player->SetAfterScale(EnemyScale);
 					player->SetAfterSpeed(EnemySpeed);
 					player->SetFrame(0.0f);
-					//player->SetLink(true);
-				}
-				else {
-					//player->SetLink(false);
+				/*	if (player->GetSpeed() <= 30.0f && EnemySpeed >= 330.0f) {
+						player->SetAround(true);
+						player->SetSpeed(player->GetSpeed() + 360.0f);
+					}
+					else if (EnemySpeed <= 30.0f && player->GetSpeed() >= 330.0f) {
+						player->SetAround(true);
+						player->SetSpeed(player->GetSpeed() - 360.0f);
+					}*/
 				}
 			}
 		}
@@ -365,6 +415,7 @@ bool Enemy::Collide(Player* player) {
 		EnemyScale = 500.0f;
 		player->SetKnockCount(player->GetKnockCount() + 1);
 		player->SetAttackInterval(10);
+		player->SetAround(false);
 		if (player->GetInAreaStart()) {
 			player->SetInArea(true);
 		}
@@ -436,5 +487,5 @@ void Enemy::FormatDraw(int EnemyCount) {
 	//stringの描画
 	//DrawFormatString(0, (20 * EnemyCount) + 0, GetColor(0, 0, 0), "EnemyScale[%d]:%f", EnemyCount, EnemyScale);
 	//DrawFormatString(0, (20 * EnemyCount) + 120, GetColor(0, 0, 0), "Timer[%d]:%d", EnemyCount, EnemyTimer);
-	DrawFormatString(0, (20 * EnemyCount) + 200, GetColor(0, 0, 0), "EnemySpeed[%d]:%f", EnemyCount, EnemySpeed);
+	DrawFormatString(0, (20 * EnemyCount) + 200, GetColor(0, 0, 0), "DistanceSpeed[%d]:%f", EnemyCount, DistanceSpeed);
 }

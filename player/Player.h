@@ -46,17 +46,19 @@ public:
 	const float& GetAttackAreaX() { return AttackAreaX; }
 	const float& GetAttackAreaY() { return AttackAreaY; }
 
+	void SetSpeed(float PlayerSpeed) { this->PlayerSpeed = PlayerSpeed; }
 	void SetAfterScale(float AfterScale) { this->AfterScale = AfterScale; }
 	void SetAfterSpeed(float AfterSpeed) { this->AfterSpeed = AfterSpeed; }
 	void SetAttackStart(bool AttackStart) { this->AttackStart = AttackStart; }
 	void SetAttackInterval(int AttackInterval) { this->AttackInterval = AttackInterval; }
 	void SetKnockCount(int KnockCount) { this->KnockCount = KnockCount; }
 	void SetFrame(float frame) { this->frame = frame; }
-	void SetTargetArea(int _targetarea) { this->targettexture = _targetarea; }
 	void SetStun(bool Stun) { this->Stun = Stun; }
 	void SetInArea(bool InArea) { this->InArea = InArea; }
+	void SetAround(bool Around) { this->Around = Around; }
 	void SetInAreaStart(bool InAreaStart) { this->InAreaStart = InAreaStart; }
 	void SetPlayer(int _player) { this->texture = _player; }
+	void SetTargetArea(int _targetarea) { this->targettexture = _targetarea; }
 private:
 	//メンバ変数
 	int texture = 0;
@@ -108,7 +110,7 @@ private:
 	int StunTimer;
 	bool Invisible;
 	int InvisibleTimer;
-
+	bool Around;
 	//攻撃エリア関係(ほんとは別クラスにやりたい)
 	float AttackRadius;
 	float AttackAreaX;
@@ -117,9 +119,9 @@ private:
 	float AttackSpeed;
 	float AttackCircleX;
 	float AttackCircleY;
-  
-	float inputX;
-	float inputY;
-	float joyangle;
+	//コントローラ関係
+	float InputX;
+	float InputY;
+	float Joyangle;
 	MoveEffect* Effects[EFFECTS_MAX] = {};
 };

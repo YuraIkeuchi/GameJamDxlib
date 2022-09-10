@@ -17,7 +17,7 @@ void Player::Initialize()
 	x = 0;
 	y = 0;
 	PlayerRadius = 0.0f;
-	PlayerSpeed = 0.0f;
+	PlayerSpeed = 5.0f;
 	PlayerScale = 320.0f;
 	PlayerCircleX = 0.0f;
 	PlayerCircleY = 0.0f;
@@ -29,7 +29,7 @@ void Player::Initialize()
 	frame = 0.0f;
 	AttackTimer = 0;
 	AttackInterval = 0;
-	KnockCount = 0;
+	KnockCount = 1;
 	LockOnTexArea = 0.0f;
 	LockOnArea = 0.0f;
 	//一回内側に入ったかどうか
@@ -49,7 +49,7 @@ void Player::Initialize()
 	StunTimer = 100;
 	Invisible = false;
 	InvisibleTimer = 100;
-
+	Around = false;
 	AttackAreaX = 0.0f;
 	AttackAreaY = 0.0f;
 	AttackScale = 60.0f;
@@ -61,9 +61,9 @@ void Player::Initialize()
 		Effects[i]->SetTexture(texture);
 	}
 
-	inputX = 0.0f;
-	inputY = 0.0f;
-	joyangle = 0.0f;
+	InputX = 0.0f;
+	InputY = 0.0f;
+	Joyangle = 0.0f;
 }
 
 void Player::Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput) {
@@ -76,7 +76,6 @@ void Player::Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPU
 	//スタン関係
 	PlayerStun();
 	AttackArea();
-
 	for (int i = 0; i < EFFECTS_MAX; i++)
 	{
 		if (Effects[i]->getIsAlive() != true) {
@@ -95,10 +94,10 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 	float Y = -(float)input.ThumbLY;
 	joyangle = atan2((float)X, (float)Y) - PI / 2;*/
 
-	inputX = (float)input.ThumbLX / 32768;
-	inputY = (float)input.ThumbLY / 32768;
-	joyangle = ((atan2(inputX, inputY) * (180.0f / PI))) + 90;
-	AttackSpeed = joyangle;
+	InputX = (float)input.ThumbLX / 32768;
+	InputY = (float)input.ThumbLY / 32768;
+	Joyangle = ((atan2(InputX, InputY) * (180.0f / PI))) + 90;
+	AttackSpeed = Joyangle;
 	//プレイヤー
 	//サークル変更
 	if (input.Buttons[XINPUT_BUTTON_DPAD_DOWN] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_DOWN]) {
@@ -204,21 +203,26 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 
 	//攻撃後の硬直(この間にリンク判定する)
 	if (AttackInterval > 0) {
+		StartJoypadVibration(DX_INPUT_PAD1, 1000, 2000);
 		AttackInterval--;
 	}
 	else {
 		//リンクが切れる
 		AttackInterval = 0;
+		StopJoypadVibration(DX_INPUT_PAD1);
 	}
 
 	//0から360まで範囲を指定する
-	if (PlayerSpeed > 360.0f) {
-		PlayerSpeed = 0.0f;
+	if (!Around) {
+		if (PlayerSpeed > 360.0f) {
+			PlayerSpeed = 0.0f;
+		}
+
+		if (PlayerSpeed < 0.0f) {
+			PlayerSpeed = 360.0f;
+		}
 	}
 
-	if (PlayerSpeed < 0.0f) {
-		PlayerSpeed = 360.0f;
-	}
 	//位置を求めている
 	PlayerRadius = PlayerSpeed * PI / 180.0f;
 	PlayerCircleX = cosf(PlayerRadius) * PlayerScale;
@@ -232,6 +236,7 @@ void Player::AttackMove(char keys[255], char oldkeys[255], XINPUT_STATE input, X
 	if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A] && !Attack && !AttackStart) {
 		Attack = true;
 	}
+	
 	//1フレームのみの判定
 	if (Attack) {
 		AttackTimer++;
@@ -285,6 +290,7 @@ void Player::PlayerStun() {
 		}
 	}
 }
+
 void Player::Draw() {
 	DrawBillboard3D(VGet(playerPosX, playerPosY, 0), 0.5f, 0.5f, 50, 0.0f, texture, true);
 
@@ -297,14 +303,8 @@ void Player::Draw() {
 }
 
 void Player::FormatDraw() {
-	DrawFormatString(0, 0, GetColor(0, 0, 0), "InArea:%d", InArea);
-	DrawFormatString(0, 20, GetColor(0, 0, 0), "InAreaStart:%d", InAreaStart);
-	DrawFormatString(0, 40, GetColor(0, 0, 0), "inputX:%f", inputX);
-	DrawFormatString(0, 60, GetColor(0, 0, 0), "inputY:%f", inputY);
-	DrawFormatString(0, 80, GetColor(0, 0, 0), "joyangle:%f", joyangle);
-	DrawFormatString(0, 100, GetColor(0, 0, 0), "Speed:%f", PlayerSpeed);
-	//DrawFormatString(0, 60, GetColor(0, 0, 0), "AddSpeed:%f", AddSpeed);
-	//DrawFormatString(0, 80, GetColor(0, 0, 0), "AddVelocity:%f", AddVelocity);
-	DrawFormatString(0, 120, GetColor(0, 0, 0), "AttackStart:%d", AttackStart);
-	DrawFormatString(0, 140, GetColor(0, 0, 0), "Attack:%d", Attack);
+	DrawFormatString(0, 0, GetColor(0, 0, 0), "Speed:%f", PlayerSpeed);
+	DrawFormatString(0, 20, GetColor(0, 0, 0), "Around:%d", Around);
+	DrawFormatString(0, 40, GetColor(0, 0, 0), "Knock:%d", KnockCount);
+	DrawFormatString(0, 80, GetColor(0, 0, 0), "InterVal:%d", AttackInterval);
 }
