@@ -21,6 +21,7 @@ void Player::Initialize()
 	PlayerScale = 320.0f;
 	PlayerCircleX = 0.0f;
 	PlayerCircleY = 0.0f;
+	PlayerRot = 0.0f;
 	//攻撃関係
 	Attack = false;
 	AttackStart = false;
@@ -44,6 +45,7 @@ void Player::Initialize()
 	Speedframe = 0.0f;
 	ChangeDir = false;
 	Dir = RIGHT;
+	PlayerRotDir = ROTRIGHT;
 	//ダメージ関係
 	Stun = false;
 	StunTimer = 100;
@@ -86,6 +88,7 @@ void Player::Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPU
 	for (int i = 0; i < EFFECTS_MAX; i++)
 	{
 		Effects[i]->Update();
+		Effects[i]->SetAngle(PlayerRot);
 	}
 }
 
@@ -98,6 +101,7 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 	InputY = (float)input.ThumbLY / 32768;
 	Joyangle = ((atan2(InputX, InputY) * (180.0f / PI))) + 90;
 	AttackSpeed = Joyangle;
+	PlayerRot += 0.01f;
 	//プレイヤー
 	//サークル変更
 	if (input.Buttons[XINPUT_BUTTON_DPAD_DOWN] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_DOWN]) {
@@ -156,6 +160,7 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 		&& (Dir == LEFT)) {
 		Speedframe = 0.0f;
 		Dir = RIGHT;
+		PlayerRotDir = ROTRIGHT;
 		ChangeDir = true;
 	}
 
@@ -164,6 +169,7 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 		&& (Dir == RIGHT)) {
 		Speedframe = 0.0f;
 		Dir = LEFT;
+		PlayerRotDir = ROTLEFT;
 		ChangeDir = true;
 	}
 
@@ -199,6 +205,22 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 	//移動量を加算している(攻撃後の硬直後以外)
 	if (AttackInterval == 0) {
 		PlayerSpeed += AddSpeed + AddVelocity;
+	}
+	//プレイヤーの向き(通常時とスティック動かしているときで変わる)
+	if (AttackStart || KnockCount != 0) {
+		InputX = 0.0f;
+		InputY = 0.0f;
+	}
+	if ((InputX == 0.0f) && (InputY == 0.0f)) {
+		if (PlayerRotDir == ROTRIGHT) {
+			PlayerRot = -((PlayerSpeed - 90.0f) / 180.0f) * PI;
+		}
+		else if (PlayerRotDir == ROTLEFT) {
+			PlayerRot = -((PlayerSpeed - 270.0f) / 180.0f) * PI;
+		}
+	}
+	else {
+		PlayerRot = -((AttackSpeed - 180.0f) / 180.0f) * PI;
 	}
 
 	//攻撃後の硬直(この間にリンク判定する)
@@ -254,6 +276,7 @@ void Player::AttackMove(char keys[255], char oldkeys[255], XINPUT_STATE input, X
 		else {
 			frame = 0.0f;
 			AttackStart = false;
+			PlayerRotDir = Dir;
 		}
 
 		PlayerScale = Ease(In, Cubic, frame, PlayerScale, AfterScale);
@@ -292,7 +315,7 @@ void Player::PlayerStun() {
 }
 
 void Player::Draw() {
-	DrawBillboard3D(VGet(playerPosX, playerPosY, 0), 0.5f, 0.5f, 50, 0.0f, texture, true);
+	DrawBillboard3D(VGet(playerPosX, playerPosY, 0), 0.5f, 0.5f, 50, PlayerRot, texture, true);
 
 	for (int i = 0; i < EFFECTS_MAX; i++)
 	{
@@ -304,7 +327,8 @@ void Player::Draw() {
 
 void Player::FormatDraw() {
 	DrawFormatString(0, 0, GetColor(0, 0, 0), "Speed:%f", PlayerSpeed);
-	DrawFormatString(0, 20, GetColor(0, 0, 0), "Around:%d", Around);
-	DrawFormatString(0, 40, GetColor(0, 0, 0), "Knock:%d", KnockCount);
+	DrawFormatString(0, 20, GetColor(0, 0, 0), "InputY:%f", InputY);
+	DrawFormatString(0, 40, GetColor(0, 0, 0), "PlayerRot:%f", PlayerRot);
+	DrawFormatString(0, 60, GetColor(0, 0, 0), "Knock:%d", KnockCount);
 	DrawFormatString(0, 80, GetColor(0, 0, 0), "InterVal:%d", AttackInterval);
 }

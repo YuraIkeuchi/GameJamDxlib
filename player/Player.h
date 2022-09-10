@@ -45,8 +45,10 @@ public:
 	const float& GetPositionY() { return playerPosY; }
 	const float& GetAttackAreaX() { return AttackAreaX; }
 	const float& GetAttackAreaY() { return AttackAreaY; }
+	const float& GetPlayerRot() { return PlayerRot; }
 
 	void SetSpeed(float PlayerSpeed) { this->PlayerSpeed = PlayerSpeed; }
+	void SetRotDir(int RotDir) { this->PlayerRotDir = RotDir; }
 	void SetAfterScale(float AfterScale) { this->AfterScale = AfterScale; }
 	void SetAfterSpeed(float AfterSpeed) { this->AfterSpeed = AfterSpeed; }
 	void SetAttackStart(bool AttackStart) { this->AttackStart = AttackStart; }
@@ -101,9 +103,16 @@ private:
 	float Speedframe;
 	bool ChangeDir;
 	int Dir;
+	int PlayerRotDir;
+	float PlayerRot;
+
 	enum MoveDir {
 		RIGHT,
 		LEFT,
+	};
+	enum RotDir {
+		ROTRIGHT,
+		ROTLEFT,
 	};
 	//ダメージ関係
 	bool Stun;
