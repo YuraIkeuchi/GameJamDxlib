@@ -37,6 +37,8 @@ public:
 public:
 	//getter setter
 	const float& GetScale() { return EnemyScale; }
+	const float& GetPositionX() { return EnemyPosX; }
+	const float& GetPositionY() { return EnemyPosY; }
 	const bool& GetAttackArea() { return InAttackArea; }
 	void SetStop(bool Stop) { this->EnemyStop = Stop; }
 	void SetEnemyTex(int tex) { this->texture = tex; }

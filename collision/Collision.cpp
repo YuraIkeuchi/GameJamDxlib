@@ -1,6 +1,14 @@
 #include "Collision.h"
 #include "math.h"
 
+float Collision::GetLength(float posX, float posY, float posX2, float posY2)
+{
+
+	float len;
+	len = sqrtf((posX - posX2) * (posX - posX2) + (posY - posY2) * (posY - posY2));
+	return len;
+}
+
 bool Collision::CircleCollision(const float& X1, const float& Y1, const float& R1, const float& X2, const float& Y2, const float& R2) {
 	float a = X1 - X2;
 	float b = Y1 - Y2;
