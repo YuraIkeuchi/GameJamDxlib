@@ -29,7 +29,7 @@ void Player::Initialize()
 	frame = 0.0f;
 	AttackTimer = 0;
 	AttackInterval = 0;
-	KnockCount = 0;
+	KnockCount = 1;
 	LockOnTexArea = 0.0f;
 	LockOnArea = 0.0f;
 	//一回内側に入ったかどうか
@@ -305,5 +305,6 @@ void Player::Draw() {
 void Player::FormatDraw() {
 	DrawFormatString(0, 0, GetColor(0, 0, 0), "Speed:%f", PlayerSpeed);
 	DrawFormatString(0, 20, GetColor(0, 0, 0), "Around:%d", Around);
+	DrawFormatString(0, 40, GetColor(0, 0, 0), "Knock:%d", KnockCount);
 	DrawFormatString(0, 80, GetColor(0, 0, 0), "InterVal:%d", AttackInterval);
 }
