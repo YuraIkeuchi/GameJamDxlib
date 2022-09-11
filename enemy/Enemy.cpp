@@ -64,7 +64,7 @@ void Enemy::Update(Player* player) {
 	InArea(player);
 	Stop(player);
 	Collide(player);
-	//PlayerCollide(player);
+	PlayerCollide(player);
 	//if (InAttackArea) {
 	//	Target(player);
 	//}
@@ -137,7 +137,7 @@ void Enemy::TutorialUpdate(Player* player) {
 	InArea(player);
 	Stop(player);
 	Collide(player);
-	//PlayerCollide(player);
+	PlayerCollide(player);
 	//if (InAttackArea) {
 	//	Target(player);
 	//}
@@ -205,6 +205,18 @@ void Enemy::ResPorn() {
 				EnemyRoundSpeed = EnemySpeed;
 				EnemySaveSpeed = EnemyRoundSpeed;
 				EnemyScale = 160.0f;
+			}
+		}
+		else if (TargetLine == 3) {
+			if (EnemyScale >= 80.0f) {
+				EnemyScale -= 5.0f;
+			}
+			else {
+				EnemySet = false;
+				EnemyMove = true;
+				EnemyRoundSpeed = EnemySpeed;
+				EnemySaveSpeed = EnemyRoundSpeed;
+				EnemyScale = 80.0f;
 			}
 		}
 	}

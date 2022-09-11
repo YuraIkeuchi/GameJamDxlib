@@ -45,6 +45,8 @@ private:
 	void GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput);
 	void GameSceneDraw();
 
+	void GameSceneEnemyArg();
+
 	void EndInit();
 	void EndUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput);
 	void EndDraw();
