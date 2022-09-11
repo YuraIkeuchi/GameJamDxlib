@@ -4,12 +4,14 @@
 #include "math.h"
 //コンストラクタ
 Player::Player() {
+	attackSound = LoadSoundMem("Resources/sound/attack.mp3");
+	enemyStopSound = LoadSoundMem("Resources/sound/enemyStop.mp3");
 }
 //デストラクタ
 Player::~Player() {
 }
 
-void Player::Initialize()
+void Player::Initialize(int soundBolume)
 {
 	playerPosX = WIN_WIDTH / 2;
 	playerPosY = WIN_HEIGHT / 2;
@@ -30,7 +32,7 @@ void Player::Initialize()
 	frame = 0.0f;
 	AttackTimer = 0;
 	AttackInterval = 0;
-	KnockCount = 1;
+	KnockCount = 0;
 	LockOnTexArea = 0.0f;
 	LockOnArea = 0.0f;
 	//一回内側に入ったかどうか
@@ -67,6 +69,8 @@ void Player::Initialize()
 	InputX = 0.0f;
 	InputY = 0.0f;
 	Joyangle = 0.0f;
+	ChangeVolumeSoundMem(soundBolume * 1.2, attackSound);
+	ChangeVolumeSoundMem(soundBolume * 1.2, enemyStopSound);
 }
 
 void Player::Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput) {
@@ -107,7 +111,7 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 	PlayerRot += 0.01f;
 	//プレイヤー
 	//サークル変更
-	if (input.Buttons[XINPUT_BUTTON_DPAD_DOWN] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_DOWN]) {
+	/*if (input.Buttons[XINPUT_BUTTON_DPAD_DOWN] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_DOWN]) {
 		if (PlayerScale > 81.0f) {
 			PlayerScale -= 80.0f;
 		}
@@ -117,7 +121,7 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 		if (PlayerScale < 319.0f) {
 			PlayerScale += 80.0f;
 		}
-	}
+	}*/
 
 	//どのサークルにいるかで変更するものがある
 	if (PlayerScale == 80.0f) {
@@ -197,6 +201,7 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 	if (input.Buttons[XINPUT_BUTTON_B] && !oldinput.Buttons[XINPUT_BUTTON_B] && !Stop) {
 		Stop = true;
 		stopEffects->active(VGet(playerPosX, playerPosY, 0));
+		PlaySoundMem(enemyStopSound, DX_PLAYTYPE_BACK);
 	}
 	//敵を止めてる時間
 	if (Stop) {
@@ -231,6 +236,7 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 	if (AttackInterval > 0) {
 		StartJoypadVibration(DX_INPUT_PAD1, 1000, 2000);
 		AttackInterval--;
+		PlaySoundMem(attackSound, DX_PLAYTYPE_BACK);
 	}
 	else {
 		//リンクが切れる
@@ -248,7 +254,7 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 			PlayerSpeed = 360.0f;
 		}
 	}
-
+	
 	//位置を求めている
 	PlayerRadius = PlayerSpeed * PI / 180.0f;
 	PlayerCircleX = cosf(PlayerRadius) * PlayerScale;
@@ -332,8 +338,9 @@ void Player::Draw() {
 
 void Player::FormatDraw() {
 	DrawFormatString(0, 0, GetColor(0, 0, 0), "Speed:%f", PlayerSpeed);
-	DrawFormatString(0, 20, GetColor(0, 0, 0), "InputY:%f", InputY);
-	DrawFormatString(0, 40, GetColor(0, 0, 0), "PlayerRot:%f", PlayerRot);
-	DrawFormatString(0, 60, GetColor(0, 0, 0), "Knock:%d", KnockCount);
-	DrawFormatString(0, 80, GetColor(0, 0, 0), "InterVal:%d", AttackInterval);
+	DrawFormatString(0, 20, GetColor(0, 0, 0), "Speed:%f", AfterSpeed);
+	DrawFormatString(0, 40, GetColor(0, 0, 0), "frame:%f", frame);
+	DrawFormatString(0, 60, GetColor(0, 0, 0), "PlayerRot:%f", PlayerRot);
+	DrawFormatString(0, 80, GetColor(0, 0, 0), "Knock:%d", KnockCount);
+	DrawFormatString(0, 100, GetColor(0, 0, 0), "AttackStart:%d", AttackStart);
 }
