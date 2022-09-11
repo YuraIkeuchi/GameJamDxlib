@@ -88,8 +88,8 @@ void SceneManager::Draw()
 		break;
 	case static_cast<int>(SceneManager::NO::Tutorial):
 		DrawFormatString(0, 300, GetColor(0, 0, 0), "TUTORIAL");
-		DrawFormatString(0, 320, GetColor(0, 0, 0), "BirthEnemyCount %d", BirthEnemyCount);
-		DrawFormatString(0, 340, GetColor(0, 0, 0), "TutorialCount %d", TutorialCount);
+	/*	DrawFormatString(0, 320, GetColor(0, 0, 0), "BirthEnemyCount %d", BirthEnemyCount);
+		DrawFormatString(0, 340, GetColor(0, 0, 0), "TutorialCount %d", TutorialCount);*/
 		TutorialDraw();
 		break;
 	case static_cast<int>(SceneManager::NO::GameScene):
@@ -241,6 +241,11 @@ void SceneManager::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STAT
 				tutorial->SetTutorialTimer(300);
 			}
 		}
+	}
+
+	if (tutorial->GetTutorialTimer() == 10) {
+		//要素全削除
+		enemy.clear();
 	}
 	//プレイヤー
 	if (tutorial->GetTutorialTimer() > 0)

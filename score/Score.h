@@ -20,6 +20,7 @@ public:
 	bool TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput);
 	//•`‰æ
 	void Draw();
+
 	//FormatString—p
 	void FormatDraw();
 public:

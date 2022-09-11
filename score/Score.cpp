@@ -12,7 +12,7 @@ void Score::Initialize() {
 	GameTimer = 1000;
 	MultPoint = 0;
 	scorePosX = 900;
-	scorePosY = 600;
+	scorePosY = 100;
 }
 
 bool Score::Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput) {
