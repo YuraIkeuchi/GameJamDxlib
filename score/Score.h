@@ -16,8 +16,11 @@ public:
 	void Initialize();
 	//更新
 	bool Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput);
+	//更新
+	bool TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput);
 	//描画
 	void Draw();
+
 	//FormatString用
 	void FormatDraw();
 public:
