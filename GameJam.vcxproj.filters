@@ -133,4 +133,7 @@
       <UniqueIdentifier>{0db4139a-3661-4b3b-80a8-aafa581e5dc5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resources\icon.rc" />
+  </ItemGroup>
 </Project>

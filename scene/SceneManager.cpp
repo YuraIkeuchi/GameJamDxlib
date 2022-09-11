@@ -10,6 +10,7 @@ void SceneManager::StaticInit()
 	int enemylinkTex = LoadGraph("Resources/LinkArea.png");
 	int enemytargetTex = LoadGraph("Resources/enemytarget.png");
 	int stageTex = LoadGraph("Resources/stage.png");
+	gameBgm = LoadSoundMem("Resources/sound/gameBgm.mp3");
 
 	for (int i = 0; i < Enemy_Max; i++) {
 		enemy[i] = new Enemy();
@@ -94,7 +95,7 @@ void SceneManager::Draw()
 void SceneManager::TitleInit()
 {
 	title->Initialize();
-	player->Initialize();
+	player->Initialize(title->GetVolume());
 }
 
 void SceneManager::TitleUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput)
@@ -146,7 +147,9 @@ void SceneManager::GameSceneInit()
 	for (int i = 0; i < Enemy_Max; i++) {
 		enemy[i]->Initialize();
 	}
-
+	
+	ChangeVolumeSoundMem(title->GetVolume(), gameBgm);
+	PlaySoundMem(gameBgm, DX_PLAYTYPE_LOOP);
 }
 
 void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput)
@@ -167,6 +170,7 @@ void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STA
 	if (score->Update(keys, oldkeys, input, oldinput) == true)
 	{
 		SceneTime = 0;
+		StopSoundMem(gameBgm);
 		EndInit();
 		SceneNo = static_cast<int>(NO::End);
 	}
@@ -199,15 +203,15 @@ void SceneManager::GameSceneDraw()
 
 	//プレイヤー
 	player->Draw();
-	player->FormatDraw();
+	//player->FormatDraw();
 
 	//スコア
 	score->Draw();
-	score->FormatDraw();
+	//score->FormatDraw();
 	//エネミー
 	for (int i = 0; i < Enemy_Max; i++) {
 		enemy[i]->Draw();
-		enemy[i]->FormatDraw(i);
+		//enemy[i]->FormatDraw(i);
 	}
 
 
@@ -215,7 +219,7 @@ void SceneManager::GameSceneDraw()
 
 void SceneManager::EndInit()
 {
-	end->Initialize();
+	end->Initialize(title->GetVolume());
 }
 
 void SceneManager::EndUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput)
@@ -254,15 +258,15 @@ void SceneManager::EndDraw()
 
 	//プレイヤー
 	player->Draw();
-	player->FormatDraw();
+	//player->FormatDraw();
 
 	//スコア
 	score->Draw();
-	score->FormatDraw();
+	//score->FormatDraw();
 	//エネミー
 	for (int i = 0; i < Enemy_Max; i++) {
 		enemy[i]->Draw();
-		enemy[i]->FormatDraw(i);
+		//enemy[i]->FormatDraw(i);
 	}
 
 	end->Draw(score->GetScorePoint());

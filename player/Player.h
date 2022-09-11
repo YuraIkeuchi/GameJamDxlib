@@ -13,7 +13,7 @@ public:
 	~Player();
 
 	//初期化
-	void Initialize();
+	void Initialize(int soundBolume);
 	//更新
 	void Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput);
 	//移動
@@ -133,4 +133,7 @@ private:
 	float InputY;
 	float Joyangle;
 	MoveEffect* Effects[EFFECTS_MAX] = {};
+
+	int attackSound;
+	int enemyStopSound;
 };

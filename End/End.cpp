@@ -8,9 +8,11 @@ End::End()
 	EndTex6 = LoadGraph("Resources/title6.png");
 	LoadDivGraph("Resources/rank.png", 4, 4, 1, 400, 112, EndTex10);
 	EndTex11 = LoadGraph("Resources/end1.png");
+	endBgm = LoadSoundMem("Resources/sound/endBgm.mp3");
+	endSe1 = LoadSoundMem("Resources/sound/titleSound3.mp3");
 }
 
-void End::Initialize()
+void End::Initialize(int soundBolume)
 {
 	doorPosX1 = -140;
 	doorPosX2 = 1280 + 140;
@@ -21,6 +23,9 @@ void End::Initialize()
 	alpha = 100;
 	endFlag = false;
 	drawFlag = false;
+	ChangeVolumeSoundMem(soundBolume, endBgm);
+	PlaySoundMem(endBgm, DX_PLAYTYPE_LOOP);
+	ChangeVolumeSoundMem(soundBolume, endSe1);
 }
 
 bool End::Update(XINPUT_STATE input, XINPUT_STATE oldinput)
@@ -56,6 +61,8 @@ bool End::Update(XINPUT_STATE input, XINPUT_STATE oldinput)
 			if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A])
 			{
 				Speedframe = 0.0f;
+				PlaySoundMem(endSe1, DX_PLAYTYPE_BACK);
+				StopSoundMem(endBgm);
 				return true;
 			}
 		}
@@ -83,6 +90,10 @@ void End::Draw(int score)
 		else if (score >= B)
 		{
 			DrawGraph(WIN_WIDTH / 2 - 200, 500, EndTex10[2], TRUE);
+		}
+		else if(score >= C)
+		{
+			DrawGraph(WIN_WIDTH / 2 - 200, 500, EndTex10[3], TRUE);
 		}
 		else
 		{

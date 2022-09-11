@@ -56,7 +56,7 @@ private:
 	float x = WIN_WIDTH / 2;
 	float y = WIN_HEIGHT / 2;
 
-
+	int gameBgm;
 public:
 	//Å‰‚É‰Šú‰»‚·‚é‚à‚Ì
 	void StaticInit();

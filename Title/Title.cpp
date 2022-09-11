@@ -34,7 +34,6 @@ void Title::Initialize()
 	alpha = 255;
 	settingFlag = false;
 	tex9Num = 2;
-	soundBolume = 50;
 	endFlag = false;
 	ChangeVolumeSoundMem(soundBolume, TitleSound1);
 	PlaySoundMem(TitleSound1, DX_PLAYTYPE_LOOP);
@@ -65,7 +64,7 @@ bool Title::Update(XINPUT_STATE input, XINPUT_STATE oldinput)
 		scale2 = 0.5f;
 		scale3 = 0.5f;
 
-		if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A]) {
+		if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A] && moveFlag == false) {
 			moveFlag = true;
 			PlaySoundMem(TitleSe2, DX_PLAYTYPE_BACK);
 		}
@@ -135,11 +134,13 @@ bool Title::Update(XINPUT_STATE input, XINPUT_STATE oldinput)
 	}
 	if (doorPosX1 <= -140)
 	{
-		moveFlag = false;
+		doorPosX1 = -140;
+		doorPosX2 = 1280 + 140;
 		timer++;
 		alpha-=2;
 		if (timer > 120)
 		{
+			moveFlag = false;
 			Speedframe = 0.0f;
 			StopSoundMem(TitleSound1);
 			return true;
