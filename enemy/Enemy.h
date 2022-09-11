@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "AttackEffect.h"
 #include "BreakEffect.h"
+#include "..\TimeEffect.h"
 
 class Enemy {
 public:
@@ -95,6 +96,7 @@ private:
 		PLAYERRIGHT,
 		PLAYERLEFT,
 	};
+	TimeEffect* timeEffects = nullptr;
 	AttackEffect* effects = nullptr;
 	BreakEffect* breakEffects = nullptr;
 };
