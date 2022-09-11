@@ -88,7 +88,8 @@ void SceneManager::Draw()
 		break;
 	case static_cast<int>(SceneManager::NO::Tutorial):
 		DrawFormatString(0, 300, GetColor(0, 0, 0), "TUTORIAL");
-		DrawFormatString(0, 320, GetColor(0, 0, 0), "TutorialCount %d",TutorialCount);
+		DrawFormatString(0, 320, GetColor(0, 0, 0), "BirthEnemyCount %d", BirthEnemyCount);
+		DrawFormatString(0, 340, GetColor(0, 0, 0), "TutorialCount %d", TutorialCount);
 		TutorialDraw();
 		break;
 	case static_cast<int>(SceneManager::NO::GameScene):
@@ -173,9 +174,11 @@ void SceneManager::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STAT
 	int enemytargetTex = LoadGraph("Resources/enemytarget.png");
 
 	//特定のフレームで敵を生成する
-	if (tutorial->GetTutorialTimer() == 380 || tutorial->GetTutorialTimer() == 280
-		|| tutorial->GetTutorialTimer() == 250 || tutorial->GetTutorialTimer() == 130
-		|| tutorial->GetTutorialTimer() == 120 || tutorial->GetTutorialTimer() == 110) {
+	if (tutorial->GetTutorialTimer() == 520 || tutorial->GetTutorialTimer() == 480
+		|| tutorial->GetTutorialTimer() == 450 || tutorial->GetTutorialTimer() == 330
+		|| tutorial->GetTutorialTimer() == 320 || tutorial->GetTutorialTimer() == 310
+		|| tutorial->GetTutorialTimer() == 250 || tutorial->GetTutorialTimer() == 230) {
+
 		BirthEnemyCount++;
 		EnemyArgment = true;
 	}
@@ -189,25 +192,55 @@ void SceneManager::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STAT
 		newEnemy->SetTargetEnemyTex(enemytargetTex);
 		newEnemy->TutorialInitialize();
 		if (BirthEnemyCount == 1) {
+			newEnemy->SetTargetLine(0);
 			newEnemy->SetSpeed(358.0f);
 		}
 		else if (BirthEnemyCount == 2) {
+			newEnemy->SetTargetLine(0);
 			newEnemy->SetSpeed(180.0f);
 		}
-		else if (BirthEnemyCount == 2) {
+		else if (BirthEnemyCount == 3) {
+			newEnemy->SetTargetLine(0);
 			newEnemy->SetSpeed(160.0f);
 		}
-		else if (BirthEnemyCount == 3) {
+		else if (BirthEnemyCount == 4) {
+			newEnemy->SetTargetLine(0);
 			newEnemy->SetSpeed(200.0f);
 		}
-		else if (BirthEnemyCount == 4) {
+		else if (BirthEnemyCount == 5) {
+			newEnemy->SetTargetLine(1);
 			newEnemy->SetSpeed(220.0f);
 		}
-		else if (BirthEnemyCount == 5) {
+		else if (BirthEnemyCount == 6) {
+			newEnemy->SetTargetLine(2);
 			newEnemy->SetSpeed(240.0f);
+		}
+		else if (BirthEnemyCount == 7) {
+			newEnemy->SetTargetLine(0);
+			newEnemy->SetTutorialMove(true);
+			newEnemy->SetSpeed(90.0f);
+		}
+		else if (BirthEnemyCount == 8) {
+			newEnemy->SetTargetLine(1);
+			newEnemy->SetTutorialMove(true);
+			newEnemy->SetSpeed(270.0f);
 		}
 		enemy.push_back(std::move(newEnemy));
 		EnemyArgment = false;
+	}
+	//最後のチュートリアルは二体同時に倒さないと進まない
+	if (tutorial->GetTutorialNumber() == 4) {
+		if (TutorialCount == 8) {
+			if(player->GetKnockCount() == 2){
+				tutorial->SetTutorialClear(true);
+			}
+			else {
+				tutorial->SetTutorialClear(false);
+				TutorialCount = 6;
+				BirthEnemyCount = 6;
+				tutorial->SetTutorialTimer(300);
+			}
+		}
 	}
 	//プレイヤー
 	if (tutorial->GetTutorialTimer() > 0)

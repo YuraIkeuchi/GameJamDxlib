@@ -93,6 +93,8 @@ void Enemy::TutorialInitialize() {
 	EnemyCircleX = 0.0f;
 	EnemyCircleY = 0.0f;
 	EnemyAdd = 0.0f;
+	//チュートリアルの変数
+	TutorialMove = false;
 	//リスポーン関係
 	EnemyAlive = false;
 	DeathEnemy = false;
@@ -124,7 +126,9 @@ void Enemy::TutorialInitialize() {
 void Enemy::TutorialUpdate(Player* player) {
 
 	ResPorn();
-	//Move(player);
+	if (TutorialMove) {
+		Move(player);
+	}
 	InArea(player);
 	Stop(player);
 	Collide(player);
@@ -147,7 +151,6 @@ void Enemy::ResPorn() {
 	if (!EnemyAlive) {
 		EnemyTimer--;
 		if (EnemyTimer == 0) {
-			TargetLine = 0;
 			Dir = rand() % 2;
 			if (Dir == RIGHT) {
 				EnemyAdd = 0.5f;
@@ -185,6 +188,18 @@ void Enemy::ResPorn() {
 				EnemyRoundSpeed = EnemySpeed;
 				EnemySaveSpeed = EnemyRoundSpeed;
 				EnemyScale = 240.0f;
+			}
+		}
+		else if (TargetLine == 2) {
+			if (EnemyScale >= 160.0f) {
+				EnemyScale -= 5.0f;
+			}
+			else {
+				EnemySet = false;
+				EnemyMove = true;
+				EnemyRoundSpeed = EnemySpeed;
+				EnemySaveSpeed = EnemyRoundSpeed;
+				EnemyScale = 160.0f;
 			}
 		}
 	}

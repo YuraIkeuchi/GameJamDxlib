@@ -8,15 +8,27 @@ public:
 	const int& GetTutorialNumber() { return TutorialNumber; }
 	const int& GetTutorialTimer() { return TutorialTimer; }
 
+	void SetTutorialTimer(int TutorialTimer) { this->TutorialTimer = TutorialTimer; }
 	void SetTutorialNumber(int TutorialNumber) { this->TutorialNumber = TutorialNumber; }
+	void SetTutorialClear(bool TutorialClear) { this->TutorialClear = TutorialClear; }
 
 private:
-	int TutorialNumber = 0;
-	int TutorialTimer = 400;
+	int TutorialNumber;
+	int TutorialTimer;
 
-	bool FirstTutorial = false;
-	bool SecondTutorial = false;
-	bool ThirdTutorial = false;
+	bool TutorialClear;
+	enum NowTuTorial {
+		Tutorial0,
+		Tutorial1,
+		Tutorial2,
+		Tutorial3,
+		Tutorial4,
+		Tutorial5,
+	};
+
+	int FirstTutorialTex;
+	int SecondTutorialTex;
+	int ThirdTutorialTex;
 public:
 	Tutorial();
 	void Initialize();

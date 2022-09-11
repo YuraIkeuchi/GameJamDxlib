@@ -46,8 +46,10 @@ public:
 	const bool& GetAttackArea() { return InAttackArea; }
 	const bool& GetDeathEnemy() { return DeathEnemy; }
 	void SetStop(bool Stop) { this->EnemyStop = Stop; }
+	void SetTutorialMove(bool TutorialMove) { this->TutorialMove = TutorialMove; }
 	void SetSpeed(float EnemySpeed) { this->EnemySpeed = EnemySpeed; }
 	void SetDeathEnemy(bool DeathEnemy) { this->DeathEnemy = DeathEnemy; }
+	void SetTargetLine(int TargetLine) { this->TargetLine = TargetLine; }
 	void SetEnemyTex(int tex) { this->texture = tex; }
 	void SetEnemyStopTex(int tex) { this->Stoptexture = tex; }
 	void SetLinkEnemyTex(int tex) { this->Linktexture = tex; }
@@ -74,6 +76,8 @@ private:
 	float EnemyCircleY;
 	float EnemyAdd;
 	float AddVelocity;
+	//チュートリアルの変数
+	bool TutorialMove;
 	//リスポーン関係
 	bool EnemyAlive;
 	bool DeathEnemy;
@@ -84,7 +88,6 @@ private:
 	//敵が止まっているか
 	bool EnemyStop;
 	int EnemyStopTimer;
-	
 	//保存用変数
 	float EnemySaveSpeed;
 	//プレイヤーと敵の位置の距離
