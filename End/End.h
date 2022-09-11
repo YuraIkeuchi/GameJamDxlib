@@ -30,9 +30,12 @@ private:
 
 	bool endFlag;
 	bool drawFlag;
+
+	int endBgm;
+	int endSe1;
 public:
 	End();
-	void Initialize();
+	void Initialize(int soundBolume);
 	bool Update(XINPUT_STATE input, XINPUT_STATE oldinput);
 	void Draw(int score);
 };

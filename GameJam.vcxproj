@@ -56,6 +56,9 @@
     <ClInclude Include="Title\Title.h" />
     <ClInclude Include="Tutorial\Tutorial.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resources\icon.rc" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{a4f810b0-0171-472a-a94b-6dd2ea28ed2a}</ProjectGuid>
