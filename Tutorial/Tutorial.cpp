@@ -51,7 +51,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 
 				if (TextCount == 0) {
 					TutorialStopTimer++;
-					if (TutorialStopTimer == 150) {
+					if (TutorialStopTimer == 80) {
 						TutorialStopTimer = 0;
 						TextStart = false;
 						frame = 0.0f;
@@ -75,7 +75,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 
 			if (!TextStart && !TextEnd) {
 				TextInterVal++;
-				if (TextInterVal == 50) {
+				if (TextInterVal == 20) {
 					TextInterVal = 0;
 					TutorialPosX = 1780.0f;
 					frame = 0.0f;
@@ -109,7 +109,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 
 				if (TextCount == 0) {
 					TutorialStopTimer++;
-					if (TutorialStopTimer == 150) {
+					if (TutorialStopTimer == 80) {
 						TutorialStopTimer = 0;
 						TextStart = false;
 						frame = 0.0f;
@@ -133,7 +133,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 
 			if (!TextStart && !TextEnd) {
 				TextInterVal++;
-				if (TextInterVal == 50) {
+				if (TextInterVal == 20) {
 					TextInterVal = 0;
 					TutorialPosX = 1780.0f;
 					frame = 0.0f;
@@ -183,7 +183,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 
 				if (TextCount == 0 || TextCount == 2) {
 					TutorialStopTimer++;
-					if (TutorialStopTimer == 150) {
+					if (TutorialStopTimer == 80) {
 						TutorialStopTimer = 0;
 						TextStart = false;
 						frame = 0.0f;
@@ -207,7 +207,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 
 			if (!TextStart && !TextEnd) {
 				TextInterVal++;
-				if (TextInterVal == 50) {
+				if (TextInterVal == 20) {
 					TextInterVal = 0;
 					TutorialPosX = 1780.0f;
 					frame = 0.0f;
@@ -259,7 +259,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 
 				if (TextCount == 0 || TextCount == 2) {
 					TutorialStopTimer++;
-					if (TutorialStopTimer == 150) {
+					if (TutorialStopTimer == 80) {
 						TutorialStopTimer = 0;
 						TextStart = false;
 						frame = 0.0f;
@@ -283,7 +283,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 
 			if (!TextStart && !TextEnd) {
 				TextInterVal++;
-				if (TextInterVal == 50) {
+				if (TextInterVal == 20) {
 					TextInterVal = 0;
 					TutorialPosX = 1780.0f;
 					frame = 0.0f;
@@ -334,7 +334,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 
 				if (TextCount == 0 || TextCount == 1) {
 					TutorialStopTimer++;
-					if (TutorialStopTimer == 150) {
+					if (TutorialStopTimer == 80) {
 						TutorialStopTimer = 0;
 						TextStart = false;
 						frame = 0.0f;
@@ -358,7 +358,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 
 			if (!TextStart && !TextEnd) {
 				TextInterVal++;
-				if (TextInterVal == 50) {
+				if (TextInterVal == 20) {
 					TextInterVal = 0;
 					TutorialPosX = 1780.0f;
 					frame = 0.0f;
@@ -409,7 +409,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 				}
 
 				TutorialStopTimer++;
-				if (TutorialStopTimer == 150) {
+				if (TutorialStopTimer == 80) {
 					TutorialStopTimer = 0;
 					TextStart = false;
 					frame = 0.0f;
@@ -432,7 +432,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 
 			if (!TextStart && !TextEnd) {
 				TextInterVal++;
-				if (TextInterVal == 50) {
+				if (TextInterVal == 20) {
 					TextInterVal = 0;
 					TutorialPosX = 1780.0f;
 					frame = 0.0f;

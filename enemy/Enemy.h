@@ -3,7 +3,7 @@
 #include "Player.h"
 #include "AttackEffect.h"
 #include "BreakEffect.h"
-#include "..\TimeEffect.h"
+#include "TimeEffect.h"
 
 class Enemy {
 public:

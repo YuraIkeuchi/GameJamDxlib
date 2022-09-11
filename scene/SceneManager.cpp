@@ -217,12 +217,12 @@ void SceneManager::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STAT
 			newEnemy->SetSpeed(240.0f);
 		}
 		else if (BirthEnemyCount == 7) {
-			newEnemy->SetTargetLine(0);
+			newEnemy->SetTargetLine(1);
 			newEnemy->SetTutorialMove(true);
 			newEnemy->SetSpeed(90.0f);
 		}
 		else if (BirthEnemyCount == 8) {
-			newEnemy->SetTargetLine(1);
+			newEnemy->SetTargetLine(2);
 			newEnemy->SetTutorialMove(true);
 			newEnemy->SetSpeed(270.0f);
 		}

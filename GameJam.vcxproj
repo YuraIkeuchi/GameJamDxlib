@@ -26,6 +26,8 @@
     <ClCompile Include="Effect\BreakEffect.cpp" />
     <ClCompile Include="effect\Emitter.cpp" />
     <ClCompile Include="effect\MoveEffect.cpp" />
+    <ClCompile Include="effect\StopEffect.cpp" />
+    <ClCompile Include="effect\TimeEffect.cpp" />
     <ClCompile Include="End\End.cpp" />
     <ClCompile Include="enemy\Enemy.cpp" />
     <ClCompile Include="main.cpp" />
@@ -34,8 +36,6 @@
     <ClCompile Include="player\Player.cpp" />
     <ClCompile Include="scene\SceneManager.cpp" />
     <ClCompile Include="score\Score.cpp" />
-    <ClCompile Include="StopEffect.cpp" />
-    <ClCompile Include="TimeEffect.cpp" />
     <ClCompile Include="Title\Title.cpp" />
     <ClCompile Include="Tutorial\Tutorial.cpp" />
   </ItemGroup>
@@ -48,6 +48,8 @@
     <ClInclude Include="Effect\BreakEffect.h" />
     <ClInclude Include="effect\Emitter.h" />
     <ClInclude Include="effect\MoveEffect.h" />
+    <ClInclude Include="effect\StopEffect.h" />
+    <ClInclude Include="effect\TimeEffect.h" />
     <ClInclude Include="End\End.h" />
     <ClInclude Include="enemy\Enemy.h" />
     <ClInclude Include="math\Vector2.h" />
@@ -55,8 +57,6 @@
     <ClInclude Include="player\Player.h" />
     <ClInclude Include="scene\SceneManager.h" />
     <ClInclude Include="score\Score.h" />
-    <ClInclude Include="StopEffect.h" />
-    <ClInclude Include="TimeEffect.h" />
     <ClInclude Include="Title\Title.h" />
     <ClInclude Include="Tutorial\Tutorial.h" />
   </ItemGroup>
