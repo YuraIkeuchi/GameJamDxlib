@@ -570,17 +570,8 @@ void Enemy::Draw() {
 	//止まっているかどうかで色が変わる
 //止まっているかどうかで色が変わる
 	if (EnemyAlive) {
-		if (!InAttackArea) {
-			if (!EnemyStop) {
-				//DrawCircle(EnemyPosX, EnemyPosY, 20, GetColor(255, 255, 0), true);
-				DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, 50.0f, 0.0f, texture, true);
-			}
-			else {
-				DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, 50.0f, 0.0f, Stoptexture, true);
-			}
-			//DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, 200.0f, 0.0f, Linktexture, true);
-		}
-		else {
+		DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, 50.0f, 0.0f, texture, true);
+		if (InAttackArea) {
 			DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, 50.0f, 0.0f, Targettexture, true);
 		}
 	}
