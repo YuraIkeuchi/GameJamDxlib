@@ -2,6 +2,7 @@
 #include "Share.h"
 #include "DxLib.h"
 #include "MoveEffect.h"
+#include "../StopEffect.h"
 
 constexpr int EFFECTS_MAX = 31;
 
@@ -133,7 +134,7 @@ private:
 	float InputY;
 	float Joyangle;
 	MoveEffect* Effects[EFFECTS_MAX] = {};
-
+	StopEffect* stopEffects = nullptr;
 	int attackSound;
 	int enemyStopSound;
 };

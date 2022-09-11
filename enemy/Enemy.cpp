@@ -46,11 +46,14 @@ void Enemy::Initialize() {
 
 	int EffectTex = LoadGraph("Resources/attackEffect.png");
 	int breakEffectTex = LoadGraph("breakEffect.png");
+	int TimeEffectTex = LoadGraph("TimeEffect.png");
 
 	effects = new AttackEffect();
 	effects->SetTexture(EffectTex);
 	breakEffects = new BreakEffect();
 	breakEffects->SetTexture(breakEffectTex);
+	timeEffects = new TimeEffect();
+	timeEffects->SetTexture(TimeEffectTex);
 
 }
 
@@ -74,6 +77,7 @@ void Enemy::Update(Player* player) {
 
 	effects->Update();
 	breakEffects->Update();
+	timeEffects->Update();
 }
 
 void Enemy::TutorialInitialize() {
@@ -295,6 +299,7 @@ void Enemy::Stop(Player* player) {
 	if (player->GetStop()) {
 		if (player->GetScale() == EnemyScale) {
 			EnemyStop = true;
+			timeEffects->active(VGet(EnemyPosX, EnemyPosY, 0));
 		}
 	}
 
@@ -580,6 +585,7 @@ void Enemy::Draw() {
 	}
 	effects->Draw();
 	breakEffects->Draw();
+	timeEffects->Draw();
 }
 
 void Enemy::FormatDraw(int EnemyCount) {
