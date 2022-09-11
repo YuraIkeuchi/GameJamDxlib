@@ -64,7 +64,8 @@ void Player::Initialize(int soundBolume)
 		Effects[i] = new MoveEffect();
 		Effects[i]->SetTexture(texture);
 	}
-
+	stopEffects = new StopEffect();
+	stopEffects->SetTexture(targettexture);
 	InputX = 0.0f;
 	InputY = 0.0f;
 	Joyangle = 0.0f;
@@ -94,6 +95,8 @@ void Player::Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPU
 		Effects[i]->Update();
 		Effects[i]->SetAngle(PlayerRot);
 	}
+	stopEffects->SetEmitPos(VGet(playerPosX, playerPosY, 0));
+	stopEffects->Update();
 }
 
 void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput) {
@@ -197,6 +200,7 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 	//敵を止める
 	if (input.Buttons[XINPUT_BUTTON_B] && !oldinput.Buttons[XINPUT_BUTTON_B] && !Stop) {
 		Stop = true;
+		stopEffects->active(VGet(playerPosX, playerPosY, 0));
 		PlaySoundMem(enemyStopSound, DX_PLAYTYPE_BACK);
 	}
 	//敵を止めてる時間
@@ -264,7 +268,7 @@ void Player::AttackMove(char keys[255], char oldkeys[255], XINPUT_STATE input, X
 	if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A] && !Attack && !AttackStart) {
 		Attack = true;
 	}
-	
+
 	//1フレームのみの判定
 	if (Attack) {
 		AttackTimer++;
@@ -291,7 +295,7 @@ void Player::AttackMove(char keys[255], char oldkeys[255], XINPUT_STATE input, X
 }
 
 void Player::AttackArea() {
-	
+
 	//位置を求めている
 	AttackRadius = AttackSpeed * PI / 180.0f;
 	AttackCircleX = cosf(AttackRadius) * AttackScale;
@@ -327,6 +331,7 @@ void Player::Draw() {
 	{
 		Effects[i]->Draw();
 	}
+	stopEffects->Draw();
 
 	DrawBillboard3D(VGet(AttackAreaX, AttackAreaY, 0), 0.5f, 0.5f, 100, 0.0f, targettexture, true);
 }

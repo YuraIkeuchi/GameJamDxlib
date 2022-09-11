@@ -34,6 +34,8 @@
     <ClCompile Include="player\Player.cpp" />
     <ClCompile Include="scene\SceneManager.cpp" />
     <ClCompile Include="score\Score.cpp" />
+    <ClCompile Include="StopEffect.cpp" />
+    <ClCompile Include="TimeEffect.cpp" />
     <ClCompile Include="Title\Title.cpp" />
     <ClCompile Include="Tutorial\Tutorial.cpp" />
   </ItemGroup>
@@ -53,6 +55,8 @@
     <ClInclude Include="player\Player.h" />
     <ClInclude Include="scene\SceneManager.h" />
     <ClInclude Include="score\Score.h" />
+    <ClInclude Include="StopEffect.h" />
+    <ClInclude Include="TimeEffect.h" />
     <ClInclude Include="Title\Title.h" />
     <ClInclude Include="Tutorial\Tutorial.h" />
   </ItemGroup>

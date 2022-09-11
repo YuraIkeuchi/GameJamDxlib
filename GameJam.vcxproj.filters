@@ -47,6 +47,10 @@
     <ClCompile Include="End\End.cpp">
       <Filter>End</Filter>
     </ClCompile>
+    <ClCompile Include="TimeEffect.cpp">
+      <Filter>effect</Filter>
+    </ClCompile>
+    <ClCompile Include="StopEffect.cpp" />
     <ClCompile Include="Tutorial\Tutorial.cpp">
       <Filter>Tutorial</Filter>
     </ClCompile>
@@ -100,6 +104,11 @@
     <ClInclude Include="End\End.h">
       <Filter>End</Filter>
     </ClInclude>
+    <ClInclude Include="TimeEffect.h">
+      <Filter>effect</Filter>
+    </ClInclude>
+    <ClInclude Include="StopEffect.h">
+      <Filter>effect</Filter>
     <ClInclude Include="Tutorial\Tutorial.h">
       <Filter>Tutorial</Filter>
     </ClInclude>
