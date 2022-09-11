@@ -476,10 +476,4 @@ void SceneManager::EndDraw()
 	score->Draw();
 	//score->FormatDraw();
 	//エネミー
-	/*for (int i = 0; i < Enemy_Max; i++) {
-		enemy[i]->Draw();
-		//enemy[i]->FormatDraw(i);
-	}
-
-	end->Draw(score->GetScorePoint());
 }
