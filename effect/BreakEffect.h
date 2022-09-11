@@ -11,7 +11,10 @@ class BreakEffect : public Emitter {
 	float count;
 
 	int texture;
+	bool DeleteEffect;
 public:
+	//getter
+	const bool GetDeleteEffect() { return DeleteEffect; }
 	//setter
 	void SetEmitPos(FLOAT3 _pos) { this->pos = _pos; }
 	void SetTexture(int tex) { this->texture = tex; }

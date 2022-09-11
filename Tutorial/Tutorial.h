@@ -7,7 +7,7 @@ public:
 	//getter setter
 	const int& GetTutorialNumber() { return TutorialNumber; }
 	const int& GetTutorialTimer() { return TutorialTimer; }
-
+	const bool& GetDoorEnd() { return doorEnd; }
 	void SetTutorialTimer(int TutorialTimer) { this->TutorialTimer = TutorialTimer; }
 	void SetTutorialNumber(int TutorialNumber) { this->TutorialNumber = TutorialNumber; }
 	void SetTutorialClear(bool TutorialClear) { this->TutorialClear = TutorialClear; }
@@ -47,10 +47,6 @@ private:
 		TutorialTex15,
 	};
 
-	int FirstTutorialTex;
-	int SecondTutorialTex;
-	int ThirdTutorialTex;
-
 	float TutorialPosX;
 	float AfterTutorialPosX;
 	float frame;
@@ -61,6 +57,16 @@ private:
 	bool TextCheck;
 	bool TutorialCheck;
 	int TextInterVal;
+
+	int doorTex;
+	bool doorStart;
+	bool doorEnd;
+
+
+	float doorPosX1;
+	float doorPosX2;
+	float doorframe;
+	int doorStopTimer;
 public:
 	Tutorial();
 	void Initialize();

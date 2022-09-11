@@ -107,8 +107,18 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 	InputX = (float)input.ThumbLX / 32768;
 	InputY = (float)input.ThumbLY / 32768;
 	Joyangle = ((atan2(InputX, InputY) * (180.0f / PI))) + 90;
-	AttackSpeed = Joyangle;
-	PlayerRot += 0.01f;
+	if(InputX == 0.0f && InputY == 0.0f){
+		if (Dir == RIGHT) {
+			AttackSpeed = PlayerSpeed + 90.0f;
+		}
+		else {
+			AttackSpeed = PlayerSpeed + 270.0f;
+		}
+	}
+	else {
+		AttackSpeed = Joyangle;
+	}
+	PlayerRot += 0.1f;
 	//プレイヤー
 	//サークル変更
 	/*if (input.Buttons[XINPUT_BUTTON_DPAD_DOWN] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_DOWN]) {
@@ -216,21 +226,21 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 		PlayerSpeed += AddSpeed + AddVelocity;
 	}
 	//プレイヤーの向き(通常時とスティック動かしているときで変わる)
-	if (AttackStart || KnockCount != 0) {
-		InputX = 0.0f;
-		InputY = 0.0f;
-	}
-	if ((InputX == 0.0f) && (InputY == 0.0f)) {
-		if (PlayerRotDir == ROTRIGHT) {
-			PlayerRot = -((PlayerSpeed - 90.0f) / 180.0f) * PI;
-		}
-		else if (PlayerRotDir == ROTLEFT) {
-			PlayerRot = -((PlayerSpeed - 270.0f) / 180.0f) * PI;
-		}
-	}
-	else {
-		PlayerRot = -((AttackSpeed - 180.0f) / 180.0f) * PI;
-	}
+	//if (AttackStart || KnockCount != 0) {
+	//	InputX = 0.0f;
+	//	InputY = 0.0f;
+	//}
+	//if ((InputX == 0.0f) && (InputY == 0.0f)) {
+	//	if (PlayerRotDir == ROTRIGHT) {
+	//		PlayerRot = -((PlayerSpeed - 90.0f) / 180.0f) * PI;
+	//	}
+	//	else if (PlayerRotDir == ROTLEFT) {
+	//		PlayerRot = -((PlayerSpeed - 270.0f) / 180.0f) * PI;
+	//	}
+	//}
+	//else {
+	//	PlayerRot = -((AttackSpeed - 180.0f) / 180.0f) * PI;
+	//}
 
 	//攻撃後の硬直(この間にリンク判定する)
 	if (AttackInterval > 0) {

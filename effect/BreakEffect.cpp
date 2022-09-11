@@ -12,7 +12,7 @@ BreakEffect::BreakEffect()
 	size = DEFALUT_SIZE;
 	alpha = ALPHA_MAX;
 	angle = 0;
-
+	DeleteEffect = false;
 	count = 0;
 }
 
@@ -31,6 +31,7 @@ void BreakEffect::Update()
 		alpha -= STEP_COUNT * 255 * 1.2f;
 
 		if (count >= 3.0f) {
+			DeleteEffect = true;
 			isAlive = false;
 			count = 0;
 			alpha = ALPHA_MAX;

@@ -45,6 +45,8 @@ private:
 	void GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput);
 	void GameSceneDraw();
 
+	void GameSceneEnemyArg();
+
 	void EndInit();
 	void EndUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput);
 	void EndDraw();
@@ -72,6 +74,10 @@ private:
 	int BirthEnemyCount = 0;
 	int TutorialCount = 0;
 	int TutorialTimer = 100;
+	enum EnemyDir {
+		RIGHT,
+		LEFT,
+	};
 public:
 	//最初に初期化するもの
 	void StaticInit();

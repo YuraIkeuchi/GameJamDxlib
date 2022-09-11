@@ -64,7 +64,7 @@ void Enemy::Update(Player* player) {
 	InArea(player);
 	Stop(player);
 	Collide(player);
-	//PlayerCollide(player);
+	PlayerCollide(player);
 	//if (InAttackArea) {
 	//	Target(player);
 	//}
@@ -137,7 +137,7 @@ void Enemy::TutorialUpdate(Player* player) {
 	InArea(player);
 	Stop(player);
 	Collide(player);
-	//PlayerCollide(player);
+	PlayerCollide(player);
 	//if (InAttackArea) {
 	//	Target(player);
 	//}
@@ -157,7 +157,6 @@ void Enemy::ResPorn() {
 	if (!EnemyAlive) {
 		EnemyTimer--;
 		if (EnemyTimer == 0) {
-			Dir = rand() % 2;
 			if (Dir == RIGHT) {
 				EnemyAdd = 0.5f;
 			}
@@ -206,6 +205,18 @@ void Enemy::ResPorn() {
 				EnemyRoundSpeed = EnemySpeed;
 				EnemySaveSpeed = EnemyRoundSpeed;
 				EnemyScale = 160.0f;
+			}
+		}
+		else if (TargetLine == 3) {
+			if (EnemyScale >= 80.0f) {
+				EnemyScale -= 5.0f;
+			}
+			else {
+				EnemySet = false;
+				EnemyMove = true;
+				EnemyRoundSpeed = EnemySpeed;
+				EnemySaveSpeed = EnemyRoundSpeed;
+				EnemyScale = 80.0f;
 			}
 		}
 	}
@@ -571,17 +582,8 @@ void Enemy::Draw() {
 	//止まっているかどうかで色が変わる
 //止まっているかどうかで色が変わる
 	if (EnemyAlive) {
-		if (!InAttackArea) {
-			if (!EnemyStop) {
-				//DrawCircle(EnemyPosX, EnemyPosY, 20, GetColor(255, 255, 0), true);
-				DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, 50.0f, 0.0f, texture, true);
-			}
-			else {
-				DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, 50.0f, 0.0f, Stoptexture, true);
-			}
-			//DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, 200.0f, 0.0f, Linktexture, true);
-		}
-		else {
+		DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, 50.0f, 0.0f, texture, true);
+		if (InAttackArea) {
 			DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, 50.0f, 0.0f, Targettexture, true);
 		}
 	}
