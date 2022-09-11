@@ -8,29 +8,38 @@
 #include "DxLib.h"
 #include"Title.h"
 #include"End.h"
-
+#include "Tutorial.h"
+#include <vector>
+#include <memory>
+#include <list> // ãƒ˜ãƒƒãƒ€ãƒ•ã‚¡ã‚¤ãƒ«ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
+using namespace std;         //  åå‰ç©ºé–“æŒ‡å®š
 class SceneManager
 {
 private:
-	//ŒÅ’è’l
+	//å›ºå®šå€¤
 	static const int Enemy_Max = 10;
 private:
-	//ƒV[ƒ“‚Ìí—Ş
+	//ã‚·ãƒ¼ãƒ³ã®ç¨®é¡
 	enum class NO
 	{
 		Title,
+		Tutorial,
 		GameScene,
 		End,
 	};
 
-	//Œ»İ‚ÌƒV[ƒ“‚Ì”Ô†
+	//ç¾åœ¨ã®ã‚·ãƒ¼ãƒ³ã®ç•ªå·
 	int SceneNo = static_cast<int>(NO::Title);
-	//‰Šú‰»‚Ì‚½‚ß‚ÌŒv‘ª
+	//åˆæœŸåŒ–ã®ãŸã‚ã®è¨ˆæ¸¬
 	int SceneTime = 0;
-#pragma region ƒV[ƒ“‚²‚Æ‚Ìˆ—
+#pragma region ã‚·ãƒ¼ãƒ³ã”ã¨ã®å‡¦ç†
 	void TitleInit();
 	void TitleUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput);
 	void TitleDraw();
+
+	void TutorialInit();
+	void TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput);
+	void TutorialDraw();
 
 	void GameSceneInit();
 	void GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput);
@@ -40,27 +49,33 @@ private:
 	void EndUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput);
 	void EndDraw();
 
-	//ƒNƒ‰ƒXéŒ¾
-	// 	//ƒGƒlƒ~[
-	Enemy *enemy[Enemy_Max];
-	//ƒvƒŒƒCƒ„[
+	//ã‚¯ãƒ©ã‚¹å®£è¨€
+	// 	//ã‚¨ãƒãƒŸãƒ¼
+	vector<unique_ptr<Enemy>>enemy;
+	bool EnemyArgment = false;
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	Player *player = nullptr;
-	//ƒXƒe[ƒWã‚Ì‰~
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ä¸Šã®å††
 	StageCircle *stagecircle = nullptr;
-	//ƒ^ƒCƒgƒ‹‚Ì“®‚«
+	//ã‚¿ã‚¤ãƒˆãƒ«ã®å‹•ã
 	Title *title = nullptr;
-	//ƒGƒ“ƒh‚Ì“®‚«
+	//ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«ã®å‹•ã
+	Tutorial* tutorial = nullptr;
+	//ã‚¨ãƒ³ãƒ‰ã®å‹•ã
 	End *end = nullptr;
-	//ƒXƒRƒA
+	//ã‚¹ã‚³ã‚¢
 	Score* score = nullptr;
 	float x = WIN_WIDTH / 2;
 	float y = WIN_HEIGHT / 2;
 
 	int gameBgm;
+	int BirthEnemyCount = 0;
+	int TutorialCount = 0;
+	int TutorialTimer = 100;
 public:
-	//Å‰‚É‰Šú‰»‚·‚é‚à‚Ì
+	//æœ€åˆã«åˆæœŸåŒ–ã™ã‚‹ã‚‚ã®
 	void StaticInit();
-	//ƒV[ƒ“‚ğØ‚è‘Ö‚¦‚é‚½‚Ñ‚É‰Šú‰»‚·‚é‚à‚Ì
+	//ã‚·ãƒ¼ãƒ³ã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹ãŸã³ã«åˆæœŸåŒ–ã™ã‚‹ã‚‚ã®
 	void Init();
 	//Update
 	void Update(char keys[255], char oldkeys[255],XINPUT_STATE input, XINPUT_STATE oldinput);

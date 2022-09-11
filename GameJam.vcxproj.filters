@@ -47,6 +47,9 @@
     <ClCompile Include="End\End.cpp">
       <Filter>End</Filter>
     </ClCompile>
+    <ClCompile Include="Tutorial\Tutorial.cpp">
+      <Filter>Tutorial</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="collision\Collision.h">
@@ -97,6 +100,9 @@
     <ClInclude Include="End\End.h">
       <Filter>End</Filter>
     </ClInclude>
+    <ClInclude Include="Tutorial\Tutorial.h">
+      <Filter>Tutorial</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="player">
@@ -131,6 +137,9 @@
     </Filter>
     <Filter Include="End">
       <UniqueIdentifier>{0db4139a-3661-4b3b-80a8-aafa581e5dc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tutorial">
+      <UniqueIdentifier>{b4b25a63-a4b4-45d4-a5df-7c6ce5c2ef53}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

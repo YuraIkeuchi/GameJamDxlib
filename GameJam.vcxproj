@@ -35,6 +35,7 @@
     <ClCompile Include="scene\SceneManager.cpp" />
     <ClCompile Include="score\Score.cpp" />
     <ClCompile Include="Title\Title.cpp" />
+    <ClCompile Include="Tutorial\Tutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\Share.h" />
@@ -53,6 +54,7 @@
     <ClInclude Include="scene\SceneManager.h" />
     <ClInclude Include="score\Score.h" />
     <ClInclude Include="Title\Title.h" />
+    <ClInclude Include="Tutorial\Tutorial.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resources\icon.rc" />
@@ -115,7 +117,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)collision;$(ProjectDir)math;$(ProjectDir)ease;$(ProjectDir)score;$(ProjectDir)Title;$(ProjectDir)End;$(ProjectDir)effect;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)collision;$(ProjectDir)ease;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)math</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)collision;$(ProjectDir)math;$(ProjectDir)ease;$(ProjectDir)score;$(ProjectDir)Title;$(ProjectDir)End;$(ProjectDir)effect;$(ProjectDir)Tutorial;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)collision;$(ProjectDir)ease;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)math</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -128,7 +130,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)collision;$(ProjectDir)math;$(ProjectDir)ease;$(ProjectDir)score;$(ProjectDir)Title;$(ProjectDir)End;$(ProjectDir)effect;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)collision;$(ProjectDir)math;$(ProjectDir)ease;$(ProjectDir)score;$(ProjectDir)Title;$(ProjectDir)End;$(ProjectDir)effect;$(ProjectDir)Tutorial;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -142,7 +144,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)collision;$(ProjectDir)math;$(ProjectDir)ease;$(ProjectDir)score;$(ProjectDir)Title;$(ProjectDir)End;$(ProjectDir)effect;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)collision;$(ProjectDir)ease;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)math</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)collision;$(ProjectDir)math;$(ProjectDir)ease;$(ProjectDir)score;$(ProjectDir)Title;$(ProjectDir)End;$(ProjectDir)effect;$(ProjectDir)Tutorial;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)collision;$(ProjectDir)ease;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)math</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -159,7 +161,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)collision;$(ProjectDir)math;$(ProjectDir)ease;$(ProjectDir)score;$(ProjectDir)Title;$(ProjectDir)End;$(ProjectDir)effect;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)player;$(ProjectDir)enemy;$(ProjectDir)scene;$(ProjectDir)base;$(ProjectDir)collision;$(ProjectDir)math;$(ProjectDir)ease;$(ProjectDir)score;$(ProjectDir)Title;$(ProjectDir)End;$(ProjectDir)effect;$(ProjectDir)Tutorial;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

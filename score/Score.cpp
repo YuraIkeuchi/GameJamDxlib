@@ -12,7 +12,7 @@ void Score::Initialize() {
 	GameTimer = 60 * 60;
 	MultPoint = 0;
 	scorePosX = 900;
-	scorePosY = 600;
+	scorePosY = 100;
 }
 
 bool Score::Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput) {
@@ -21,7 +21,7 @@ bool Score::Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT
 	{
 		return true;
 	}
-	//ì|ÇµÇΩìGÅ@* ç≈èIínì_ÇÃÉXÉRÉAâ¡éZ
+	//ÂÄí„Åó„ÅüÊïµ„ÄÄ* ÊúÄÁµÇÂú∞ÁÇπ„ÅÆ„Çπ„Ç≥„Ç¢Âä†ÁÆó
 	if (!player->GetAttackStart() && player->GetKnockCount() != 0) {
 		if (player->GetScale() == 80.0f) {
 			MultPoint = 10;
@@ -35,7 +35,37 @@ bool Score::Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT
 		else{
 			MultPoint = 1;
 		}
-		//ÉäÉìÉNÇ™ìrêÿÇÍÇΩÇ∆Ç´Ç…É|ÉCÉìÉgÇÃâ¡éZÇ»Ç«ÇÇµÇƒÇ¢ÇÈ
+		//„É™„É≥„ÇØ„ÅåÈÄîÂàá„Çå„Åü„Å®„Åç„Å´„Éù„Ç§„É≥„Éà„ÅÆÂä†ÁÆó„Å™„Å©„Çí„Åó„Å¶„ÅÑ„Çã
+		ScorePoint += player->GetKnockCount() * MultPoint;
+		player->SetKnockCount(0);
+		player->SetInArea(false);
+		player->SetInAreaStart(false);
+	}
+
+	return false;
+}
+
+bool Score::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput) {
+	//GameTimer--;
+	if (GameTimer <= 0)
+	{
+		return true;
+	}
+	//ÂÄí„Åó„ÅüÊïµ„ÄÄ* ÊúÄÁµÇÂú∞ÁÇπ„ÅÆ„Çπ„Ç≥„Ç¢Âä†ÁÆó
+	if (!player->GetAttackStart() && player->GetKnockCount() != 0) {
+		if (player->GetScale() == 80.0f) {
+			MultPoint = 10;
+		}
+		else if (player->GetScale() == 160.0f) {
+			MultPoint = 5;
+		}
+		else if (player->GetScale() == 240.0f) {
+			MultPoint = 2;
+		}
+		else {
+			MultPoint = 1;
+		}
+		//„É™„É≥„ÇØ„ÅåÈÄîÂàá„Çå„Åü„Å®„Åç„Å´„Éù„Ç§„É≥„Éà„ÅÆÂä†ÁÆó„Å™„Å©„Çí„Åó„Å¶„ÅÑ„Çã
 		ScorePoint += player->GetKnockCount() * MultPoint;
 		player->SetKnockCount(0);
 		player->SetInArea(false);
@@ -46,18 +76,18 @@ bool Score::Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT
 }
 
 void Score::Draw() {
-	ChangeFont("ÇlÇr ñæí©");
+	ChangeFont("Ôº≠Ôº≥ ÊòéÊúù");
 	SetFontSize(64);
-	DrawFormatString(scorePosX, scorePosY - 64, GetColor(0, 0, 0), "ÉWÉJÉì %-10d", GameTimer / 60);
-	DrawFormatString(scorePosX, scorePosY, GetColor(0, 0, 0), "ÉXÉRÉA %-10d", ScorePoint - 1);
+	DrawFormatString(scorePosX, scorePosY - 64, GetColor(0, 0, 0), "„Ç∏„Ç´„É≥ %-10d", GameTimer / 60);
+	DrawFormatString(scorePosX, scorePosY, GetColor(0, 0, 0), "„Çπ„Ç≥„Ç¢ %-10d", ScorePoint - 1);
 	SetFontSize(20);
 }
 
 void Score::FormatDraw() {
 	//DrawFormatString(0, 100, GetColor(0, 0, 0), "GameTimer::%d",GameTimer);
-	//ChangeFont("ÇlÇr ñæí©");
+	//ChangeFont("Ôº≠Ôº≥ ÊòéÊúù");
 	//SetFontSize(64);
-	//DrawFormatString(scorePosX, scorePosY-64, GetColor(0, 0, 0), "ÉWÉJÉì %-10d", GameTimer / 60);
-	//DrawFormatString(scorePosX, scorePosY, GetColor(0, 0, 0), "ÉXÉRÉA %-10d", ScorePoint - 1);
+	//DrawFormatString(scorePosX, scorePosY-64, GetColor(0, 0, 0), "„Ç∏„Ç´„É≥ %-10d", GameTimer / 60);
+	//DrawFormatString(scorePosX, scorePosY, GetColor(0, 0, 0), "„Çπ„Ç≥„Ç¢ %-10d", ScorePoint - 1);
 	//SetFontSize(20);
 }

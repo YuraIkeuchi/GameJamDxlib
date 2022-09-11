@@ -14,6 +14,10 @@ public:
 	void Initialize();
 	//更新
 	void Update(Player* player);
+	//チュートリアル初期化
+	void TutorialInitialize();
+	//チュートリアル更新
+	void TutorialUpdate(Player* player);
 	//生成
 	void ResPorn();
 	//移動
@@ -40,7 +44,12 @@ public:
 	const float& GetPositionX() { return EnemyPosX; }
 	const float& GetPositionY() { return EnemyPosY; }
 	const bool& GetAttackArea() { return InAttackArea; }
+	const bool& GetDeathEnemy() { return DeathEnemy; }
 	void SetStop(bool Stop) { this->EnemyStop = Stop; }
+	void SetTutorialMove(bool TutorialMove) { this->TutorialMove = TutorialMove; }
+	void SetSpeed(float EnemySpeed) { this->EnemySpeed = EnemySpeed; }
+	void SetDeathEnemy(bool DeathEnemy) { this->DeathEnemy = DeathEnemy; }
+	void SetTargetLine(int TargetLine) { this->TargetLine = TargetLine; }
 	void SetEnemyTex(int tex) { this->texture = tex; }
 	void SetEnemyStopTex(int tex) { this->Stoptexture = tex; }
 	void SetLinkEnemyTex(int tex) { this->Linktexture = tex; }
@@ -67,8 +76,11 @@ private:
 	float EnemyCircleY;
 	float EnemyAdd;
 	float AddVelocity;
+	//チュートリアルの変数
+	bool TutorialMove;
 	//リスポーン関係
 	bool EnemyAlive;
+	bool DeathEnemy;
 	int EnemyTimer;
 	bool EnemyMove;
 	bool EnemySet;
@@ -76,7 +88,6 @@ private:
 	//敵が止まっているか
 	bool EnemyStop;
 	int EnemyStopTimer;
-	
 	//保存用変数
 	float EnemySaveSpeed;
 	//プレイヤーと敵の位置の距離
