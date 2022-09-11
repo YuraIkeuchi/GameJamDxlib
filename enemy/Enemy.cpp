@@ -119,12 +119,13 @@ void Enemy::TutorialInitialize() {
 
 	int EffectTex = LoadGraph("Resources/attackEffect.png");
 	int breakEffectTex = LoadGraph("breakEffect.png");
-
+	int TimeEffectTex = LoadGraph("TimeEffect.png");
 	effects = new AttackEffect();
 	effects->SetTexture(EffectTex);
 	breakEffects = new BreakEffect();
 	breakEffects->SetTexture(breakEffectTex);
-
+	timeEffects = new TimeEffect();
+	timeEffects->SetTexture(TimeEffectTex);
 }
 
 void Enemy::TutorialUpdate(Player* player) {
@@ -149,6 +150,7 @@ void Enemy::TutorialUpdate(Player* player) {
 
 	effects->Update();
 	breakEffects->Update();
+	timeEffects->Update();
 }
 void Enemy::ResPorn() {
 	//リスポーンする
@@ -585,7 +587,7 @@ void Enemy::Draw() {
 	}
 	effects->Draw();
 	breakEffects->Draw();
-	timeEffects->Draw();
+	//timeEffects->Draw();
 }
 
 void Enemy::FormatDraw(int EnemyCount) {

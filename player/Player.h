@@ -2,7 +2,7 @@
 #include "Share.h"
 #include "DxLib.h"
 #include "MoveEffect.h"
-#include "../StopEffect.h"
+#include "StopEffect.h"
 
 constexpr int EFFECTS_MAX = 31;
 

@@ -51,7 +51,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 
 				if (TextCount == 0) {
 					TutorialStopTimer++;
-					if (TutorialStopTimer == 150) {
+					if (TutorialStopTimer == 80) {
 						TutorialStopTimer = 0;
 						TextStart = false;
 						frame = 0.0f;
@@ -75,7 +75,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 
 			if (!TextStart && !TextEnd) {
 				TextInterVal++;
-				if (TextInterVal == 50) {
+				if (TextInterVal == 20) {
 					TextInterVal = 0;
 					TutorialPosX = 1780.0f;
 					frame = 0.0f;
@@ -109,7 +109,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 
 				if (TextCount == 0) {
 					TutorialStopTimer++;
-					if (TutorialStopTimer == 150) {
+					if (TutorialStopTimer == 80) {
 						TutorialStopTimer = 0;
 						TextStart = false;
 						frame = 0.0f;
@@ -133,7 +133,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 
 			if (!TextStart && !TextEnd) {
 				TextInterVal++;
-				if (TextInterVal == 50) {
+				if (TextInterVal == 20) {
 					TextInterVal = 0;
 					TutorialPosX = 1780.0f;
 					frame = 0.0f;
@@ -183,7 +183,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 
 				if (TextCount == 0 || TextCount == 2) {
 					TutorialStopTimer++;
-					if (TutorialStopTimer == 150) {
+					if (TutorialStopTimer == 80) {
 						TutorialStopTimer = 0;
 						TextStart = false;
 						frame = 0.0f;
@@ -207,7 +207,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 
 			if (!TextStart && !TextEnd) {
 				TextInterVal++;
-				if (TextInterVal == 50) {
+				if (TextInterVal == 20) {
 					TextInterVal = 0;
 					TutorialPosX = 1780.0f;
 					frame = 0.0f;
@@ -259,7 +259,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 
 				if (TextCount == 0 || TextCount == 2) {
 					TutorialStopTimer++;
-					if (TutorialStopTimer == 150) {
+					if (TutorialStopTimer == 80) {
 						TutorialStopTimer = 0;
 						TextStart = false;
 						frame = 0.0f;
@@ -283,7 +283,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 
 			if (!TextStart && !TextEnd) {
 				TextInterVal++;
-				if (TextInterVal == 50) {
+				if (TextInterVal == 20) {
 					TextInterVal = 0;
 					TutorialPosX = 1780.0f;
 					frame = 0.0f;
@@ -334,7 +334,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 
 				if (TextCount == 0 || TextCount == 1) {
 					TutorialStopTimer++;
-					if (TutorialStopTimer == 150) {
+					if (TutorialStopTimer == 80) {
 						TutorialStopTimer = 0;
 						TextStart = false;
 						frame = 0.0f;
@@ -358,7 +358,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 
 			if (!TextStart && !TextEnd) {
 				TextInterVal++;
-				if (TextInterVal == 50) {
+				if (TextInterVal == 20) {
 					TextInterVal = 0;
 					TutorialPosX = 1780.0f;
 					frame = 0.0f;
@@ -370,7 +370,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 			TextCheck = true;
 		}
 
-		if (TextCount == 1) {
+		if (TextCount == 2) {
 			if (TutorialTimer >= 200) {
 				TutorialTimer--;
 			}
@@ -409,7 +409,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 				}
 
 				TutorialStopTimer++;
-				if (TutorialStopTimer == 150) {
+				if (TutorialStopTimer == 80) {
 					TutorialStopTimer = 0;
 					TextStart = false;
 					frame = 0.0f;
@@ -432,7 +432,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 
 			if (!TextStart && !TextEnd) {
 				TextInterVal++;
-				if (TextInterVal == 50) {
+				if (TextInterVal == 20) {
 					TextInterVal = 0;
 					TutorialPosX = 1780.0f;
 					frame = 0.0f;
@@ -469,7 +469,7 @@ void Tutorial::Draw()
 		DrawFormatString((TutorialPosX - 420), 630, GetColor(0, 0, 0), "よく来たな・・・リーサルの世界へ");
 	}
 	else if (TextNumber == TutorialTex1) {
-		DrawFormatString((TutorialPosX - 360), 630, GetColor(0, 0, 0), "RTとLTで方向を変換してみろ");
+		DrawFormatString((TutorialPosX - 280), 630, GetColor(0, 0, 0), "RTとLTで方向を変換してみろ");
 	}
 	else if (TextNumber == TutorialTex2) {
 		DrawFormatString((TutorialPosX - 200), 630, GetColor(0, 0, 0), "次は敵を倒してみろ");
@@ -478,7 +478,7 @@ void Tutorial::Draw()
 		DrawFormatString((TutorialPosX - 420), 630, GetColor(0, 0, 0), "Lスティックで照準を合わせてAを押せ");
 	}
 	else if (TextNumber == TutorialTex4) {
-		DrawFormatString((TutorialPosX - 200), 630, GetColor(0, 0, 0), "リンクの説明をしよう");
+		DrawFormatString((TutorialPosX - 180), 630, GetColor(0, 0, 0), "リンクの説明をしよう");
 	}
 	else if (TextNumber == TutorialTex5) {
 		DrawFormatString((TutorialPosX - 410), 630, GetColor(0, 0, 0), "近くに敵がいる状態で敵を倒すと");
@@ -487,31 +487,31 @@ void Tutorial::Draw()
 		DrawFormatString((TutorialPosX - 360), 630, GetColor(0, 0, 0), "近くの敵にリンクして倒せるぞ");
 	}
 	else if (TextNumber == TutorialTex7) {
-		DrawFormatString((TutorialPosX - 200), 630, GetColor(0, 0, 0), "リンクした時は・・・");
+		DrawFormatString((TutorialPosX - 180), 630, GetColor(0, 0, 0), "リンクした時は・・・");
 	}
 	else if (TextNumber == TutorialTex8) {
 		DrawFormatString((TutorialPosX - 250), 630, GetColor(0, 0, 0), "レーンを跨いで倒せるぞ");
 	}
 	else if (TextNumber == TutorialTex9) {
-		DrawFormatString((TutorialPosX - 440), 630, GetColor(0, 0, 0), "リンク終了時の場所でスコアが決まるぞ");
+		DrawFormatString((TutorialPosX - 450), 630, GetColor(0, 0, 0), "リンク終了時の場所でスコアが決まるぞ");
 	}
 	else if (TextNumber == TutorialTex10) {
-		DrawFormatString((TutorialPosX - 180), 630, GetColor(0, 0, 0), "Bを押すと");
+		DrawFormatString((TutorialPosX - 160), 630, GetColor(0, 0, 0), "Bを押すと");
 	}
 	else if (TextNumber == TutorialTex11) {
-		DrawFormatString((TutorialPosX - 300), 630, GetColor(0, 0, 0), "同じサークル上の敵を止められるぞ");
+		DrawFormatString((TutorialPosX - 350), 630, GetColor(0, 0, 0), "同じサークル上の敵を止められるぞ");
 	}
 	else if (TextNumber == TutorialTex12) {
-		DrawFormatString((TutorialPosX - 250), 630, GetColor(0, 0, 0), "リンクして敵を倒してみよう");
+		DrawFormatString((TutorialPosX - 360), 630, GetColor(0, 0, 0), "リンクして敵を倒してみよう");
 	}
 	else if (TextNumber == TutorialTex13) {
-		DrawFormatString((TutorialPosX - 200), 630, GetColor(0, 0, 0), "よく出来たな");
+		DrawFormatString((TutorialPosX - 180), 630, GetColor(0, 0, 0), "よく出来たな");
 	}
 	else if (TextNumber == TutorialTex14) {
-		DrawFormatString((TutorialPosX - 130), 630, GetColor(0, 0, 0), "敵とぶつかると動けなくなってしまうそ");
+		DrawFormatString((TutorialPosX - 450), 630, GetColor(0, 0, 0), "敵とぶつかると動けなくなってしまうぞ");
 	}
 	else if (TextNumber == TutorialTex15) {
-		DrawFormatString((TutorialPosX - 250), 630, GetColor(0, 0, 0), "リンクしてスコアを稼ぐのだ");
+		DrawFormatString((TutorialPosX - 340), 630, GetColor(0, 0, 0), "リンクしてスコアを稼ぐのだ");
 	}
 	SetFontSize(20);
 }

@@ -32,7 +32,7 @@ private:
 	int SceneNo = static_cast<int>(NO::Title);
 	//初期化のための計測
 	int SceneTime = 0;
-#pragma region シーンごとの処理
+//#pragma region シーンごとの処理
 	void TitleInit();
 	void TitleUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput);
 	void TitleDraw();
