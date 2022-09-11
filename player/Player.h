@@ -49,7 +49,7 @@ public:
 	const float& GetPlayerRot() { return PlayerRot; }
 
 	void SetSpeed(float PlayerSpeed) { this->PlayerSpeed = PlayerSpeed; }
-	void SetRotDir(int RotDir) { this->PlayerRotDir = RotDir; }
+	void SetScale(float PlayerScale) { this->PlayerScale = PlayerScale; }
 	void SetAfterScale(float AfterScale) { this->AfterScale = AfterScale; }
 	void SetAfterSpeed(float AfterSpeed) { this->AfterSpeed = AfterSpeed; }
 	void SetAttackStart(bool AttackStart) { this->AttackStart = AttackStart; }

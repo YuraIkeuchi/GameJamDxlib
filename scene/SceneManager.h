@@ -72,6 +72,10 @@ private:
 	int BirthEnemyCount = 0;
 	int TutorialCount = 0;
 	int TutorialTimer = 100;
+	enum EnemyDir {
+		RIGHT,
+		LEFT,
+	};
 public:
 	//最初に初期化するもの
 	void StaticInit();

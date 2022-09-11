@@ -89,12 +89,13 @@ void SceneManager::Draw()
 		break;
 	case static_cast<int>(SceneManager::NO::Tutorial):
 		DrawFormatString(0, 300, GetColor(0, 0, 0), "TUTORIAL");
-	/*	DrawFormatString(0, 320, GetColor(0, 0, 0), "BirthEnemyCount %d", BirthEnemyCount);
-		DrawFormatString(0, 340, GetColor(0, 0, 0), "TutorialCount %d", TutorialCount);*/
+		DrawFormatString(0, 320, GetColor(0, 0, 0), "BirthEnemyCount %d", BirthEnemyCount);
+		DrawFormatString(0, 340, GetColor(0, 0, 0), "TutorialCount %d", TutorialCount);
 		TutorialDraw();
 		break;
 	case static_cast<int>(SceneManager::NO::GameScene):
 		DrawFormatString(0, 300, GetColor(0, 0, 0), "GAME");
+		DrawFormatString(0, 320, GetColor(0, 0, 0), "BirthEnemyCount %d", BirthEnemyCount);
 		GameSceneDraw();
 		break;
 	case static_cast<int>(SceneManager::NO::End):
@@ -194,7 +195,7 @@ void SceneManager::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STAT
 		newEnemy->TutorialInitialize();
 		if (BirthEnemyCount == 1) {
 			newEnemy->SetTargetLine(0);
-			newEnemy->SetSpeed(358.0f);
+			newEnemy->SetSpeed(90.0f);
 		}
 		else if (BirthEnemyCount == 2) {
 			newEnemy->SetTargetLine(0);
@@ -229,6 +230,8 @@ void SceneManager::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STAT
 		enemy.push_back(std::move(newEnemy));
 		EnemyArgment = false;
 	}
+
+	
 	//最後のチュートリアルは二体同時に倒さないと進まない
 	if (tutorial->GetTutorialNumber() == 4) {
 		if (TutorialCount == 8) {
@@ -244,7 +247,9 @@ void SceneManager::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STAT
 		}
 	}
 
-	if (tutorial->GetTutorialTimer() == 10) {
+	if (tutorial->GetDoorEnd()) {
+		player->SetScale(320.0f);
+		BirthEnemyCount = 0;
 		//要素全削除
 		enemy.clear();
 	}
@@ -314,7 +319,7 @@ void SceneManager::TutorialDraw()
 
 	//スコア
 	score->Draw();
-	score->FormatDraw();
+	//score->FormatDraw();
 	//エネミー
 	for (unique_ptr<Enemy>& newEnemy : enemy) {
 		if (newEnemy != nullptr) {
@@ -343,7 +348,8 @@ void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STA
 	int enemytargetTex = LoadGraph("Resources/enemytarget.png");
 
 	//特定のフレームで敵を生成する
-	if (score->GetGameTimer() == 900 || score->GetGameTimer() == 800) {
+	if (score->GetGameTimer() == 3520 || score->GetGameTimer() == 3500 || score->GetGameTimer() == 3480
+		|| score->GetGameTimer() == 3460) {
 		BirthEnemyCount++;
 		EnemyArgment = true;
 	}
@@ -357,10 +363,24 @@ void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STA
 		newEnemy->SetTargetEnemyTex(enemytargetTex);
 		newEnemy->Initialize();
 		if (BirthEnemyCount == 1) {
+			newEnemy->SetTargetLine(0);
+			newEnemy->SetDir(RIGHT);
 			newEnemy->SetSpeed(0.0f);
 		}
 		else if (BirthEnemyCount == 2) {
-			newEnemy->SetSpeed(123.0f);
+			newEnemy->SetTargetLine(0);
+			newEnemy->SetDir(RIGHT);
+			newEnemy->SetSpeed(90.0f);
+		}
+		else if (BirthEnemyCount == 3) {
+			newEnemy->SetTargetLine(0);
+			newEnemy->SetDir(RIGHT);
+			newEnemy->SetSpeed(180.0f);
+		}
+		else if (BirthEnemyCount == 4) {
+			newEnemy->SetTargetLine(0);
+			newEnemy->SetDir(RIGHT);
+			newEnemy->SetSpeed(270.0f);
 		}
 		enemy.push_back(std::move(newEnemy));
 		EnemyArgment = false;

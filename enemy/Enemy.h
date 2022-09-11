@@ -35,6 +35,7 @@ public:
 	bool PlayerCollide(Player* player);
 	//ロックオン当たり判定(プレイヤーがスタンする)
 	bool LockOnCollide(Player* player);
+	void Death();
 	//描画
 	void Draw();
 	//FormatString用
@@ -47,6 +48,7 @@ public:
 	const bool& GetAttackArea() { return InAttackArea; }
 	const bool& GetDeathEnemy() { return DeathEnemy; }
 	void SetStop(bool Stop) { this->EnemyStop = Stop; }
+	void SetDir(int Dir) { this->Dir = Dir; }
 	void SetTutorialMove(bool TutorialMove) { this->TutorialMove = TutorialMove; }
 	void SetSpeed(float EnemySpeed) { this->EnemySpeed = EnemySpeed; }
 	void SetDeathEnemy(bool DeathEnemy) { this->DeathEnemy = DeathEnemy; }

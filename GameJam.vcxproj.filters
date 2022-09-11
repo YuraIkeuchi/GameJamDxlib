@@ -1,48 +1,160 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="base\StageCircle.cpp" />
-    <ClCompile Include="collision\Collision.cpp" />
-    <ClCompile Include="ease\Easing.cpp" />
-    <ClCompile Include="effect\AttackEffect.cpp" />
-    <ClCompile Include="Effect\BreakEffect.cpp" />
-    <ClCompile Include="effect\Emitter.cpp" />
-    <ClCompile Include="effect\MoveEffect.cpp" />
-    <ClCompile Include="End\End.cpp" />
-    <ClCompile Include="enemy\Enemy.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="math\Vector2.cpp" />
-    <ClCompile Include="math\Vector3.cpp" />
-    <ClCompile Include="player\Player.cpp" />
-    <ClCompile Include="scene\SceneManager.cpp" />
-    <ClCompile Include="score\Score.cpp" />
-    <ClCompile Include="Title\Title.cpp" />
-    <ClCompile Include="Tutorial\Tutorial.cpp" />
-    <ClCompile Include="effect\StopEffect.cpp" />
-    <ClCompile Include="effect\TimeEffect.cpp" />
+    <ClCompile Include="Effect\BreakEffect.cpp">
+      <Filter>effect</Filter>
+    </ClCompile>
+    <ClCompile Include="effect\AttackEffect.cpp">
+      <Filter>effect</Filter>
+    </ClCompile>
+    <ClCompile Include="collision\Collision.cpp">
+      <Filter>collision</Filter>
+    </ClCompile>
+    <ClCompile Include="ease\Easing.cpp">
+      <Filter>ease</Filter>
+    </ClCompile>
+    <ClCompile Include="effect\Emitter.cpp">
+      <Filter>effect</Filter>
+    </ClCompile>
+    <ClCompile Include="End\End.cpp">
+      <Filter>end</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy\Enemy.cpp">
+      <Filter>enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="effect\MoveEffect.cpp">
+      <Filter>effect</Filter>
+    </ClCompile>
+    <ClCompile Include="effect\TimeEffect.cpp">
+      <Filter>effect</Filter>
+    </ClCompile>
+    <ClCompile Include="effect\StopEffect.cpp">
+      <Filter>effect</Filter>
+    </ClCompile>
+    <ClCompile Include="player\Player.cpp">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\SceneManager.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="base\StageCircle.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="score\Score.cpp">
+      <Filter>score</Filter>
+    </ClCompile>
+    <ClCompile Include="math\Vector2.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\Vector3.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="Title\Title.cpp">
+      <Filter>title</Filter>
+    </ClCompile>
+    <ClCompile Include="Tutorial\Tutorial.cpp">
+      <Filter>tutorial</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="base\Share.h" />
-    <ClInclude Include="base\StageCircle.h" />
-    <ClInclude Include="collision\Collision.h" />
-    <ClInclude Include="ease\Easing.h" />
-    <ClInclude Include="effect\AttackEffect.h" />
-    <ClInclude Include="Effect\BreakEffect.h" />
-    <ClInclude Include="effect\Emitter.h" />
-    <ClInclude Include="effect\MoveEffect.h" />
-    <ClInclude Include="End\End.h" />
-    <ClInclude Include="enemy\Enemy.h" />
-    <ClInclude Include="math\Vector2.h" />
-    <ClInclude Include="math\Vector3.h" />
-    <ClInclude Include="player\Player.h" />
-    <ClInclude Include="scene\SceneManager.h" />
-    <ClInclude Include="score\Score.h" />
-    <ClInclude Include="Title\Title.h" />
-    <ClInclude Include="Tutorial\Tutorial.h" />
-    <ClInclude Include="effect\StopEffect.h" />
-    <ClInclude Include="effect\TimeEffect.h" />
+    <ClInclude Include="Effect\BreakEffect.h">
+      <Filter>effect</Filter>
+    </ClInclude>
+    <ClInclude Include="effect\AttackEffect.h">
+      <Filter>effect</Filter>
+    </ClInclude>
+    <ClInclude Include="collision\Collision.h">
+      <Filter>collision</Filter>
+    </ClInclude>
+    <ClInclude Include="ease\Easing.h">
+      <Filter>ease</Filter>
+    </ClInclude>
+    <ClInclude Include="effect\Emitter.h">
+      <Filter>effect</Filter>
+    </ClInclude>
+    <ClInclude Include="End\End.h">
+      <Filter>end</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy\Enemy.h">
+      <Filter>enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="effect\MoveEffect.h">
+      <Filter>effect</Filter>
+    </ClInclude>
+    <ClInclude Include="effect\StopEffect.h">
+      <Filter>effect</Filter>
+    </ClInclude>
+    <ClInclude Include="effect\TimeEffect.h">
+      <Filter>effect</Filter>
+    </ClInclude>
+    <ClInclude Include="player\Player.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="base\Share.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\SceneManager.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="base\StageCircle.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="score\Score.h">
+      <Filter>score</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Vector2.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Vector3.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="Title\Title.h">
+      <Filter>title</Filter>
+    </ClInclude>
+    <ClInclude Include="Tutorial\Tutorial.h">
+      <Filter>tutorial</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resources\icon.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="player">
+      <UniqueIdentifier>{0ed27531-c63a-4e30-a868-4ecbcac721fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="enemy">
+      <UniqueIdentifier>{91cb17cf-11c4-4a38-a62d-5822d004fe2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene">
+      <UniqueIdentifier>{e4125eef-bebc-4965-ac76-cc2c4dc92751}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="effect">
+      <UniqueIdentifier>{0b66e550-86e5-4672-9fbc-110fc776fcda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="end">
+      <UniqueIdentifier>{0033407e-a87a-4e9f-a739-e94f6276dcb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ease">
+      <UniqueIdentifier>{1bc2b2b3-e674-48c3-901c-6a59bb7c59c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base">
+      <UniqueIdentifier>{d7afc1bb-0f60-4de5-ba3c-aa9866cc858e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="math">
+      <UniqueIdentifier>{adc11620-f11f-4bde-8b2d-cc86cd163bea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="collision">
+      <UniqueIdentifier>{b858bb5a-2a06-4d5c-9581-37585e9f6bb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="score">
+      <UniqueIdentifier>{7f6fcf52-98aa-47ba-a963-1c7f41d9336c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="title">
+      <UniqueIdentifier>{9bc48d00-3784-46d5-a23d-711e4682affb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tutorial">
+      <UniqueIdentifier>{1ee9ec92-1ffb-409a-96e9-8924f9258095}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

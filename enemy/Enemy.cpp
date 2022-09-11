@@ -157,7 +157,6 @@ void Enemy::ResPorn() {
 	if (!EnemyAlive) {
 		EnemyTimer--;
 		if (EnemyTimer == 0) {
-			Dir = rand() % 2;
 			if (Dir == RIGHT) {
 				EnemyAdd = 0.5f;
 			}
