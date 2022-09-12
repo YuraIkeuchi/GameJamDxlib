@@ -5,7 +5,6 @@ void SceneManager::StaticInit()
 {
 	int playerTex = LoadGraph("Resources/player.png");
 	int targetTex = LoadGraph("Resources/TargetArea.png");
-	
 	int stageTex = LoadGraph("Resources/stage.png");
 	gameBgm = LoadSoundMem("Resources/sound/gameBgm.mp3");
 
@@ -192,7 +191,8 @@ void SceneManager::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STAT
 		newEnemy->SetTargetEnemyTex(enemytargetTex);
 		newEnemy->TutorialInitialize();
 		if (BirthEnemyCount == 1) {
-			newEnemy->SetTargetLine(0);
+			newEnemy->SetTargetLine(3);
+			newEnemy->SetTutorialMove(true);
 			newEnemy->SetSpeed(358.0f);
 		}
 		else if (BirthEnemyCount == 2) {
@@ -444,22 +444,22 @@ void SceneManager::GameSceneEnemyArg() {
 		newEnemy->SetTargetEnemyTex(enemytargetTex);
 		newEnemy->Initialize();
 		if (BirthEnemyCount == 1) {
-			newEnemy->SetTargetLine(0);
+			newEnemy->SetTargetLine(3);
 			newEnemy->SetDir(RIGHT);
 			newEnemy->SetSpeed(0.0f);
 		}
 		else if (BirthEnemyCount == 2) {
-			newEnemy->SetTargetLine(0);
+			newEnemy->SetTargetLine(3);
 			newEnemy->SetDir(RIGHT);
 			newEnemy->SetSpeed(90.0f);
 		}
 		else if (BirthEnemyCount == 3) {
-			newEnemy->SetTargetLine(0);
+			newEnemy->SetTargetLine(3);
 			newEnemy->SetDir(RIGHT);
 			newEnemy->SetSpeed(180.0f);
 		}
 		else if (BirthEnemyCount == 4) {
-			newEnemy->SetTargetLine(0);
+			newEnemy->SetTargetLine(3);
 			newEnemy->SetDir(RIGHT);
 			newEnemy->SetSpeed(270.0f);
 		}
@@ -634,11 +634,11 @@ void SceneManager::EndUpdate(char keys[255], char oldkeys[255], XINPUT_STATE inp
 void SceneManager::EndDraw()
 {
 	//描画処理
-//ステージ上の円
-	//stagecircle->Draw();
+	//ステージ上の円
+	stagecircle->Draw();
 
 	////プレイヤー
-	//player->Draw();
+	player->Draw();
 	////player->FormatDraw();
 
 	////スコア
