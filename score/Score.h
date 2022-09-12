@@ -42,4 +42,13 @@ private:
 
 	float scorePosX;
 	float scorePosY;
+
+	float scorePosX2;
+	float scorePosY2;
+
+	int knockCount;
+	int alphaCount;
+
+	int scoreTex;
+	int timeTex;
 };
