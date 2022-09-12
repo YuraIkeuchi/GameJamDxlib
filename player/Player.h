@@ -137,4 +137,6 @@ private:
 	StopEffect* stopEffects = nullptr;
 	int attackSound;
 	int enemyStopSound;
+
+	int stopTexture;
 };

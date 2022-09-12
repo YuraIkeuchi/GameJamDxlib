@@ -6,6 +6,7 @@
 Player::Player() {
 	attackSound = LoadSoundMem("Resources/sound/attack.mp3");
 	enemyStopSound = LoadSoundMem("Resources/sound/enemyStop.mp3");
+	stopTexture = LoadGraph("Resources/stop.png");
 }
 //デストラクタ
 Player::~Player() {
@@ -65,7 +66,7 @@ void Player::Initialize(int soundBolume)
 		Effects[i]->SetTexture(texture);
 	}
 	stopEffects = new StopEffect();
-	stopEffects->SetTexture(targettexture);
+	stopEffects->SetTexture(stopTexture);
 	InputX = 0.0f;
 	InputY = 0.0f;
 	Joyangle = 0.0f;
