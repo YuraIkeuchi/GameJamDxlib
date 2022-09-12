@@ -56,17 +56,17 @@ private:
 	vector<unique_ptr<Enemy>>enemy;
 	bool EnemyArgment = false;
 	//プレイヤー
-	Player *player = nullptr;
+	Player* player = nullptr;
 	//ステージ上の円
-	StageCircle *stagecircle = nullptr;
+	unique_ptr<StageCircle> stagecircle;
 	//タイトルの動き
-	Title *title = nullptr;
+	unique_ptr<Title> title;
 	//チュートリアルの動き
-	Tutorial* tutorial = nullptr;
+	unique_ptr<Tutorial> tutorial;
 	//エンドの動き
-	End *end = nullptr;
+	unique_ptr<End> end;
 	//スコア
-	Score* score = nullptr;
+	unique_ptr<Score> score;
 	float x = WIN_WIDTH / 2;
 	float y = WIN_HEIGHT / 2;
 

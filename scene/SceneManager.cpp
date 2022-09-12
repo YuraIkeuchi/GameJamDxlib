@@ -24,13 +24,22 @@ void SceneManager::StaticInit()
 	//	enemy[i]->SetTargetEnemyTex(enemytargetTex);
 	//}
 	player = new Player();
-	stagecircle = new StageCircle();
-	score = new Score();
-	score->SetPlayer(player);
-	title = new Title();
-	tutorial = new Tutorial();
-	end = new End();
-
+	StageCircle* stagecircle_;
+	stagecircle_ = new StageCircle();
+	stagecircle.reset(stagecircle_);
+	Score* score_;
+	score_ = new Score();
+	score_->SetPlayer(player);
+	score.reset(score_);
+	Title* title_;
+	title_ = new Title();
+	title.reset(title_);
+	Tutorial* tutorial_;
+	tutorial_ = new Tutorial();
+	tutorial.reset(tutorial_);
+	End* end_;
+	end_ = new End();
+	end.reset(end_);
 	player->SetPlayer(playerTex);
 	player->SetTargetArea(targetTex);
 	stagecircle->SetTexture(stageTex);
@@ -429,6 +438,9 @@ void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STA
 				PlaySoundMem(checkSE, DX_PLAYTYPE_BACK);
 				StopSoundMem(gameBgm);
 				TitleInit();
+				BirthEnemyCount = 0;
+				//要素全削除
+				enemy.clear();
 				SceneNo = static_cast<int>(NO::Title);
 			}
 		}

@@ -56,6 +56,9 @@
     <ClCompile Include="Tutorial\Tutorial.cpp">
       <Filter>tutorial</Filter>
     </ClCompile>
+    <ClCompile Include="particle\Particle.cpp">
+      <Filter>particle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Effect\BreakEffect.h">
@@ -115,6 +118,9 @@
     <ClInclude Include="Tutorial\Tutorial.h">
       <Filter>tutorial</Filter>
     </ClInclude>
+    <ClInclude Include="particle\Particle.h">
+      <Filter>particle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resources\icon.rc" />
@@ -155,6 +161,9 @@
     </Filter>
     <Filter Include="tutorial">
       <UniqueIdentifier>{1ee9ec92-1ffb-409a-96e9-8924f9258095}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="particle">
+      <UniqueIdentifier>{c11f74ec-797c-48ad-b9cf-aa72d9eb5453}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

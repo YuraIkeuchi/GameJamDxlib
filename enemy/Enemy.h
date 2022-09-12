@@ -4,7 +4,7 @@
 #include "AttackEffect.h"
 #include "BreakEffect.h"
 #include "TimeEffect.h"
-
+#include "Particle.h"
 class Enemy {
 public:
 	//コンストラクタ
@@ -110,6 +110,10 @@ private:
 	bool TargetShrink;
 	float Targetframe;
 	float TargetSize;
+	//パーティクル関係
+	int ParticleCount;
+	float ParticlePosX;
+	float ParticlePosY;
 	enum MoveDir {
 		RIGHT,
 		LEFT,
@@ -119,7 +123,8 @@ private:
 		PLAYERRIGHT,
 		PLAYERLEFT,
 	};
-	TimeEffect* timeEffects = nullptr;
-	AttackEffect* effects = nullptr;
-	BreakEffect* breakEffects = nullptr;
+	unique_ptr<TimeEffect> timeEffects;
+	unique_ptr<AttackEffect> effects;
+	unique_ptr<BreakEffect> breakEffects;
+	unique_ptr<Particle> particle;
 };
