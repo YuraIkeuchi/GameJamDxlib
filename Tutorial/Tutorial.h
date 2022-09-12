@@ -43,8 +43,6 @@ private:
 		TutorialTex11,
 		TutorialTex12,
 		TutorialTex13,
-		TutorialTex14,
-		TutorialTex15,
 	};
 
 	float TutorialPosX;

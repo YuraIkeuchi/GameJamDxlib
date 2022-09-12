@@ -174,11 +174,10 @@ void SceneManager::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STAT
 	int enemytargetTex = LoadGraph("Resources/enemytarget.png");
 
 	//特定のフレームで敵を生成する
-	if (tutorial->GetTutorialTimer() == 520 || tutorial->GetTutorialTimer() == 480
-		|| tutorial->GetTutorialTimer() == 450 || tutorial->GetTutorialTimer() == 330
-		|| tutorial->GetTutorialTimer() == 325 || tutorial->GetTutorialTimer() == 320
-		|| tutorial->GetTutorialTimer() == 250 || tutorial->GetTutorialTimer() == 230) {
-
+	if (tutorial->GetTutorialTimer() == 310 || tutorial->GetTutorialTimer() == 308 || tutorial->GetTutorialTimer() == 306
+		|| tutorial->GetTutorialTimer() == 304 || tutorial->GetTutorialTimer() == 280 || tutorial->GetTutorialTimer() == 275
+		|| tutorial->GetTutorialTimer() == 110 || tutorial->GetTutorialTimer() == 108 || tutorial->GetTutorialTimer() == 106
+		) {
 		BirthEnemyCount++;
 		EnemyArgment = true;
 	}
@@ -192,61 +191,47 @@ void SceneManager::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STAT
 		newEnemy->TutorialInitialize();
 		if (BirthEnemyCount == 1) {
 			newEnemy->SetTargetLine(0);
-			newEnemy->SetTutorialMove(true);
-			newEnemy->SetSpeed(358.0f);
+			newEnemy->SetSpeed(0.0f);
 		}
 		else if (BirthEnemyCount == 2) {
 			newEnemy->SetTargetLine(0);
-			newEnemy->SetSpeed(10.0f);
+			newEnemy->SetSpeed(90.0f);
 		}
 		else if (BirthEnemyCount == 3) {
 			newEnemy->SetTargetLine(0);
-			newEnemy->SetSpeed(358.0f);
+			newEnemy->SetSpeed(180.0f);
 		}
 		else if (BirthEnemyCount == 4) {
 			newEnemy->SetTargetLine(0);
-			newEnemy->SetSpeed(200.0f);
+			newEnemy->SetSpeed(270.0f);
+		}
+		else if (BirthEnemyCount == 4) {
+			newEnemy->SetTargetLine(0);
+			newEnemy->SetSpeed(10.0f);
 		}
 		else if (BirthEnemyCount == 5) {
-			newEnemy->SetTargetLine(1);
-			newEnemy->SetSpeed(220.0f);
+			newEnemy->SetTargetLine(0);
+			newEnemy->SetSpeed(358.0f);
 		}
 		else if (BirthEnemyCount == 6) {
-			newEnemy->SetTargetLine(2);
-			newEnemy->SetSpeed(240.0f);
+			newEnemy->SetTargetLine(0);
+			newEnemy->SetSpeed(200.0f);
 		}
 		else if (BirthEnemyCount == 7) {
 			newEnemy->SetTargetLine(1);
-			newEnemy->SetTutorialMove(true);
-			newEnemy->SetSpeed(90.0f);
+			newEnemy->SetSpeed(220.0f);
 		}
 		else if (BirthEnemyCount == 8) {
 			newEnemy->SetTargetLine(2);
-			newEnemy->SetTutorialMove(true);
-			newEnemy->SetSpeed(270.0f);
+			newEnemy->SetSpeed(240.0f);
 		}
 		enemy.push_back(std::move(newEnemy));
 		EnemyArgment = false;
 	}
 
-	
-	//最後のチュートリアルは二体同時に倒さないと進まない
-	if (tutorial->GetTutorialNumber() == 4) {
-		if (TutorialCount == 8) {
-			if(player->GetKnockCount() == 2){
-				tutorial->SetTutorialClear(true);
-			}
-			else {
-				tutorial->SetTutorialClear(false);
-				TutorialCount = 6;
-				BirthEnemyCount = 6;
-				tutorial->SetTutorialTimer(300);
-			}
-		}
-	}
-
 	if (tutorial->GetDoorEnd()) {
 		player->SetScale(320.0f);
+		score->SetScorePoint(0);
 		BirthEnemyCount = 0;
 		//要素全削除
 		enemy.clear();
