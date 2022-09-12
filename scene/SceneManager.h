@@ -78,6 +78,25 @@ private:
 		RIGHT,
 		LEFT,
 	};
+
+	bool changeFlag;
+
+	int filterTex;
+	int curTex;
+	int menuStopTex;
+	int newStartTex;
+	int goTitleTex;
+	int removeTex;
+
+	int curPosX;
+	int curPosY;
+
+	int menuChangeSE;
+	int checkSE;
+
+	float scale1;
+	float scale2;
+	float scale3;
 public:
 	//最初に初期化するもの
 	void StaticInit();

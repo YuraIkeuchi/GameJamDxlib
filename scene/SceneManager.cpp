@@ -7,6 +7,14 @@ void SceneManager::StaticInit()
 	int targetTex = LoadGraph("Resources/TargetArea.png");
 	int stageTex = LoadGraph("Resources/stage.png");
 	gameBgm = LoadSoundMem("Resources/sound/gameBgm.mp3");
+	filterTex = LoadGraph("Resources/filter.png");
+	menuStopTex = LoadGraph("Resources/menuStop.png");
+	newStartTex = LoadGraph("Resources/newStart.png");
+	goTitleTex = LoadGraph("Resources/goTitle.png");
+	removeTex = LoadGraph("Resources/remove.png");
+	curTex = LoadGraph("Resources/title4.png");
+	menuChangeSE = LoadSoundMem("Resources/sound/titleSound2.mp3");
+	checkSE = LoadSoundMem("Resources/sound/titleSound3.mp3");
 
 	//for (int i = 0; i < Enemy_Max; i++) {
 	//	enemy[i] = new Enemy();
@@ -336,40 +344,108 @@ void SceneManager::TutorialDraw()
 void SceneManager::GameSceneInit()
 {
 	score->Initialize();
+	changeFlag = false;
+	scale1 = 0.5f;
+	scale2 = 0.5f;
+	scale3 = 0.5f;
+	curPosX = WIN_WIDTH / 2 - (300 * 0.5);
+	curPosY = 380;
+	ChangeVolumeSoundMem(title->GetVolume(), menuChangeSE);
+	ChangeVolumeSoundMem(title->GetVolume(), checkSE);
 }
 
 void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput)
 {
 	//敵の生成
-	GameSceneEnemyArg();
-	//プレイヤー
-	if (score->GetGameTimer() > 0)
+	if (changeFlag == false)
 	{
-		player->Update(keys, oldkeys, input, oldinput);
-		for (unique_ptr<Enemy>& newEnemy : enemy) {
-			if (newEnemy != nullptr) {
-				newEnemy->Update(player);
-				if (newEnemy->GetAttackArea()) {
-					newEnemy->Target(player);
+		GameSceneEnemyArg();
+		//プレイヤー
+		if (score->GetGameTimer() > 0)
+		{
+			player->Update(keys, oldkeys, input, oldinput);
+			for (unique_ptr<Enemy> &newEnemy : enemy) {
+				if (newEnemy != nullptr) {
+					newEnemy->Update(player);
+					if (newEnemy->GetAttackArea()) {
+						newEnemy->Target(player);
+					}
 				}
 			}
 		}
+
+		//ゲーム終了
+		if (score->Update(keys, oldkeys, input, oldinput) == true)
+		{
+			player->SetScale(320.0f);
+			score->SetScorePoint(0);
+			BirthEnemyCount = 0;
+			//要素全削除
+			enemy.clear();
+			SceneTime = 0;
+			StopSoundMem(gameBgm);
+			EndInit();
+			SceneNo = static_cast<int>(NO::End);
+		}
 	}
 
-	//ゲーム終了
-	if (score->Update(keys, oldkeys, input, oldinput) == true)
+	if (input.Buttons[XINPUT_BUTTON_START] && !oldinput.Buttons[XINPUT_BUTTON_START])
 	{
-		player->SetScale(320.0f);
-		score->SetScorePoint(0);
-		BirthEnemyCount = 0;
-		//要素全削除
-		enemy.clear();
-		SceneTime = 0;
-		StopSoundMem(gameBgm);
-		EndInit();
-		SceneNo = static_cast<int>(NO::End);
+		changeFlag = true;
 	}
 
+	if (changeFlag == true)
+	{
+		if (input.Buttons[XINPUT_BUTTON_DPAD_UP] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_UP] && curPosY >= 500) {
+			curPosY -= 120;
+			PlaySoundMem(menuChangeSE, DX_PLAYTYPE_BACK);
+		}
+
+		if (input.Buttons[XINPUT_BUTTON_DPAD_DOWN] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_DOWN] && curPosY <= 500) {
+			curPosY += 120;
+			PlaySoundMem(menuChangeSE, DX_PLAYTYPE_BACK);
+		}
+
+		if (curPosY == 380)
+		{
+			scale1 = 0.7f;
+			scale2 = 0.5f;
+			scale3 = 0.5f;
+
+			if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A]) {
+				GameSceneInit();
+				player->Initialize(title->GetVolume());
+				enemy.clear();
+				BirthEnemyCount = 0;
+				PlaySoundMem(checkSE, DX_PLAYTYPE_BACK);
+			}
+		}
+		if (curPosY == 500)
+		{
+			scale1 = 0.5f;
+			scale2 = 0.7f;
+			scale3 = 0.5f;
+			if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A]) {
+				PlaySoundMem(checkSE, DX_PLAYTYPE_BACK);
+				StopSoundMem(gameBgm);
+				TitleInit();
+				SceneNo = static_cast<int>(NO::Title);
+			}
+		}
+		if (curPosY == 620)
+		{
+			scale1 = 0.5f;
+			scale2 = 0.5f;
+			scale3 = 0.7f;
+
+			if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A]) {
+				PlaySoundMem(checkSE, DX_PLAYTYPE_BACK);
+				curPosY = 500;
+				changeFlag = false;
+			}
+		}
+
+	}
 	Vector3 cameraOrgPosition(player->GetPositionX(),player->GetPositionY(), 500.0f);
 	Vector3 cameraPosition = cameraOrgPosition;
 
@@ -400,6 +476,12 @@ void SceneManager::GameSceneDraw()
 	player->Draw();
 	player->FormatDraw();
 
+
+	if (changeFlag == false)
+	{
+		//スコア
+		score->Draw();
+	}
 	//score->FormatDraw();
 	//エネミー
 	for (unique_ptr<Enemy>& newEnemy : enemy) {
@@ -409,9 +491,19 @@ void SceneManager::GameSceneDraw()
 		}
 	}
 
-
 	//スコア
 	score->Draw();
+	if (changeFlag == true)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
+		DrawGraph(0, 0, filterTex, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		DrawRotaGraph(WIN_WIDTH / 2 , 200, 1.3f, 0.0f, menuStopTex, TRUE);
+		DrawRotaGraph(WIN_WIDTH / 2, 380, scale1, 0.0f, newStartTex, TRUE);
+		DrawRotaGraph(WIN_WIDTH / 2, 500, scale2, 0.0f, goTitleTex, TRUE);
+		DrawRotaGraph(WIN_WIDTH / 2, 620, scale3, 0.0f, removeTex, TRUE);
+		DrawRotaGraph(curPosX, curPosY, 0.5f, 0.0f, curTex, TRUE);
+	}
 }
 
 void SceneManager::GameSceneEnemyArg() {
