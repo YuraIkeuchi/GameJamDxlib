@@ -37,7 +37,7 @@ public:
 	bool LockOnCollide(Player* player);
 	void VanishEnemy();
 	//描画
-	void Draw();
+	void Draw(Player* player);
 	//FormatString用
 	void FormatDraw(int EnemyCount);
 public:
@@ -80,7 +80,6 @@ private:
 	float EnemyCircleX;
 	float EnemyCircleY;
 	float EnemyAdd;
-	float AddVelocity;
 	//チュートリアルの変数
 	bool TutorialMove;
 	//リスポーン関係
@@ -108,7 +107,10 @@ private:
 	bool MoveLine;
 	bool Vanish;
 	float frame;
-
+	//照準に関する変数
+	bool TargetShrink;
+	float Targetframe;
+	float TargetSize;
 	enum MoveDir {
 		RIGHT,
 		LEFT,

@@ -33,6 +33,7 @@ public:
 	//getter setter（結構増えちゃうかも申し訳ない)
 	const float& GetScale() { return PlayerScale; }
 	const float& GetSpeed() { return PlayerSpeed; }
+	const float& GetAfterSpeed() { return AfterSpeed; }
 	const bool& GetStop() { return Stop; }
 	const bool& GetInArea() { return InArea; }
 	const bool& GetInAreaStart() { return InAreaStart; }
@@ -118,6 +119,7 @@ private:
 	//ダメージ関係
 	bool Stun;
 	int StunTimer;
+	int StunCount;
 	bool Invisible;
 	int InvisibleTimer;
 	bool Around;
