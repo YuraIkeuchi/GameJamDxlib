@@ -170,13 +170,12 @@ void SceneManager::TutorialInit()
 void SceneManager::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput)
 {
 	int enemyTex = LoadGraph("Resources/enemy.png");
-	int enemylinkTex = LoadGraph("Resources/LinkArea.png");
+	int enemyrespornTex = LoadGraph("Resources/resporn.png");
 	int enemytargetTex = LoadGraph("Resources/enemytarget.png");
 
 	//特定のフレームで敵を生成する
-	if (tutorial->GetTutorialTimer() == 310 || tutorial->GetTutorialTimer() == 308 || tutorial->GetTutorialTimer() == 306
-		|| tutorial->GetTutorialTimer() == 304 || tutorial->GetTutorialTimer() == 280 || tutorial->GetTutorialTimer() == 275
-		|| tutorial->GetTutorialTimer() == 110 || tutorial->GetTutorialTimer() == 108 || tutorial->GetTutorialTimer() == 106
+	if (tutorial->GetTutorialTimer() == 321 || tutorial->GetTutorialTimer() == 316 || tutorial->GetTutorialTimer() == 311
+		|| tutorial->GetTutorialTimer() == 306 || tutorial->GetTutorialTimer() == 150 || tutorial->GetTutorialTimer() == 145
 		) {
 		BirthEnemyCount++;
 		EnemyArgment = true;
@@ -186,47 +185,56 @@ void SceneManager::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STAT
 		unique_ptr<Enemy> newEnemy;
 		newEnemy = make_unique<Enemy>();
 		newEnemy->SetEnemyTex(enemyTex);
-		newEnemy->SetLinkEnemyTex(enemylinkTex);
+		newEnemy->SetRespornTex(enemyrespornTex);
 		newEnemy->SetTargetEnemyTex(enemytargetTex);
-		newEnemy->TutorialInitialize();
+		newEnemy->Initialize();
 		if (BirthEnemyCount == 1) {
 			newEnemy->SetTargetLine(0);
+			newEnemy->SetTutorialMove(true);
 			newEnemy->SetSpeed(0.0f);
 		}
 		else if (BirthEnemyCount == 2) {
 			newEnemy->SetTargetLine(0);
+			newEnemy->SetTutorialMove(true);
 			newEnemy->SetSpeed(90.0f);
 		}
 		else if (BirthEnemyCount == 3) {
 			newEnemy->SetTargetLine(0);
+			newEnemy->SetTutorialMove(true);
 			newEnemy->SetSpeed(180.0f);
 		}
 		else if (BirthEnemyCount == 4) {
 			newEnemy->SetTargetLine(0);
+			newEnemy->SetTutorialMove(true);
 			newEnemy->SetSpeed(270.0f);
-		}
-		else if (BirthEnemyCount == 4) {
-			newEnemy->SetTargetLine(0);
-			newEnemy->SetSpeed(10.0f);
 		}
 		else if (BirthEnemyCount == 5) {
 			newEnemy->SetTargetLine(0);
-			newEnemy->SetSpeed(358.0f);
+			newEnemy->SetTutorialMove(true);
+			newEnemy->SetSpeed(0.0f);
 		}
 		else if (BirthEnemyCount == 6) {
-			newEnemy->SetTargetLine(0);
-			newEnemy->SetSpeed(200.0f);
-		}
-		else if (BirthEnemyCount == 7) {
 			newEnemy->SetTargetLine(1);
-			newEnemy->SetSpeed(220.0f);
-		}
-		else if (BirthEnemyCount == 8) {
-			newEnemy->SetTargetLine(2);
-			newEnemy->SetSpeed(240.0f);
+			newEnemy->SetTutorialMove(true);
+			newEnemy->SetSpeed(180.0f);
 		}
 		enemy.push_back(std::move(newEnemy));
 		EnemyArgment = false;
+	}
+
+	//最後のチュートリアルは二体同時に倒さないと進まない
+	if (tutorial->GetTutorialNumber() == 2) {
+		if (TutorialCount == 6) {
+			if (player->GetKnockCount() == 2) {
+				tutorial->SetTutorialClear(true);
+			}
+			else {
+				tutorial->SetTutorialClear(false);
+				TutorialCount = 4;
+				BirthEnemyCount = 4;
+				tutorial->SetTutorialTimer(200);
+			}
+		}
 	}
 
 	if (tutorial->GetDoorEnd()) {
@@ -300,8 +308,6 @@ void SceneManager::TutorialDraw()
 	player->Draw();
 	player->FormatDraw();
 
-	//スコア
-	score->Draw();
 	//score->FormatDraw();
 	//エネミー
 	for (unique_ptr<Enemy>& newEnemy : enemy) {
@@ -311,6 +317,9 @@ void SceneManager::TutorialDraw()
 		}
 	}
 
+
+	//スコア
+	score->Draw();
 	ChangeVolumeSoundMem(title->GetVolume(), gameBgm);
 	PlaySoundMem(gameBgm, DX_PLAYTYPE_LOOP);
 	tutorial->Draw();
@@ -385,8 +394,6 @@ void SceneManager::GameSceneDraw()
 	player->Draw();
 	//player->FormatDraw();
 
-	//スコア
-	score->Draw();
 	//score->FormatDraw();
 	//エネミー
 	for (unique_ptr<Enemy>& newEnemy : enemy) {
@@ -395,13 +402,16 @@ void SceneManager::GameSceneDraw()
 			newEnemy->FormatDraw(2);
 		}
 	}
+
+
+	//スコア
+	score->Draw();
 }
 
 void SceneManager::GameSceneEnemyArg() {
 
 	int enemyTex = LoadGraph("Resources/enemy.png");
-	int enemystopTex = LoadGraph("Resources/enemystop.png");
-	int enemylinkTex = LoadGraph("Resources/LinkArea.png");
+	int enemyrespornTex = LoadGraph("Resources/resporn.png");
 	int enemytargetTex = LoadGraph("Resources/enemytarget.png");
 
 	//特定のフレームで敵を生成する
@@ -425,8 +435,7 @@ void SceneManager::GameSceneEnemyArg() {
 		unique_ptr<Enemy> newEnemy;
 		newEnemy = make_unique<Enemy>();
 		newEnemy->SetEnemyTex(enemyTex);
-		newEnemy->SetLinkEnemyTex(enemylinkTex);
-		newEnemy->SetEnemyStopTex(enemystopTex);
+		newEnemy->SetRespornTex(enemyrespornTex);
 		newEnemy->SetTargetEnemyTex(enemytargetTex);
 		newEnemy->Initialize();
 		if (BirthEnemyCount == 1) {

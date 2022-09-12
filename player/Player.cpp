@@ -353,7 +353,9 @@ void Player::Draw() {
 
 	stopEffects->Draw();
 
-	DrawBillboard3D(VGet(AttackAreaX, AttackAreaY, 0), 0.5f, 0.5f, 100, 0.0f, targettexture, true);
+	if (!AttackStart) {
+		DrawBillboard3D(VGet(AttackAreaX, AttackAreaY, 0), 0.5f, 0.5f, 100, 0.0f, targettexture, true);
+	}
 }
 
 void Player::FormatDraw() {

@@ -24,6 +24,7 @@ private:
 	int curPosX;
 	int curPosY;
 
+	int SelectPos[3];
 	float scale1;
 	float scale2;
 	float scale3;
