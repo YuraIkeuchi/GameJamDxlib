@@ -596,5 +596,5 @@ void Enemy::FormatDraw(int EnemyCount) {
 	//stringの描画
 	//DrawFormatString(0, (20 * EnemyCount) + 0, GetColor(0, 0, 0), "EnemyScale[%d]:%f", EnemyCount, EnemyScale);
 	//DrawFormatString(0, (20 * EnemyCount) + 120, GetColor(0, 0, 0), "Timer[%d]:%d", EnemyCount, EnemyTimer);
-	DrawFormatString(0, (20 * EnemyCount) + 200, GetColor(0, 0, 0), "DistanceSpeed[%d]:%f", EnemyCount, EnemySpeed);
+	//DrawFormatString(0, (20 * EnemyCount) + 200, GetColor(0, 0, 0), "DistanceSpeed[%d]:%f", EnemyCount, EnemySpeed);
 }
