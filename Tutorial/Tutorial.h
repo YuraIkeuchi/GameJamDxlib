@@ -39,7 +39,6 @@ private:
 		TutorialTex7,
 		TutorialTex8,
 		TutorialTex9,
-		TutorialTex10,
 	};
 
 	float TutorialPosX;

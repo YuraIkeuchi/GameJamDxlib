@@ -112,7 +112,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 	}
 	//最初の敵を倒す
 	else if (TutorialNumber == Tutorial1) {
-		if (TextCount < 5) {
+		if (TextCount < 4) {
 			//easingでテキストが流れてくる
 			if (TextStart) {
 				if (frame < 1.0f) {
@@ -122,7 +122,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 					frame = 1.0f;
 				}
 
-				if (TextCount != 4) {
+				if (TextCount != 3) {
 					TutorialStopTimer++;
 					if (TutorialStopTimer == 120) {
 						TutorialStopTimer = 0;
@@ -194,7 +194,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 		}
 		else if (TutorialCount == 4) {
 			TutorialCheck = true;
-			if (TextCount == 4 && frame == 1.0f) {
+			if (TextCount == 3 && frame == 1.0f) {
 				TextStart = false;
 				frame = 0.0f;
 				TextEnd = true;
@@ -266,7 +266,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 			TextCheck = true;
 		}
 
-		if (TutorialCount == 6 && TutorialClear) {
+		if (TutorialCount == 7 && TutorialClear) {
 			TutorialCheck = true;
 			if (TextCount == 2 && frame == 1.0f) {
 				TextStart = false;
@@ -398,10 +398,10 @@ void Tutorial::Draw()
 		ChangeFont("HOKKORIRegular");
 		SetFontSize(50);
 		if (TextNumber == TutorialTex0) {
-			DrawFormatString((TutorialPosX - 290), 630, GetColor(0, 0, 0), "まずRTとLTで方向を変換してみろ");
+			DrawFormatString((TutorialPosX - 360), 630, GetColor(0, 0, 0), "まずRTとLTで方向を変換してみろ");
 		}
 		else if (TextNumber == TutorialTex1) {
-			DrawFormatString((TutorialPosX - 200), 630, GetColor(0, 0, 0), "次は敵を倒してみろ");
+			DrawFormatString((TutorialPosX - 220), 630, GetColor(0, 0, 0), "次は敵を倒してみろ");
 		}
 		else if (TextNumber == TutorialTex2) {
 			DrawFormatString((TutorialPosX - 420), 630, GetColor(0, 0, 0), "Lスティックで照準を合わせてAを押せ");
@@ -410,24 +410,21 @@ void Tutorial::Draw()
 			DrawFormatString((TutorialPosX - 460), 630, GetColor(0, 0, 0), "敵とぶつかると動けなくなってしまうぞ");
 		}
 		else if (TextNumber == TutorialTex4) {
-			DrawFormatString((TutorialPosX - 140), 630, GetColor(0, 0, 0), "Bを押すと");
+			DrawFormatString((TutorialPosX - 450), 630, GetColor(0, 0, 0), "Bで同じサークル上の敵がスタンするぞ");
 		}
 		else if (TextNumber == TutorialTex5) {
-			DrawFormatString((TutorialPosX - 360), 630, GetColor(0, 0, 0), "同じサークル上の敵を止められるぞ");
-		}
-		else if (TextNumber == TutorialTex6) {
 			DrawFormatString((TutorialPosX - 400), 630, GetColor(0, 0, 0), "近くに敵がいる状態で敵を倒すと");
 		}
-		else if (TextNumber == TutorialTex7) {
+		else if (TextNumber == TutorialTex6) {
 			DrawFormatString((TutorialPosX - 360), 630, GetColor(0, 0, 0), "近くの敵にリンクして倒せるぞ");
 		}
-		else if (TextNumber == TutorialTex8) {
-			DrawFormatString((TutorialPosX - 190), 630, GetColor(0, 0, 0), "リンクを使い倒そう");
+		else if (TextNumber == TutorialTex7) {
+			DrawFormatString((TutorialPosX - 220), 630, GetColor(0, 0, 0), "リンクを使い倒そう");
 		}
-		else if (TextNumber == TutorialTex9) {
+		else if (TextNumber == TutorialTex8) {
 			DrawFormatString((TutorialPosX - 460), 630, GetColor(0, 0, 0), "リンク終了時の場所でスコアが決まるぞ");
 		}
-		else if (TextNumber == TutorialTex10) {
+		else if (TextNumber == TutorialTex9) {
 			DrawFormatString((TutorialPosX - 340), 630, GetColor(0, 0, 0), "リンクしてスコアを稼ぐのだ");
 		}
 		SetFontSize(20);

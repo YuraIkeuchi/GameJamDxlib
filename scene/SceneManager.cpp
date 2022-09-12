@@ -172,11 +172,11 @@ void SceneManager::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STAT
 	int enemyTex = LoadGraph("Resources/enemy.png");
 	int enemyrespornTex = LoadGraph("Resources/resporn.png");
 	int enemytargetTex = LoadGraph("Resources/enemytarget.png");
-
+	int enemystopTex = LoadGraph("Resources/enemystop.png");
 	//特定のフレームで敵を生成する
 	if (tutorial->GetTutorialTimer() == 321 || tutorial->GetTutorialTimer() == 316 || tutorial->GetTutorialTimer() == 311
 		|| tutorial->GetTutorialTimer() == 306 || tutorial->GetTutorialTimer() == 150 || tutorial->GetTutorialTimer() == 145
-		) {
+		|| tutorial->GetTutorialTimer() == 140) {
 		BirthEnemyCount++;
 		EnemyArgment = true;
 	}
@@ -187,6 +187,7 @@ void SceneManager::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STAT
 		newEnemy->SetEnemyTex(enemyTex);
 		newEnemy->SetRespornTex(enemyrespornTex);
 		newEnemy->SetTargetEnemyTex(enemytargetTex);
+		newEnemy->SetStopTex(enemystopTex);
 		newEnemy->Initialize();
 		if (BirthEnemyCount == 1) {
 			newEnemy->SetTargetLine(0);
@@ -211,10 +212,15 @@ void SceneManager::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STAT
 		else if (BirthEnemyCount == 5) {
 			newEnemy->SetTargetLine(0);
 			newEnemy->SetTutorialMove(true);
-			newEnemy->SetSpeed(0.0f);
+			newEnemy->SetSpeed(180.0f);
 		}
 		else if (BirthEnemyCount == 6) {
 			newEnemy->SetTargetLine(1);
+			newEnemy->SetTutorialMove(true);
+			newEnemy->SetSpeed(180.0f);
+		}
+		else if (BirthEnemyCount == 7) {
+			newEnemy->SetTargetLine(2);
 			newEnemy->SetTutorialMove(true);
 			newEnemy->SetSpeed(180.0f);
 		}
@@ -222,10 +228,10 @@ void SceneManager::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STAT
 		EnemyArgment = false;
 	}
 
-	//最後のチュートリアルは二体同時に倒さないと進まない
+	//最後のチュートリアルは三体同時に倒さないと進まない
 	if (tutorial->GetTutorialNumber() == 2) {
-		if (TutorialCount == 6) {
-			if (player->GetKnockCount() == 2) {
+		if (TutorialCount == 7) {
+			if (player->GetKnockCount() == 3) {
 				tutorial->SetTutorialClear(true);
 			}
 			else {
@@ -392,7 +398,7 @@ void SceneManager::GameSceneDraw()
 
 	//プレイヤー
 	player->Draw();
-	//player->FormatDraw();
+	player->FormatDraw();
 
 	//score->FormatDraw();
 	//エネミー
@@ -413,7 +419,7 @@ void SceneManager::GameSceneEnemyArg() {
 	int enemyTex = LoadGraph("Resources/enemy.png");
 	int enemyrespornTex = LoadGraph("Resources/resporn.png");
 	int enemytargetTex = LoadGraph("Resources/enemytarget.png");
-
+	int enemystopTex = LoadGraph("Resources/enemystop.png");
 	//特定のフレームで敵を生成する
 	if (score->GetGameTimer() == 3520 || score->GetGameTimer() == 3500 || score->GetGameTimer() == 3480
 		|| score->GetGameTimer() == 3460 || score->GetGameTimer() == 3100 || score->GetGameTimer() == 3000
@@ -437,6 +443,7 @@ void SceneManager::GameSceneEnemyArg() {
 		newEnemy->SetEnemyTex(enemyTex);
 		newEnemy->SetRespornTex(enemyrespornTex);
 		newEnemy->SetTargetEnemyTex(enemytargetTex);
+		newEnemy->SetStopTex(enemystopTex);
 		newEnemy->Initialize();
 		if (BirthEnemyCount == 1) {
 			newEnemy->SetTargetLine(0);

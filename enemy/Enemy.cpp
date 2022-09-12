@@ -37,6 +37,7 @@ void Enemy::Initialize() {
 	//敵が止まっているか
 	EnemyStop = false;
 	EnemyStopTimer = 0;
+	EnemyAngle = 0.0f;
 	Dir = RIGHT;
 	//保存用変数
 	EnemySaveSpeed = 0.0f;
@@ -72,8 +73,8 @@ void Enemy::Update(Player* player) {
 
 	if (!player->GetAttackStart()) {
 		ResPorn();
-		Move(player);
 	}
+	Move(player);
 	InArea(player);
 	Stop(player);
 	Collide(player);
@@ -168,8 +169,8 @@ void Enemy::ResPorn() {
 }
 
 void Enemy::Move(Player* player) {
-	//攻撃中は敵が止まる
-	if (player->GetAttackStart()) {
+	//攻撃中は敵が止まる(ロックオンされた敵)
+	if ((player->GetAttackStart()) && (InAttackArea) && (EnemySpeed == player->GetAfterSpeed())) {
 		EnemyAdd = 0.0f;
 	}
 	else {
@@ -245,9 +246,11 @@ void Enemy::Stop(Player* player) {
 	}
 
 	if (EnemyStop) {
+		EnemyAngle += 0.1f;
 		EnemyStopTimer++;
 
 		if (EnemyStopTimer == 200) {
+			EnemyAngle = 0.0f;
 			EnemyStop = false;
 			EnemyStopTimer = 0;
 		}
@@ -486,12 +489,14 @@ bool Enemy::Collide(Player* player) {
 	float plaPosY = player->GetPositionY();
 	if (Collision::CircleCollision(EnemyPosX, EnemyPosY, 15.0f, plaPosX, plaPosY, 15.0f)
 		&& (EnemyMove) && (EnemyAlive) && (player->GetScale() == EnemyScale) && (player->GetAttackStart())) {
+		//敵の情報を消す
 		EnemyAlive = false;
 		EnemyMove = false;
 		effects->active(FLOAT3{ EnemyPosX ,EnemyPosY ,0.0f });
 		breakEffects->active(FLOAT3{ EnemyPosX ,EnemyPosY ,0.0f });
 		EnemyScale = 500.0f;
 		DeathEnemy = true;
+		//プレイヤーの処理
 		player->SetKnockCount(player->GetKnockCount() + 1);
 		player->SetAttackInterval(10);
 		/*player->SetAttackStart(false);
@@ -501,6 +506,7 @@ bool Enemy::Collide(Player* player) {
 		if (player->GetInAreaStart()) {
 			player->SetInArea(true);
 		}
+
 		return true;
 	}
 	else {
@@ -517,8 +523,17 @@ bool Enemy::PlayerCollide(Player* player) {
 	float plaPosY = player->GetPositionY();
 	if (Collision::CircleCollision(EnemyPosX, EnemyPosY, 10.0f, plaPosX, plaPosY, 10.0f)
 		&& (EnemyMove) && (EnemyAlive) && (player->GetScale() == EnemyScale)
-		&& (player->GetKnockCount() == 0) && (!player->GetInvisible())) {
+		&& (player->GetKnockCount() == 0) &&(!player->GetStun()) && (!player->GetInvisible())) {
 		player->SetStun(true);
+
+		if (player->GetSpeed() < EnemySpeed) {
+			player->SetBoundPower(-1.0f);
+			player->SetBoundDir(2);
+		}
+		else {
+			player->SetBoundPower(1.0f);
+			player->SetBoundDir(1);
+		}
 		return true;
 	}
 	else {
@@ -574,6 +589,10 @@ void Enemy::Draw(Player* player) {
 		DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, size, 0.0f, texture, true);
 		if (InAttackArea) {
 			DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, TargetSize, 0.0f, Targettexture, true);
+		}
+
+		if (EnemyStop) {
+			DrawBillboard3D(VGet(EnemyPosX, EnemyPosY + 35.0f, 0), 0.5f, 0.5f, 50.0f, EnemyAngle, Stoptexture, true);
 		}
 	}
 	else {
