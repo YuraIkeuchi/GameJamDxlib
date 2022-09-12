@@ -64,7 +64,7 @@ bool Title::Update(XINPUT_STATE input, XINPUT_STATE oldinput)
 		scale2 = 0.5f;
 		scale3 = 0.5f;
 
-		if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A] && moveFlag == false) {
+		if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A] && moveFlag == false && settingFlag == false) {
 			moveFlag = true;
 			PlaySoundMem(TitleSe2, DX_PLAYTYPE_BACK);
 		}
@@ -74,7 +74,7 @@ bool Title::Update(XINPUT_STATE input, XINPUT_STATE oldinput)
 		scale1 = 0.5f;
 		scale2 = 0.7f;
 		scale3 = 0.5f;
-		if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A] && settingFlag == false) {
+		if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A] && settingFlag == false && moveFlag == false) {
 			settingFlag = true;
 			PlaySoundMem(TitleSe2, DX_PLAYTYPE_BACK);
 		}

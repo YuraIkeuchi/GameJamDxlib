@@ -39,18 +39,19 @@ public:
 	const bool& GetInAreaStart() { return InAreaStart; }
 	const bool& GetAttack() { return Attack; }
 	const bool& GetInvisible() { return Invisible; }
+	const bool& GetStun() { return Stun; }
 	const bool& GetAttackStart() { return AttackStart; }
 	const int& GetAttackInterval() { return AttackInterval; }
 	const int& GetKnockCount() { return KnockCount; }
-	const float& GetLockOnArea() { return LockOnArea; }
 	const float& GetPositionX() { return playerPosX; }
 	const float& GetPositionY() { return playerPosY; }
 	const float& GetAttackAreaX() { return AttackAreaX; }
 	const float& GetAttackAreaY() { return AttackAreaY; }
-	const float& GetPlayerRot() { return PlayerRot; }
 
 	void SetSpeed(float PlayerSpeed) { this->PlayerSpeed = PlayerSpeed; }
 	void SetScale(float PlayerScale) { this->PlayerScale = PlayerScale; }
+	void SetBoundDir(int BoundDir) { this->BoundDir = BoundDir; }
+	void SetBoundPower(float BoundPower) { this->BoundPower = BoundPower; }
 	void SetAfterScale(float AfterScale) { this->AfterScale = AfterScale; }
 	void SetAfterSpeed(float AfterSpeed) { this->AfterSpeed = AfterSpeed; }
 	void SetAttackStart(bool AttackStart) { this->AttackStart = AttackStart; }
@@ -61,6 +62,8 @@ public:
 	void SetInArea(bool InArea) { this->InArea = InArea; }
 	void SetAround(bool Around) { this->Around = Around; }
 	void SetInAreaStart(bool InAreaStart) { this->InAreaStart = InAreaStart; }
+
+
 	void SetPlayer(int _player) { this->texture = _player; }
 	void SetTargetArea(int _targetarea) { this->targettexture = _targetarea; }
 private:
@@ -78,6 +81,7 @@ private:
 	float PlayerScale;// LaneNumと一緒に変えること
 	float PlayerCircleX;
 	float PlayerCircleY;
+	float BoundPower;
 	//攻撃関係
 	bool Attack;
 	bool AttackStart;
@@ -120,9 +124,15 @@ private:
 	bool Stun;
 	int StunTimer;
 	int StunCount;
+	int BoundDir;
 	bool Invisible;
 	int InvisibleTimer;
 	bool Around;
+	enum HitDir {
+		NOHIT,
+		HITRIGHT,
+		HITLEFT,
+	};
 	//攻撃エリア関係(ほんとは別クラスにやりたい)
 	float AttackRadius;
 	float AttackAreaX;

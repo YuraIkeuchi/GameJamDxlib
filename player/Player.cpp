@@ -56,6 +56,8 @@ void Player::Initialize(int soundBolume)
 	Invisible = false;
 	InvisibleTimer = 100;
 	Around = false;
+	BoundDir = NOHIT;
+	//攻撃エリア
 	AttackAreaX = 0.0f;
 	AttackAreaY = 0.0f;
 	AttackScale = 60.0f;
@@ -77,11 +79,11 @@ void Player::Initialize(int soundBolume)
 
 void Player::Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput) {
 	if (!Stun) {
-		//移動
-		Move(keys, oldkeys, input, oldinput);
 		//攻撃
 		AttackMove(keys, oldkeys, input, oldinput);
 	}
+	//移動
+	Move(keys, oldkeys, input, oldinput);
 	//スタン関係
 	PlayerStun();
 	AttackArea();
@@ -120,21 +122,15 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 	else {
 		AttackSpeed = Joyangle;
 	}
-	PlayerRot += 0.1f;
-	//プレイヤー
-	//サークル変更
-	/*if (input.Buttons[XINPUT_BUTTON_DPAD_DOWN] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_DOWN]) {
-		if (PlayerScale > 81.0f) {
-			PlayerScale -= 80.0f;
-		}
+
+	//プレイヤーの回転
+	if (AttackStart) {
+		PlayerRot += 1.0f;
 	}
-
-	if (input.Buttons[XINPUT_BUTTON_DPAD_UP] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_UP]) {
-		if (PlayerScale < 319.0f) {
-			PlayerScale += 80.0f;
-		}
-	}*/
-
+	else {
+		PlayerRot += 0.1f;
+	}
+	
 	//どのサークルにいるかで変更するものがある
 	if (PlayerScale == 80.0f) {
 		LockOnTexArea = 200.0f;
@@ -225,7 +221,7 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 	}
 	//移動量を加算している(攻撃後の硬直後以外)
 	if (AttackInterval == 0) {
-		PlayerSpeed += AddSpeed + AddVelocity;
+		PlayerSpeed += AddSpeed + AddVelocity + BoundPower;
 	}
 	//プレイヤーの向き(通常時とスティック動かしているときで変わる)
 	//if (AttackStart || KnockCount != 0) {
@@ -319,21 +315,51 @@ void Player::AttackArea() {
 void Player::PlayerStun() {
 	//ダメージ食らったとき動けない
 	if (Stun) {
+		AddSpeed = 0.0f;
+		AddVelocity = 0.0f;
 		StunTimer--;
 		if (StunTimer % 10 == 0) {
 			StunCount++;
 		}
 		if (StunTimer <= 0) {
-			StunCount = 0;
 			StunTimer = 100;
 			Stun = false;
 			Invisible = true;
+			ChangeDir = true;
+			Speedframe = 0.0f;
+		}
+
+		if (BoundPower > 0.0f) {
+			BoundDir = HITRIGHT;
+		}
+		else if(BoundPower < 0.0f) {
+			BoundDir = HITLEFT;
+		}
+
+		//ダメージ食らった時跳ね返る
+		if (BoundDir == HITRIGHT) {
+			BoundPower -= 0.025f;
+			if (BoundPower < 0.0f) {
+				BoundPower = 0.0f;
+				BoundDir = NOHIT;
+			}
+		}
+		else if (BoundDir == HITLEFT) {
+			BoundPower += 0.025f;
+			if (BoundPower > 0.0f) {
+				BoundPower = 0.0f;
+				BoundDir = NOHIT;
+			}
 		}
 	}
 	//スタン終わったとき一定時間無敵
 	if (Invisible) {
 		InvisibleTimer--;
+		if (InvisibleTimer % 10 == 0) {
+			StunCount++;
+		}
 		if (InvisibleTimer <= 0) {
+			StunCount = 0;
 			InvisibleTimer = 100;
 			Invisible = false;
 		}
@@ -353,12 +379,17 @@ void Player::Draw() {
 
 	stopEffects->Draw();
 
-	DrawBillboard3D(VGet(AttackAreaX, AttackAreaY, 0), 0.5f, 0.5f, 100, 0.0f, targettexture, true);
+	if (!AttackStart) {
+		DrawBillboard3D(VGet(AttackAreaX, AttackAreaY, 0), 0.5f, 0.5f, 100, 0.0f, targettexture, true);
+	}
 }
 
 void Player::FormatDraw() {
-	/*DrawFormatString(0, 0, GetColor(0, 0, 0), "Speed:%f", PlayerSpeed);
-	DrawFormatString(0, 20, GetColor(0, 0, 0), "Speed:%f", AfterSpeed);
+	DrawFormatString(0, 0, GetColor(0, 0, 0), "AddSpeed:%f", AddSpeed);
+	DrawFormatString(0, 20, GetColor(0, 0, 0), "BoundPower:%f", BoundPower);
+	DrawFormatString(0, 40, GetColor(0, 0, 0), "Stun:%d", Stun);
+	/*
+	
 	DrawFormatString(0, 40, GetColor(0, 0, 0), "Attack:%d", Attack);*/
 	//DrawFormatString(0, 20, GetColor(0, 0, 0), "Speed:%f", AfterSpeed);
 	//DrawFormatString(0, 40, GetColor(0, 0, 0), "frame:%f", frame);

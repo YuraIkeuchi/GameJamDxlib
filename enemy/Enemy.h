@@ -15,8 +15,6 @@ public:
 	void Initialize();
 	//更新
 	void Update(Player* player);
-	//チュートリアル初期化
-	void TutorialInitialize();
 	//チュートリアル更新
 	void TutorialUpdate(Player* player);
 	//生成
@@ -54,14 +52,14 @@ public:
 	void SetDeathEnemy(bool DeathEnemy) { this->DeathEnemy = DeathEnemy; }
 	void SetTargetLine(int TargetLine) { this->TargetLine = TargetLine; }
 	void SetEnemyTex(int tex) { this->texture = tex; }
-	void SetEnemyStopTex(int tex) { this->Stoptexture = tex; }
-	void SetLinkEnemyTex(int tex) { this->Linktexture = tex; }
+	void SetRespornTex(int tex) { this->Resporntexture = tex; }
 	void SetTargetEnemyTex(int tex) { this->Targettexture = tex; }
+	void SetStopTex(int tex) { this->Stoptexture = tex; }
 private:
 	int texture = 0;
-	int Linktexture = 0;
-	int Stoptexture = 0;
+	int Resporntexture = 0;
 	int Targettexture = 0;
+	int Stoptexture = 0;
 	//メンバ変数
 	//座標
 	float EnemyPosX;
@@ -92,6 +90,7 @@ private:
 	//敵が止まっているか
 	bool EnemyStop;
 	int EnemyStopTimer;
+	float EnemyAngle;
 	//保存用変数
 	float EnemySaveSpeed;
 	//プレイヤーと敵の位置の距離

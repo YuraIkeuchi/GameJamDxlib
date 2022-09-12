@@ -37,6 +37,7 @@ void Enemy::Initialize() {
 	//敵が止まっているか
 	EnemyStop = false;
 	EnemyStopTimer = 0;
+	EnemyAngle = 0.0f;
 	Dir = RIGHT;
 	//保存用変数
 	EnemySaveSpeed = 0.0f;
@@ -53,6 +54,8 @@ void Enemy::Initialize() {
 	TargetShrink = false;
 	Targetframe = 0.0f;
 	TargetSize = 120.0f;
+	//チュートリアル
+	TutorialMove = false;
 	int EffectTex = LoadGraph("Resources/attackEffect.png");
 	int breakEffectTex = LoadGraph("breakEffect.png");
 	int TimeEffectTex = LoadGraph("TimeEffect.png");
@@ -70,8 +73,8 @@ void Enemy::Update(Player* player) {
 
 	if (!player->GetAttackStart()) {
 		ResPorn();
-		Move(player);
 	}
+	Move(player);
 	InArea(player);
 	Stop(player);
 	Collide(player);
@@ -90,62 +93,6 @@ void Enemy::Update(Player* player) {
 	effects->Update();
 	breakEffects->Update();
 	timeEffects->Update();
-}
-
-void Enemy::TutorialInitialize() {
-	EnemyTimer = 100;
-	//座標
-	EnemyPosX = 0.0f;
-	EnemyPosY = 0.0f;
-	size = 50.0f;
-	//円運動のための変数
-	x = 0.0f;
-	y = 0.0f;
-	EnemyRadius = 0.0f;
-	//0から360までの円周
-	EnemySpeed = 0.0f;
-	//一周したかどうかの判定を取るための円周
-	EnemyRoundSpeed = 0.0f;
-	EnemyScale = 1000.0f;
-	EnemyCircleX = 0.0f;
-	EnemyCircleY = 0.0f;
-	EnemyAdd = 0.0f;
-	//チュートリアルの変数
-	TutorialMove = false;
-	//リスポーン関係
-	EnemyAlive = false;
-	DeathEnemy = false;
-	EnemyMove = false;
-	EnemySet = false;
-	TargetLine = 0;
-	//敵が止まっているか
-	EnemyStop = false;
-	EnemyStopTimer = 0;
-	Dir = RIGHT;
-	//保存用変数
-	EnemySaveSpeed = 0.0f;
-	//プレイヤーと敵の位置の距離
-	DistanceScale = 0.0f;
-	DistanceSpeed = 0.0f;
-	//攻撃範囲
-	InAttackArea = false;
-	//円の半径の移動関係
-	MoveLine = false;
-	AfterScale = false;
-	Vanish = false;
-	//照準に関する変数
-	TargetShrink = false;
-	Targetframe = 0.0f;
-	TargetSize = 120.0f;
-	int EffectTex = LoadGraph("Resources/attackEffect.png");
-	int breakEffectTex = LoadGraph("breakEffect.png");
-	int TimeEffectTex = LoadGraph("TimeEffect.png");
-	effects = new AttackEffect();
-	effects->SetTexture(EffectTex);
-	breakEffects = new BreakEffect();
-	breakEffects->SetTexture(breakEffectTex);
-	timeEffects = new TimeEffect();
-	timeEffects->SetTexture(TimeEffectTex);
 }
 
 void Enemy::TutorialUpdate(Player* player) {
@@ -222,43 +169,17 @@ void Enemy::ResPorn() {
 }
 
 void Enemy::Move(Player* player) {
-	//攻撃中は敵が止まる
-	if (player->GetAttackStart()) {
+	//攻撃中は敵が止まる(ロックオンされた敵)
+	if ((player->GetAttackStart()) && (InAttackArea) && (EnemySpeed == player->GetAfterSpeed())) {
 		EnemyAdd = 0.0f;
 	}
 	else {
 		//どのサークルにいるかで変更するものがある
-		if (EnemyScale == 80.0f) {
-			if (Dir == RIGHT) {
-				EnemyAdd = 1.2f;
-			}
-			else {
-				EnemyAdd = -1.2f;
-			}
+		if (Dir == RIGHT) {
+			EnemyAdd = 0.8f;
 		}
-		else if (EnemyScale == 160.0f) {
-			if (Dir == RIGHT) {
-				EnemyAdd = 1.0f;
-			}
-			else {
-				EnemyAdd = -1.0f;
-			}
-		}
-		else if (EnemyScale == 240.0f) {
-			if (Dir == RIGHT) {
-				EnemyAdd = 0.8f;
-			}
-			else {
-				EnemyAdd = -0.8f;
-			}
-		}
-		else if (EnemyScale == 320.0f) {
-			if (Dir == RIGHT) {
-				EnemyAdd = 0.65f;
-			}
-			else {
-				EnemyAdd = 0.65f;
-			}
+		else {
+			EnemyAdd = -0.8f;
 		}
 	}
 
@@ -278,7 +199,7 @@ void Enemy::Move(Player* player) {
 		EnemySpeed = 360.0f;
 	}
 
-	if (EnemyMove) {
+	if (EnemyMove && !TutorialMove) {
 		if (Dir == RIGHT) {
 			if (EnemyRoundSpeed > EnemySaveSpeed + 360.0f) {
 				EnemyMove = false;
@@ -325,9 +246,11 @@ void Enemy::Stop(Player* player) {
 	}
 
 	if (EnemyStop) {
+		EnemyAngle += 0.1f;
 		EnemyStopTimer++;
 
 		if (EnemyStopTimer == 200) {
+			EnemyAngle = 0.0f;
 			EnemyStop = false;
 			EnemyStopTimer = 0;
 		}
@@ -566,12 +489,14 @@ bool Enemy::Collide(Player* player) {
 	float plaPosY = player->GetPositionY();
 	if (Collision::CircleCollision(EnemyPosX, EnemyPosY, 15.0f, plaPosX, plaPosY, 15.0f)
 		&& (EnemyMove) && (EnemyAlive) && (player->GetScale() == EnemyScale) && (player->GetAttackStart())) {
+		//敵の情報を消す
 		EnemyAlive = false;
 		EnemyMove = false;
 		effects->active(FLOAT3{ EnemyPosX ,EnemyPosY ,0.0f });
 		breakEffects->active(FLOAT3{ EnemyPosX ,EnemyPosY ,0.0f });
 		EnemyScale = 500.0f;
 		DeathEnemy = true;
+		//プレイヤーの処理
 		player->SetKnockCount(player->GetKnockCount() + 1);
 		player->SetAttackInterval(10);
 		/*player->SetAttackStart(false);
@@ -581,6 +506,7 @@ bool Enemy::Collide(Player* player) {
 		if (player->GetInAreaStart()) {
 			player->SetInArea(true);
 		}
+
 		return true;
 	}
 	else {
@@ -597,8 +523,17 @@ bool Enemy::PlayerCollide(Player* player) {
 	float plaPosY = player->GetPositionY();
 	if (Collision::CircleCollision(EnemyPosX, EnemyPosY, 10.0f, plaPosX, plaPosY, 10.0f)
 		&& (EnemyMove) && (EnemyAlive) && (player->GetScale() == EnemyScale)
-		&& (player->GetKnockCount() == 0) && (!player->GetInvisible())) {
+		&& (player->GetKnockCount() == 0) &&(!player->GetStun()) && (!player->GetInvisible())) {
 		player->SetStun(true);
+
+		if (player->GetSpeed() < EnemySpeed) {
+			player->SetBoundPower(-1.0f);
+			player->SetBoundDir(2);
+		}
+		else {
+			player->SetBoundPower(1.0f);
+			player->SetBoundDir(1);
+		}
 		return true;
 	}
 	else {
@@ -655,10 +590,14 @@ void Enemy::Draw(Player* player) {
 		if (InAttackArea) {
 			DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, TargetSize, 0.0f, Targettexture, true);
 		}
+
+		if (EnemyStop) {
+			DrawBillboard3D(VGet(EnemyPosX, EnemyPosY + 35.0f, 0), 0.5f, 0.5f, 50.0f, EnemyAngle, Stoptexture, true);
+		}
 	}
 	else {
 		if (EnemyTimer >= 1) {
-			DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, size, 0.0f, Linktexture, true);
+			DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, size, 0.0f, Resporntexture, true);
 		}
 	}
 	effects->Draw();
