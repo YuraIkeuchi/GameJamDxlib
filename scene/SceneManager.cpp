@@ -476,12 +476,6 @@ void SceneManager::GameSceneDraw()
 	player->Draw();
 	player->FormatDraw();
 
-
-	if (changeFlag == false)
-	{
-		//スコア
-		score->Draw();
-	}
 	//score->FormatDraw();
 	//エネミー
 	for (unique_ptr<Enemy>& newEnemy : enemy) {
@@ -495,6 +489,7 @@ void SceneManager::GameSceneDraw()
 	score->Draw();
 	if (changeFlag == true)
 	{
+		//スコア
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
 		DrawGraph(0, 0, filterTex, TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
