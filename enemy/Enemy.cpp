@@ -56,17 +56,30 @@ void Enemy::Initialize() {
 	TargetSize = 120.0f;
 	//チュートリアル
 	TutorialMove = false;
+	//パーティクル関係
+	ParticleCount = 0;
+	ParticlePosX = 0.0f;
+	ParticlePosY = 0.0f;
 	int EffectTex = LoadGraph("Resources/attackEffect.png");
 	int breakEffectTex = LoadGraph("breakEffect.png");
 	int TimeEffectTex = LoadGraph("TimeEffect.png");
-
-	effects = new AttackEffect();
-	effects->SetTexture(EffectTex);
-	breakEffects = new BreakEffect();
-	breakEffects->SetTexture(breakEffectTex);
-	timeEffects = new TimeEffect();
-	timeEffects->SetTexture(TimeEffectTex);
-
+	int particleTex = LoadGraph("Resources/hootEffect.png");
+	AttackEffect* effects_;
+	effects_ = new AttackEffect();
+	effects_->SetTexture(EffectTex);
+	effects.reset(effects_);
+	BreakEffect* breakEffects_;
+	breakEffects_ = new BreakEffect();
+	breakEffects_->SetTexture(breakEffectTex);
+	breakEffects.reset(breakEffects_);
+	TimeEffect* timeEffects_;
+	timeEffects_ = new TimeEffect();
+	timeEffects_->SetTexture(TimeEffectTex);
+	timeEffects.reset(timeEffects_);
+	Particle* particle_;
+	particle_ = new Particle();
+	particle_->SetTexture(particleTex);
+	particle.reset(particle_);
 }
 
 void Enemy::Update(Player* player) {
@@ -89,10 +102,12 @@ void Enemy::Update(Player* player) {
 	EnemyCircleY = sinf(EnemyRadius) * EnemyScale;
 	EnemyPosX = EnemyCircleX + x;
 	EnemyPosY = EnemyCircleY + y;
-
+	ParticlePosX = EnemyPosX;
+	ParticlePosY = EnemyPosY;
 	effects->Update();
 	breakEffects->Update();
 	timeEffects->Update();
+	particle->Update(ParticlePosX, ParticlePosY, ParticleCount, 1);
 }
 
 void Enemy::TutorialUpdate(Player* player) {
@@ -117,19 +132,23 @@ void Enemy::TutorialUpdate(Player* player) {
 	EnemyCircleY = sinf(EnemyRadius) * EnemyScale;
 	EnemyPosX = EnemyCircleX + x;
 	EnemyPosY = EnemyCircleY + y;
-
+	ParticlePosX = EnemyPosX;
+	ParticlePosY = EnemyPosY;
 	effects->Update();
 	breakEffects->Update();
 	timeEffects->Update();
+	particle->Update(ParticlePosX, ParticlePosY, ParticleCount, 1);
 }
 void Enemy::ResPorn() {
 	//リスポーンする
 	if (!EnemyAlive) {
 		EnemyTimer--;
 		if (EnemyTimer == 90) {
+			ParticleCount = 1;
 			EnemySet = true;
 		}
 		if (EnemyTimer == 0) {
+			ParticleCount = 0;
 			if (Dir == RIGHT) {
 				EnemyAdd = 0.5f;
 			}
@@ -597,15 +616,17 @@ void Enemy::Draw(Player* player) {
 	}
 	else {
 		if (EnemyTimer >= 1) {
-			DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, size, 0.0f, Resporntexture, true);
+			DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, size, 0.0f, Resporntexture, true);	
 		}
 	}
 	effects->Draw();
 	breakEffects->Draw();
+	particle->Draw();
 	//timeEffects->Draw();
 }
 
 void Enemy::FormatDraw(int EnemyCount) {
+	DrawFormatString(0, (20 * EnemyCount) + 120, GetColor(0, 0, 0), "Vish[%d]:%d", EnemyCount, ParticleCount);
 	//stringの描画
 	/*DrawFormatString(0, (20 * EnemyCount) + 0, GetColor(0, 0, 0), "EnemyScale[%d]:%f", EnemyCount, EnemyScale);
 	DrawFormatString(0, (20 * EnemyCount) + 120, GetColor(0, 0, 0), "Vish[%d]:%d", EnemyCount, Vanish);
