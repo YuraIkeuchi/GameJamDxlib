@@ -76,7 +76,7 @@ bool Score::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input
 }
 
 void Score::Draw() {
-	ChangeFont("HOKKORIRegular");
+	ChangeFont("ＭＳ 明朝");
 	SetFontSize(64);
 	DrawFormatString(scorePosX, scorePosY - 64, GetColor(0, 0, 0), "Timer %-10d", GameTimer / 60);
 	DrawFormatString(scorePosX, scorePosY + 64, GetColor(0, 0, 0), "frame %-10d", GameTimer);
