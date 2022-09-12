@@ -35,9 +35,9 @@ public:
 	bool PlayerCollide(Player* player);
 	//ロックオン当たり判定(プレイヤーがスタンする)
 	bool LockOnCollide(Player* player);
-	void Death();
+	void VanishEnemy();
 	//描画
-	void Draw();
+	void Draw(Player* player);
 	//FormatString用
 	void FormatDraw(int EnemyCount);
 public:
@@ -66,6 +66,8 @@ private:
 	//座標
 	float EnemyPosX;
 	float EnemyPosY;
+	//大きさ
+	float size;
 	//円運動のための変数
 	float x;
 	float y;
@@ -78,7 +80,6 @@ private:
 	float EnemyCircleX;
 	float EnemyCircleY;
 	float EnemyAdd;
-	float AddVelocity;
 	//チュートリアルの変数
 	bool TutorialMove;
 	//リスポーン関係
@@ -100,6 +101,16 @@ private:
 	bool InAttackArea;
 
 	int Dir;
+
+	//円の半径の移動関係
+	float AfterScale;
+	bool MoveLine;
+	bool Vanish;
+	float frame;
+	//照準に関する変数
+	bool TargetShrink;
+	float Targetframe;
+	float TargetSize;
 	enum MoveDir {
 		RIGHT,
 		LEFT,

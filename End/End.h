@@ -3,9 +3,9 @@
 #include "DxLib.h"
 
 //ランク分けのボーダーライン
-#define S 100
-#define A 80
-#define B 50
+#define S 200
+#define A 120
+#define B 70
 #define C 20
 
 class End

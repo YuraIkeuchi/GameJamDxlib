@@ -52,6 +52,7 @@ void Player::Initialize(int soundBolume)
 	//ダメージ関係
 	Stun = false;
 	StunTimer = 100;
+	StunCount = 0;
 	Invisible = false;
 	InvisibleTimer = 100;
 	Around = false;
@@ -245,7 +246,7 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 
 	//攻撃後の硬直(この間にリンク判定する)
 	if (AttackInterval > 0) {
-		StartJoypadVibration(DX_INPUT_PAD1, 1000, 2000);
+		StartJoypadVibration(DX_INPUT_PAD1, 500, 2000);
 		AttackInterval--;
 		PlaySoundMem(attackSound, DX_PLAYTYPE_BACK);
 	}
@@ -319,7 +320,11 @@ void Player::PlayerStun() {
 	//ダメージ食らったとき動けない
 	if (Stun) {
 		StunTimer--;
+		if (StunTimer % 10 == 0) {
+			StunCount++;
+		}
 		if (StunTimer <= 0) {
+			StunCount = 0;
 			StunTimer = 100;
 			Stun = false;
 			Invisible = true;
@@ -336,21 +341,25 @@ void Player::PlayerStun() {
 }
 
 void Player::Draw() {
-	DrawBillboard3D(VGet(playerPosX, playerPosY, 0), 0.5f, 0.5f, 50, PlayerRot, texture, true);
 
-	for (int i = 0; i < EFFECTS_MAX; i++)
-	{
-		Effects[i]->Draw();
+	if (StunCount % 2 == 0) {
+		DrawBillboard3D(VGet(playerPosX, playerPosY, 0), 0.5f, 0.5f, 50, PlayerRot, texture, true);
+
+		for (int i = 0; i < EFFECTS_MAX; i++)
+		{
+			Effects[i]->Draw();
+		}
 	}
+
 	stopEffects->Draw();
 
 	DrawBillboard3D(VGet(AttackAreaX, AttackAreaY, 0), 0.5f, 0.5f, 100, 0.0f, targettexture, true);
 }
 
 void Player::FormatDraw() {
-	DrawFormatString(0, 0, GetColor(0, 0, 0), "Speed:%f", PlayerSpeed);
+	/*DrawFormatString(0, 0, GetColor(0, 0, 0), "Speed:%f", PlayerSpeed);
 	DrawFormatString(0, 20, GetColor(0, 0, 0), "Speed:%f", AfterSpeed);
-	DrawFormatString(0, 40, GetColor(0, 0, 0), "Attack:%d", Attack);
+	DrawFormatString(0, 40, GetColor(0, 0, 0), "Attack:%d", Attack);*/
 	//DrawFormatString(0, 20, GetColor(0, 0, 0), "Speed:%f", AfterSpeed);
 	//DrawFormatString(0, 40, GetColor(0, 0, 0), "frame:%f", frame);
 	//DrawFormatString(0, 60, GetColor(0, 0, 0), "PlayerRot:%f", PlayerRot);

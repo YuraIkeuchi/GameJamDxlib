@@ -5,7 +5,6 @@ void SceneManager::StaticInit()
 {
 	int playerTex = LoadGraph("Resources/player.png");
 	int targetTex = LoadGraph("Resources/TargetArea.png");
-	
 	int stageTex = LoadGraph("Resources/stage.png");
 	gameBgm = LoadSoundMem("Resources/sound/gameBgm.mp3");
 
@@ -89,8 +88,8 @@ void SceneManager::Draw()
 		break;
 	case static_cast<int>(SceneManager::NO::Tutorial):
 		DrawFormatString(0, 300, GetColor(0, 0, 0), "TUTORIAL");
-		DrawFormatString(0, 320, GetColor(0, 0, 0), "BirthEnemyCount %d", BirthEnemyCount);
-		DrawFormatString(0, 340, GetColor(0, 0, 0), "TutorialCount %d", TutorialCount);
+		/*DrawFormatString(0, 320, GetColor(0, 0, 0), "BirthEnemyCount %d", BirthEnemyCount);
+		DrawFormatString(0, 340, GetColor(0, 0, 0), "TutorialCount %d", TutorialCount);*/
 		TutorialDraw();
 		break;
 	case static_cast<int>(SceneManager::NO::GameScene):
@@ -175,11 +174,10 @@ void SceneManager::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STAT
 	int enemytargetTex = LoadGraph("Resources/enemytarget.png");
 
 	//特定のフレームで敵を生成する
-	if (tutorial->GetTutorialTimer() == 520 || tutorial->GetTutorialTimer() == 480
-		|| tutorial->GetTutorialTimer() == 450 || tutorial->GetTutorialTimer() == 330
-		|| tutorial->GetTutorialTimer() == 325 || tutorial->GetTutorialTimer() == 320
-		|| tutorial->GetTutorialTimer() == 250 || tutorial->GetTutorialTimer() == 230) {
-
+	if (tutorial->GetTutorialTimer() == 310 || tutorial->GetTutorialTimer() == 308 || tutorial->GetTutorialTimer() == 306
+		|| tutorial->GetTutorialTimer() == 304 || tutorial->GetTutorialTimer() == 280 || tutorial->GetTutorialTimer() == 275
+		|| tutorial->GetTutorialTimer() == 110 || tutorial->GetTutorialTimer() == 108 || tutorial->GetTutorialTimer() == 106
+		) {
 		BirthEnemyCount++;
 		EnemyArgment = true;
 	}
@@ -193,60 +191,47 @@ void SceneManager::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STAT
 		newEnemy->TutorialInitialize();
 		if (BirthEnemyCount == 1) {
 			newEnemy->SetTargetLine(0);
-			newEnemy->SetSpeed(358.0f);
+			newEnemy->SetSpeed(0.0f);
 		}
 		else if (BirthEnemyCount == 2) {
 			newEnemy->SetTargetLine(0);
-			newEnemy->SetSpeed(10.0f);
+			newEnemy->SetSpeed(90.0f);
 		}
 		else if (BirthEnemyCount == 3) {
 			newEnemy->SetTargetLine(0);
-			newEnemy->SetSpeed(358.0f);
+			newEnemy->SetSpeed(180.0f);
 		}
 		else if (BirthEnemyCount == 4) {
 			newEnemy->SetTargetLine(0);
-			newEnemy->SetSpeed(200.0f);
+			newEnemy->SetSpeed(270.0f);
+		}
+		else if (BirthEnemyCount == 4) {
+			newEnemy->SetTargetLine(0);
+			newEnemy->SetSpeed(10.0f);
 		}
 		else if (BirthEnemyCount == 5) {
-			newEnemy->SetTargetLine(1);
-			newEnemy->SetSpeed(220.0f);
+			newEnemy->SetTargetLine(0);
+			newEnemy->SetSpeed(358.0f);
 		}
 		else if (BirthEnemyCount == 6) {
-			newEnemy->SetTargetLine(2);
-			newEnemy->SetSpeed(240.0f);
+			newEnemy->SetTargetLine(0);
+			newEnemy->SetSpeed(200.0f);
 		}
 		else if (BirthEnemyCount == 7) {
 			newEnemy->SetTargetLine(1);
-			newEnemy->SetTutorialMove(true);
-			newEnemy->SetSpeed(90.0f);
+			newEnemy->SetSpeed(220.0f);
 		}
 		else if (BirthEnemyCount == 8) {
 			newEnemy->SetTargetLine(2);
-			newEnemy->SetTutorialMove(true);
-			newEnemy->SetSpeed(270.0f);
+			newEnemy->SetSpeed(240.0f);
 		}
 		enemy.push_back(std::move(newEnemy));
 		EnemyArgment = false;
 	}
 
-	
-	//最後のチュートリアルは二体同時に倒さないと進まない
-	if (tutorial->GetTutorialNumber() == 4) {
-		if (TutorialCount == 8) {
-			if(player->GetKnockCount() == 2){
-				tutorial->SetTutorialClear(true);
-			}
-			else {
-				tutorial->SetTutorialClear(false);
-				TutorialCount = 6;
-				BirthEnemyCount = 6;
-				tutorial->SetTutorialTimer(300);
-			}
-		}
-	}
-
 	if (tutorial->GetDoorEnd()) {
 		player->SetScale(320.0f);
+		score->SetScorePoint(0);
 		BirthEnemyCount = 0;
 		//要素全削除
 		enemy.clear();
@@ -321,7 +306,7 @@ void SceneManager::TutorialDraw()
 	//エネミー
 	for (unique_ptr<Enemy>& newEnemy : enemy) {
 		if (newEnemy != nullptr) {
-			newEnemy->Draw();
+			newEnemy->Draw(player);
 			newEnemy->FormatDraw(2);
 		}
 	}
@@ -360,6 +345,7 @@ void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STA
 	if (score->Update(keys, oldkeys, input, oldinput) == true)
 	{
 		player->SetScale(320.0f);
+		score->SetScorePoint(0);
 		BirthEnemyCount = 0;
 		//要素全削除
 		enemy.clear();
@@ -405,7 +391,7 @@ void SceneManager::GameSceneDraw()
 	//エネミー
 	for (unique_ptr<Enemy>& newEnemy : enemy) {
 		if (newEnemy != nullptr) {
-			newEnemy->Draw();
+			newEnemy->Draw(player);
 			newEnemy->FormatDraw(2);
 		}
 	}
@@ -420,16 +406,16 @@ void SceneManager::GameSceneEnemyArg() {
 
 	//特定のフレームで敵を生成する
 	if (score->GetGameTimer() == 3520 || score->GetGameTimer() == 3500 || score->GetGameTimer() == 3480
-		|| score->GetGameTimer() == 3460 || score->GetGameTimer() == 3100 || score->GetGameTimer() == 3050
-		|| score->GetGameTimer() == 3000 || score->GetGameTimer() == 2950 || score->GetGameTimer() == 2900//9
-		|| score->GetGameTimer() == 2500 || score->GetGameTimer() == 2480 || score->GetGameTimer() == 2460
-		|| score->GetGameTimer() == 2440 || score->GetGameTimer() == 2420 || score->GetGameTimer() == 2400
-		|| score->GetGameTimer() == 2380 || score->GetGameTimer() == 2360 || score->GetGameTimer() == 2340
-		|| score->GetGameTimer() == 2320 || score->GetGameTimer() == 2300 || score->GetGameTimer() == 2280//21
-		|| score->GetGameTimer() == 1500 || score->GetGameTimer() == 1480 || score->GetGameTimer() == 1460
-		|| score->GetGameTimer() == 1300 || score->GetGameTimer() == 1280 || score->GetGameTimer() == 1260
-		|| score->GetGameTimer() == 1100 || score->GetGameTimer() == 1080 || score->GetGameTimer() == 1060
-		|| score->GetGameTimer() == 900 || score->GetGameTimer() == 880 || score->GetGameTimer() == 860//30
+		|| score->GetGameTimer() == 3460 || score->GetGameTimer() == 3100 || score->GetGameTimer() == 3000
+		|| score->GetGameTimer() == 2900 || score->GetGameTimer() == 2800 || score->GetGameTimer() == 2700//9
+		|| score->GetGameTimer() == 2500 || score->GetGameTimer() == 2450 || score->GetGameTimer() == 2400
+		|| score->GetGameTimer() == 2350 || score->GetGameTimer() == 2300 || score->GetGameTimer() == 2250
+		|| score->GetGameTimer() == 2200 || score->GetGameTimer() == 2150 || score->GetGameTimer() == 2100
+		|| score->GetGameTimer() == 2050 || score->GetGameTimer() == 2000 || score->GetGameTimer() == 1980//21
+		|| score->GetGameTimer() == 1500 || score->GetGameTimer() == 1450 || score->GetGameTimer() == 1400
+		|| score->GetGameTimer() == 1300 || score->GetGameTimer() == 1250 || score->GetGameTimer() == 1200
+		|| score->GetGameTimer() == 1100 || score->GetGameTimer() == 1050 || score->GetGameTimer() == 1000
+		|| score->GetGameTimer() == 900 || score->GetGameTimer() == 850 || score->GetGameTimer() == 800//30
 		) {
 		BirthEnemyCount++;
 		EnemyArgment = true;
@@ -634,11 +620,11 @@ void SceneManager::EndUpdate(char keys[255], char oldkeys[255], XINPUT_STATE inp
 void SceneManager::EndDraw()
 {
 	//描画処理
-//ステージ上の円
-	//stagecircle->Draw();
+	//ステージ上の円
+	stagecircle->Draw();
 
 	////プレイヤー
-	//player->Draw();
+	player->Draw();
 	////player->FormatDraw();
 
 	////スコア
