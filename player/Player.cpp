@@ -293,7 +293,7 @@ void Player::AttackMove(char keys[255], char oldkeys[255], XINPUT_STATE input, X
 	//1フレームのみの判定
 	if (Attack) {
 		AttackTimer++;
-		if (AttackTimer == 2) {
+		if (AttackTimer == 5) {
 			AttackTimer = 0;
 			Attack = false;
 		}
@@ -397,7 +397,14 @@ void Player::Draw() {
 	stopEffects->Draw();
 
 	if (!AttackStart && !Stun) {
+		if (Attack) {
+			SetDrawBright(255, 0, 0);
+		}
+		else {
+			SetDrawBright(255, 255, 255);
+		}
 		DrawBillboard3D(VGet(AttackAreaX, AttackAreaY, 0), 0.5f, 0.5f, 100, 0.0f, targettexture, true);
+		SetDrawBright(255, 255, 255);
 	}
 
 }

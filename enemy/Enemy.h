@@ -90,7 +90,9 @@ private:
 	//敵が止まっているか
 	bool EnemyStop;
 	int EnemyStopTimer;
-	float EnemyAngle;
+	float StopPos;
+	float SizeAngle;
+	float SizeAngle2;
 	//保存用変数
 	float EnemySaveSpeed;
 	//プレイヤーと敵の位置の距離

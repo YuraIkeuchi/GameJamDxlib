@@ -58,7 +58,9 @@ void Enemy::Initialize() {
 	//敵が止まっているか
 	EnemyStop = false;
 	EnemyStopTimer = 0;
-	EnemyAngle = 0.0f;
+	SizeAngle = 0.0f;
+	SizeAngle2 = 0.0f;
+	StopPos = 0.0f;
 	Dir = RIGHT;
 	//保存用変数
 	EnemySaveSpeed = 0.0f;
@@ -267,11 +269,13 @@ void Enemy::Stop(Player* player) {
 	}
 
 	if (EnemyStop) {
-		EnemyAngle += 0.1f;
+		//sin波によって上下に動く
+		SizeAngle += 40.0f;
+		SizeAngle2 = SizeAngle * (3.14f / 180.0f);
+		StopPos = (sin(SizeAngle2) * 2.0f) + EnemyPosX;
 		EnemyStopTimer++;
 
 		if (EnemyStopTimer == 200) {
-			EnemyAngle = 0.0f;
 			EnemyStop = false;
 			EnemyStopTimer = 0;
 		}
@@ -617,7 +621,7 @@ void Enemy::Draw(Player* player) {
 		}
 
 		if (EnemyStop) {
-			DrawBillboard3D(VGet(EnemyPosX, EnemyPosY + 35.0f, 0), 0.5f, 0.5f, 50.0f, EnemyAngle, Stoptexture, true);
+			DrawBillboard3D(VGet(StopPos, EnemyPosY, 0), 0.5f, 0.5f, 50, 0.0f, Stoptexture, true);
 		}
 	}
 	else {
@@ -632,7 +636,7 @@ void Enemy::Draw(Player* player) {
 }
 
 void Enemy::FormatDraw(int EnemyCount) {
-	//DrawFormatString(0, (20 * EnemyCount) + 120, GetColor(0, 0, 0), "Vish[%d]:%d", EnemyCount, ParticleCount);
+	//DrawFormatString(0, (20 * EnemyCount) + 120, GetColor(0, 0, 0), "StopPos[%d]:%f", EnemyCount, StopPos);
 	//stringの描画
 	/*DrawFormatString(0, (20 * EnemyCount) + 0, GetColor(0, 0, 0), "EnemyScale[%d]:%f", EnemyCount, EnemyScale);
 	DrawFormatString(0, (20 * EnemyCount) + 120, GetColor(0, 0, 0), "Vish[%d]:%d", EnemyCount, Vanish);

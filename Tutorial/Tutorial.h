@@ -14,7 +14,8 @@ public:
 	void SetTutorialClear(bool TutorialClear) { this->TutorialClear = TutorialClear; }
 
 private:
-	int TutorialGraph;
+	int TutorialGraph[10] = {};
+	int SkipTex;
 	int TutorialNumber;
 	int TutorialTimer;
 
@@ -52,6 +53,9 @@ private:
 	bool TextCheck;
 	bool TutorialCheck;
 	int TextInterVal;
+
+	float SkipPosX;
+	float SkipPosY;
 
 public:
 	Tutorial();
