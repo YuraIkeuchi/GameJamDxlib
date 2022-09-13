@@ -154,6 +154,7 @@ private:
 	int attackSound;
 	bool PlayerSound;
 	int enemyStopSound;
+	int enemyHitSound;
 
 	int stopTexture;
 };
