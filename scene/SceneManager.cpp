@@ -181,7 +181,8 @@ void SceneManager::TutorialInit()
 	//for (int i = 0; i < Enemy_Max; i++) {
 	//	enemy[i]->Initialize();
 	//}
-
+	ChangeVolumeSoundMem(title->GetVolume(), gameBgm);
+	PlaySoundMem(gameBgm, DX_PLAYTYPE_LOOP);
 }
 
 void SceneManager::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput)
@@ -343,8 +344,6 @@ void SceneManager::TutorialDraw()
 
 	//スコア
 	score->Draw();
-	ChangeVolumeSoundMem(title->GetVolume(), gameBgm);
-	PlaySoundMem(gameBgm, DX_PLAYTYPE_LOOP);
 	tutorial->Draw();
 
 }
@@ -398,9 +397,10 @@ void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STA
 		}
 	}
 
-	if (input.Buttons[XINPUT_BUTTON_START] && !oldinput.Buttons[XINPUT_BUTTON_START])
+	if (input.Buttons[XINPUT_BUTTON_START] && !oldinput.Buttons[XINPUT_BUTTON_START] && changeFlag == false)
 	{
 		changeFlag = true;
+		PlaySoundMem(checkSE, DX_PLAYTYPE_BACK);
 	}
 
 	if (changeFlag == true)
@@ -452,7 +452,7 @@ void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STA
 
 			if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A]) {
 				PlaySoundMem(checkSE, DX_PLAYTYPE_BACK);
-				curPosY = 500;
+				curPosY = 380;
 				changeFlag = false;
 			}
 		}

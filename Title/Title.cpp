@@ -43,7 +43,7 @@ void Title::Initialize()
 
 bool Title::Update(XINPUT_STATE input, XINPUT_STATE oldinput)
 {
-	if (input.Buttons[XINPUT_BUTTON_DPAD_UP] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_UP] && curPosY >= 500 && settingFlag == false) {
+	if (input.Buttons[XINPUT_BUTTON_DPAD_UP] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_UP] && curPosY >= 500 && settingFlag == false && moveFlag == false) {
 		curPosY -= 120;
 		PlaySoundMem(TitleSe1, DX_PLAYTYPE_BACK);
 	}
@@ -53,7 +53,7 @@ bool Title::Update(XINPUT_STATE input, XINPUT_STATE oldinput)
 		PlaySoundMem(TitleSe1, DX_PLAYTYPE_BACK);
 	}
 
-	if (input.Buttons[XINPUT_BUTTON_DPAD_DOWN] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_DOWN] && curPosY <= 500) {
+	if (input.Buttons[XINPUT_BUTTON_DPAD_DOWN] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_DOWN] && curPosY <= 500 && moveFlag == false) {
 		curPosY += 120;
 		PlaySoundMem(TitleSe1, DX_PLAYTYPE_BACK);
 	}
