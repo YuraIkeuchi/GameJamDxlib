@@ -11,7 +11,7 @@ Score::~Score() {
 
 void Score::Initialize() {
 	ScorePoint = 0;
-	GameTimer = 60 * 60;
+	GameTimer = 120 * 60;
 	MultPoint = 1;
 	scorePosX = 900;
 	scorePosY = 100;

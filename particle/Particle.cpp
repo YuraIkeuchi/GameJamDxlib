@@ -36,12 +36,14 @@ void Particle::Draw() {
 	for (int i = 0; i < Particle_Max; i++) {
 		if (Alive[i]) {
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha[i]);		//ブレンドモードをα(128/255)に設定
-			DrawBillboard3D(VGet(particlePosX[i], particlePosY[i], 0.0f), 0.5f, 0.5f, particleR[i], 0.0f, texture, true);
+			if (alpha[i] <= 200.0f) {
+				DrawBillboard3D(VGet(particlePosX[i], particlePosY[i], 0.0f), 0.5f, 0.5f, particleR[i], 0.0f, texture, true);
+			}
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ブレンドモードをオフ
 		}
 	}
 
-	//DrawFormatString(0, 200, GetColor(0, 0, 0), "Alive:%d", Alive[0]);
+	//DrawFormatString(0, 200, GetColor(0, 0, 0), "Alive:%f", particleR[0]);
 	//DrawFormatString(0, 220, GetColor(0, 0, 0), "angle[0]:%f", angle[0]);
 	//DrawFormatString(0, 240, GetColor(0, 0, 0), "angle[1]:%f", angle[1]);
 	//DrawFormatString(0, 260, GetColor(0, 0, 0), "speed:%f", speed[0]);
@@ -74,9 +76,10 @@ void Particle::NormalParticle(float StartPosX, float StartPosY, int Timer, int T
 			particlePosY[i] += sin(angle[i]) * speed[i];//位置に角度とスピードを足してる
 			alpha[i] -= 2;//ブレンド値を減らしてる
 			speed[i] += 0.01f;//弾の速さを上げてる
-			particleR[i] -= 0.1f;//半径の大きさを上げる
+			particleR[i] -= 0.1f;//半径の大きさを下げる
 			if (alpha[i] <= 0) {
 				Alive[i] = 0;
+				particleR[i] = 0.0f;
 			}
 		}
 	}

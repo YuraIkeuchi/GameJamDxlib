@@ -4,7 +4,8 @@
 
 Tutorial::Tutorial()
 {
-	TutorialGraph = LoadGraph("Resources/Tutorial.png");
+	LoadDivGraph("Resources/TutorialText/Tutorial-sheet.png",10,10,1,816,128,TutorialGraph);
+	SkipTex = LoadGraph("Resources/Skip.png");
 }
 
 void Tutorial::Initialize()
@@ -24,6 +25,8 @@ void Tutorial::Initialize()
 	TextCheck = false;
 	TutorialCheck = false;
 
+	SkipPosX = 200.0f;
+	SkipPosY = 64.0f;
 }
 
 void Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCount)
@@ -328,25 +331,13 @@ void Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 
 void Tutorial::Draw()
 {
-	//DrawFormatString(0, 360, GetColor(0, 0, 0), "TutorialTimer %d", TutorialTimer);
-	//DrawFormatString(0, 380, GetColor(0, 0, 0), "TutorialCheck %d", TutorialCheck);
-	//DrawFormatString(0, 400, GetColor(0, 0, 0), "TextCheck %d", TextCheck);
-	//DrawFormatString(0, 420, GetColor(0, 0, 0), "TutorialClear %d", TutorialClear);
-	//DrawFormatString(0, 440, GetColor(0, 0, 0), "TutorialPosX %f", TutorialPosX);
-	////DrawFormatString(0, 380, GetColor(0, 0, 0), "TextCount %d", TextCount);
-	///*DrawFormatString(0, 360, GetColor(0, 0, 0), "TutorialTimer %d", TutorialTimer);
-	//
-	//DrawFormatString(0, 400, GetColor(0, 0, 0), "TextStart %d", TextStart);
-	//DrawFormatString(0, 420, GetColor(0, 0, 0), "TextEnd %d", TextEnd);
-	//DrawFormatString(0, 440, GetColor(0, 0, 0), "TutorialStopTimer %d", TutorialStopTimer);*/
-	////DrawFormatString(600, 460, GetColor(0, 0, 0), "doorframe %f", doorframe);
-	//////DrawFormatString(600, 480, GetColor(0, 0, 0), "doorposX %f", doorPosX1);
-	////DrawFormatString(0, 500, GetColor(0, 0, 0), "doorpos2 %f", doorPosX2);
 
-		DrawExtendGraph((TutorialPosX - 500), (656 - 64), (TutorialPosX + 500), (656 + 64),
-			TutorialGraph, TRUE);
+	DrawExtendGraph((TutorialPosX - 408), (656 - 64), (TutorialPosX + 408), (656 + 64),
+		TutorialGraph[TextNumber], TRUE);
 
-		ChangeFont("HOKKORIRegular");
+		DrawExtendGraph((SkipPosX - 200), (SkipPosY - 64), (SkipPosX + 200), (SkipPosY + 64),
+			SkipTex, TRUE);
+		/*ChangeFont("x8y12pxTheStrongGamer");
 		SetFontSize(50);
 		if (TextNumber == TutorialTex0) {
 			DrawFormatString((TutorialPosX - 360), 630, GetColor(0, 0, 0), "まずRTとLTで方向を変換してみろ");
@@ -361,7 +352,7 @@ void Tutorial::Draw()
 			DrawFormatString((TutorialPosX - 460), 630, GetColor(0, 0, 0), "敵とぶつかると動けなくなってしまうぞ");
 		}
 		else if (TextNumber == TutorialTex4) {
-			DrawFormatString((TutorialPosX - 450), 630, GetColor(0, 0, 0), "Bで同じサークル上の敵がスタンするぞ");
+			DrawFormatString((TutorialPosX - 450), 630, GetColor(0, 0, 0), "Bで同じサークル上の敵を止められるぞ");
 		}
 		else if (TextNumber == TutorialTex5) {
 			DrawFormatString((TutorialPosX - 400), 630, GetColor(0, 0, 0), "近くに敵がいる状態で敵を倒すと");
@@ -378,5 +369,5 @@ void Tutorial::Draw()
 		else if (TextNumber == TutorialTex9) {
 			DrawFormatString((TutorialPosX - 340), 630, GetColor(0, 0, 0), "リンクしてスコアを稼ぐのだ");
 		}
-		SetFontSize(20);
+		SetFontSize(20);*/
 }
