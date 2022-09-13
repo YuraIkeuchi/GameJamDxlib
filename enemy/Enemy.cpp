@@ -4,6 +4,27 @@
 #include "DxLib.h"
 #include "Easing.h"
 Enemy::Enemy() {
+	int EffectTex = LoadGraph("Resources/attackEffect.png");
+	int breakEffectTex = LoadGraph("breakEffect.png");
+	int TimeEffectTex = LoadGraph("TimeEffect.png");
+	int particleTex = LoadGraph("Resources/hootEffect.png");
+
+	AttackEffect* effects_;
+	effects_ = new AttackEffect();
+	effects_->SetTexture(EffectTex);
+	effects.reset(effects_);
+	BreakEffect* breakEffects_;
+	breakEffects_ = new BreakEffect();
+	breakEffects_->SetTexture(breakEffectTex);
+	breakEffects.reset(breakEffects_);
+	TimeEffect* timeEffects_;
+	timeEffects_ = new TimeEffect();
+	timeEffects_->SetTexture(TimeEffectTex);
+	timeEffects.reset(timeEffects_);
+	Particle* particle_;
+	particle_ = new Particle();
+	particle_->SetTexture(particleTex);
+	particle.reset(particle_);
 }
 
 Enemy::~Enemy() {
@@ -53,33 +74,14 @@ void Enemy::Initialize() {
 	//照準に関する変数
 	TargetShrink = false;
 	Targetframe = 0.0f;
-	TargetSize = 120.0f;
+	TargetSize = 140.0f;
 	//チュートリアル
 	TutorialMove = false;
 	//パーティクル関係
 	ParticleCount = 0;
 	ParticlePosX = 0.0f;
 	ParticlePosY = 0.0f;
-	int EffectTex = LoadGraph("Resources/attackEffect.png");
-	int breakEffectTex = LoadGraph("breakEffect.png");
-	int TimeEffectTex = LoadGraph("TimeEffect.png");
-	int particleTex = LoadGraph("Resources/hootEffect.png");
-	AttackEffect* effects_;
-	effects_ = new AttackEffect();
-	effects_->SetTexture(EffectTex);
-	effects.reset(effects_);
-	BreakEffect* breakEffects_;
-	breakEffects_ = new BreakEffect();
-	breakEffects_->SetTexture(breakEffectTex);
-	breakEffects.reset(breakEffects_);
-	TimeEffect* timeEffects_;
-	timeEffects_ = new TimeEffect();
-	timeEffects_->SetTexture(TimeEffectTex);
-	timeEffects.reset(timeEffects_);
-	Particle* particle_;
-	particle_ = new Particle();
-	particle_->SetTexture(particleTex);
-	particle.reset(particle_);
+
 }
 
 void Enemy::Update(Player* player) {
@@ -258,7 +260,7 @@ void Enemy::Move(Player* player) {
 void Enemy::Stop(Player* player) {
 	//敵のストップ
 	if (player->GetStop()) {
-		if (player->GetScale() == EnemyScale) {
+		if (player->GetScale() == EnemyScale && EnemyAlive) {
 			EnemyStop = true;
 			timeEffects->active(VGet(EnemyPosX, EnemyPosY, 0));
 		}
@@ -282,7 +284,7 @@ void Enemy::InArea(Player* player) {
 	DistanceSpeed = player->GetSpeed() - EnemySpeed;
 
 	DistanceSpeed = fabs(DistanceSpeed);
-	if (EnemyAlive) {
+	if (EnemyAlive && !player->GetStun()) {
 		//一回目の攻撃のときと二回目のときの判定の広さが変わる
 		if (player->GetKnockCount() == 0) {
 			//一番中心の円とそれ以外の円で処理が別
@@ -290,7 +292,7 @@ void Enemy::InArea(Player* player) {
 				if ((DistanceScale <= 80) && LockOnCollide(player) && (EnemyMove)) {
 					InAttackArea = true;
 					if (!TargetShrink) {
-						TargetSize = 120.0f;
+						TargetSize = 140.0f;
 						Targetframe = 0.0f;
 						TargetShrink = true;
 					}
@@ -304,7 +306,7 @@ void Enemy::InArea(Player* player) {
 				if ((DistanceScale >= -80) && LockOnCollide(player) && (EnemyMove)) {
 					InAttackArea = true;
 					if (!TargetShrink) {
-						TargetSize = 120.0f;
+						TargetSize = 140.0f;
 						Targetframe = 0.0f;
 						TargetShrink = true;
 					}
@@ -317,10 +319,10 @@ void Enemy::InArea(Player* player) {
 		}
 		else {
 			if (player->GetScale() != 80.0f) {
-				if ((DistanceScale <= 80) && (EnemyMove) && (DistanceSpeed <= 60 || DistanceSpeed >= 320)) {
+				if ((DistanceScale <= 80) && (EnemyMove) && (DistanceSpeed <= 60 || DistanceSpeed >= 310)) {
 					InAttackArea = true;
 					if (!TargetShrink) {
-						TargetSize = 120.0f;
+						TargetSize = 140.0f;
 						Targetframe = 0.0f;
 						TargetShrink = true;
 					}
@@ -331,10 +333,10 @@ void Enemy::InArea(Player* player) {
 				}
 			}
 			else {
-				if ((DistanceScale >= -80) && (EnemyMove) && (DistanceSpeed <= 60 || DistanceSpeed >= 320)) {
+				if ((DistanceScale >= -80) && (EnemyMove) && (DistanceSpeed <= 60 || DistanceSpeed >= 310)) {
 					InAttackArea = true;
 					if (!TargetShrink) {
-						TargetSize = 120.0f;
+						TargetSize = 140.0f;
 						Targetframe = 0.0f;
 						TargetShrink = true;
 					}
@@ -392,11 +394,11 @@ void Enemy::Target(Player* player) {
 					player->SetAfterSpeed(EnemySpeed);
 					player->SetFrame(0.0f);
 					//0度と360度の境目の差をなくす
-					if (player->GetSpeed() <= 30.0f && DistanceSpeed >= 320) {
+					if (player->GetSpeed() <= 60.0f && DistanceSpeed >= 310) {
 						player->SetAround(true);
 						player->SetSpeed(player->GetSpeed() + 360.0f);
 					}
-					else if (player->GetSpeed() >= 330.0f && DistanceSpeed >= 320) {
+					else if (player->GetSpeed() >= 310.0f && DistanceSpeed >= 310) {
 						player->SetAround(true);
 						player->SetSpeed(player->GetSpeed() - 360.0f);
 					}
@@ -408,11 +410,11 @@ void Enemy::Target(Player* player) {
 					player->SetFrame(0.0f);
 					player->SetInAreaStart(true);
 					//0度と360度の境目の差をなくす
-					if (EnemySpeed >= 330.0f && DistanceSpeed >= 320) {
+					if (player->GetSpeed() <= 60.0f && DistanceSpeed >= 310) {
 						player->SetAround(true);
 						player->SetSpeed(player->GetSpeed() + 360.0f);
 					}
-					else if (player->GetSpeed() >= 330.0f && DistanceSpeed >= 320) {
+					else if (player->GetSpeed() >= 310.0f && DistanceSpeed >= 310) {
 						player->SetAround(true);
 						player->SetSpeed(player->GetSpeed() - 360.0f);
 					}
@@ -426,11 +428,11 @@ void Enemy::Target(Player* player) {
 						player->SetAfterSpeed(EnemySpeed);
 						player->SetFrame(0.0f);
 						//0度と360度の境目の差をなくす
-						if (player->GetSpeed() >= 330.0f && DistanceSpeed >= 320) {
+						if (player->GetSpeed() <= 60.0f && DistanceSpeed >= 310) {
 							player->SetAround(true);
 							player->SetSpeed(player->GetSpeed() + 360.0f);
 						}
-						else if (player->GetSpeed() >= 330.0f && DistanceSpeed >= 320) {
+						else if (player->GetSpeed() >= 310.0f && DistanceSpeed >= 310) {
 							player->SetAround(true);
 							player->SetSpeed(player->GetSpeed() - 360.0f);
 						}
@@ -447,11 +449,11 @@ void Enemy::Target(Player* player) {
 					player->SetAfterSpeed(EnemySpeed);
 					player->SetFrame(0.0f);
 					//0度と360度の境目の差をなくす
-					if (player->GetSpeed() <= 30.0f && EnemySpeed >= 330.0f) {
+					if (player->GetSpeed() <= 60.0f && DistanceSpeed >= 310) {
 						player->SetAround(true);
 						player->SetSpeed(player->GetSpeed() + 360.0f);
 					}
-					else if (EnemySpeed <= 30.0f && player->GetSpeed() >= 330.0f) {
+					else if (player->GetSpeed() >= 310.0f && DistanceSpeed >= 310) {
 						player->SetAround(true);
 						player->SetSpeed(player->GetSpeed() - 360.0f);
 					}
@@ -466,11 +468,11 @@ void Enemy::Target(Player* player) {
 					player->SetAfterSpeed(EnemySpeed);
 					player->SetFrame(0.0f);
 					//0度と360度の境目の差をなくす
-					if (player->GetSpeed() <= 30.0f && EnemySpeed >= 330.0f) {
+					if (player->GetSpeed() <= 60.0f && DistanceSpeed >= 310) {
 						player->SetAround(true);
 						player->SetSpeed(player->GetSpeed() + 360.0f);
 					}
-					else if (EnemySpeed <= 30.0f && player->GetSpeed() >= 330.0f) {
+					else if (player->GetSpeed() >= 310.0f && DistanceSpeed >= 310) {
 						player->SetAround(true);
 						player->SetSpeed(player->GetSpeed() - 360.0f);
 					}
@@ -482,11 +484,11 @@ void Enemy::Target(Player* player) {
 					player->SetAfterSpeed(EnemySpeed);
 					player->SetFrame(0.0f);
 					//0度と360度の境目の差をなくす
-					if (player->GetSpeed() <= 30.0f && EnemySpeed >= 330.0f) {
+					if (player->GetSpeed() <= 60.0f && DistanceSpeed >= 310) {
 						player->SetAround(true);
 						player->SetSpeed(player->GetSpeed() + 360.0f);
 					}
-					else if (EnemySpeed <= 30.0f && player->GetSpeed() >= 330.0f) {
+					else if (player->GetSpeed() >= 310.0f && DistanceSpeed >= 310) {
 						player->SetAround(true);
 						player->SetSpeed(player->GetSpeed() - 360.0f);
 					}
@@ -513,8 +515,9 @@ bool Enemy::Collide(Player* player) {
 		EnemyMove = false;
 		effects->active(FLOAT3{ EnemyPosX ,EnemyPosY ,0.0f });
 		breakEffects->active(FLOAT3{ EnemyPosX ,EnemyPosY ,0.0f });
-		EnemyScale = 500.0f;
+		EnemyScale = 1000.0f;
 		DeathEnemy = true;
+		ParticleCount = 0;
 		//プレイヤーの処理
 		player->SetKnockCount(player->GetKnockCount() + 1);
 		player->SetAttackInterval(10);
@@ -586,11 +589,14 @@ void Enemy::VanishEnemy() {
 
 	if (Vanish) {
 		if (frame < 1.0f) {
+			//ParticleCount = 1;
 			frame += 0.05f;
 		}
 		else {
+			//ParticleCount = 0;
 			DeathEnemy = true;
 			EnemyAlive = false;
+			EnemyMove = false;
 			Vanish = false;
 		}
 		size = Ease(In, Cubic, frame, size, 0.0f);
@@ -606,7 +612,7 @@ void Enemy::Draw(Player* player) {
 				VGet(player->GetPositionX(), player->GetPositionY(), 0), GetColor(255, 255, 255));
 		}
 		DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, size, 0.0f, texture, true);
-		if (InAttackArea) {
+		if (InAttackArea && !player->GetStun()) {
 			DrawBillboard3D(VGet(EnemyPosX, EnemyPosY, 0), 0.5f, 0.5f, TargetSize, 0.0f, Targettexture, true);
 		}
 
@@ -626,7 +632,7 @@ void Enemy::Draw(Player* player) {
 }
 
 void Enemy::FormatDraw(int EnemyCount) {
-	DrawFormatString(0, (20 * EnemyCount) + 120, GetColor(0, 0, 0), "Vish[%d]:%d", EnemyCount, ParticleCount);
+	//DrawFormatString(0, (20 * EnemyCount) + 120, GetColor(0, 0, 0), "Vish[%d]:%d", EnemyCount, ParticleCount);
 	//stringの描画
 	/*DrawFormatString(0, (20 * EnemyCount) + 0, GetColor(0, 0, 0), "EnemyScale[%d]:%f", EnemyCount, EnemyScale);
 	DrawFormatString(0, (20 * EnemyCount) + 120, GetColor(0, 0, 0), "Vish[%d]:%d", EnemyCount, Vanish);

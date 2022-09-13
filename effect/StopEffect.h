@@ -12,6 +12,7 @@ class StopEffect : public Emitter {
 
 	int texture;
 public:
+	const bool& Alive() { return isAlive; }
 	//setter
 	void SetEmitPos(FLOAT3 _pos) { this->pos = _pos; }
 	void SetTexture(int tex) { this->texture = tex; }

@@ -9,6 +9,7 @@
 #include"Title.h"
 #include"End.h"
 #include "Tutorial.h"
+#include "SceneChange.h"
 #include <vector>
 #include <memory>
 #include <list> // ヘッダファイルインクルード
@@ -67,16 +68,27 @@ private:
 	unique_ptr<End> end;
 	//スコア
 	unique_ptr<Score> score;
+	//シーンチェンジ
+	unique_ptr<SceneChange> scenechange;
 	float x = WIN_WIDTH / 2;
 	float y = WIN_HEIGHT / 2;
 
 	int gameBgm;
+	bool BGMLOOP;
+	bool ResetTutorial;
+	bool ChangeStart;
 	int BirthEnemyCount = 0;
 	int TutorialCount = 0;
-	int TutorialTimer = 100;
 	enum EnemyDir {
 		RIGHT,
 		LEFT,
+	};
+
+	int ChangeNumber = 0;
+	enum ChangeType {
+		NO,
+		RESTART,
+		TITLE,
 	};
 
 	bool changeFlag;
@@ -97,6 +109,12 @@ private:
 	float scale1;
 	float scale2;
 	float scale3;
+
+	int enemyTex;
+	int enemyrespornTex;
+	int enemytargetTex;
+	int enemystopTex;
+
 public:
 	//最初に初期化するもの
 	void StaticInit();

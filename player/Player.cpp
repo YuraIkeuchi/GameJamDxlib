@@ -7,6 +7,17 @@ Player::Player() {
 	attackSound = LoadSoundMem("Resources/sound/attack.mp3");
 	enemyStopSound = LoadSoundMem("Resources/sound/enemyStop.mp3");
 	stopTexture = LoadGraph("Resources/stop.png");
+	MoveEffect* Effects_[EFFECTS_MAX];
+	for (int i = 0; i < EFFECTS_MAX; i++) {
+		Effects_[i] = new MoveEffect();
+		Effects_[i]->SetTexture(texture);
+		Effects[i].reset(Effects_[i]);
+	}
+
+	StopEffect* stopEffects_;
+	stopEffects_ = new StopEffect();
+	stopEffects_->SetTexture(stopTexture);
+	stopEffects.reset(stopEffects_);
 }
 //デストラクタ
 Player::~Player() {
@@ -64,12 +75,7 @@ void Player::Initialize(int soundBolume)
 	AttackSpeed = 0.0f;
 	AttackCircleX = 0.0f;
 	AttackCircleY = 0.0f;
-	for (int i = 0; i < EFFECTS_MAX; i++) {
-		Effects[i] = new MoveEffect();
-		Effects[i]->SetTexture(texture);
-	}
-	stopEffects = new StopEffect();
-	stopEffects->SetTexture(stopTexture);
+	
 	InputX = 0.0f;
 	InputY = 0.0f;
 	Joyangle = 0.0f;
@@ -206,10 +212,12 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 	}
 
 	//敵を止める
-	if (input.Buttons[XINPUT_BUTTON_B] && !oldinput.Buttons[XINPUT_BUTTON_B] && !Stop) {
+	if (input.Buttons[XINPUT_BUTTON_B] && !oldinput.Buttons[XINPUT_BUTTON_B] && !Stop && !stopEffects->getIsAlive()) {
 		Stop = true;
 		stopEffects->active(VGet(playerPosX, playerPosY, 0));
-		PlaySoundMem(enemyStopSound, DX_PLAYTYPE_BACK);
+		if (PlayerSound) {
+			PlaySoundMem(enemyStopSound, DX_PLAYTYPE_BACK);
+		}
 	}
 	//敵を止めてる時間
 	if (Stop) {
@@ -240,11 +248,14 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 	//	PlayerRot = -((AttackSpeed - 180.0f) / 180.0f) * PI;
 	//}
 
+	//SEを鳴らす
+	if (AttackInterval == 10) {
+		PlaySoundMem(attackSound, DX_PLAYTYPE_BACK);
+	}
 	//攻撃後の硬直(この間にリンク判定する)
 	if (AttackInterval > 0) {
-		StartJoypadVibration(DX_INPUT_PAD1, 500, 2000);
+		StartJoypadVibration(DX_INPUT_PAD1, 300, 2000);
 		AttackInterval--;
-		PlaySoundMem(attackSound, DX_PLAYTYPE_BACK);
 	}
 	else {
 		//リンクが切れる
@@ -379,15 +390,17 @@ void Player::Draw() {
 
 	stopEffects->Draw();
 
-	if (!AttackStart) {
+	if (!AttackStart && !Stun) {
 		DrawBillboard3D(VGet(AttackAreaX, AttackAreaY, 0), 0.5f, 0.5f, 100, 0.0f, targettexture, true);
 	}
+
 }
 
 void Player::FormatDraw() {
-	DrawFormatString(0, 0, GetColor(0, 0, 0), "AddSpeed:%f", AddSpeed);
-	DrawFormatString(0, 20, GetColor(0, 0, 0), "BoundPower:%f", BoundPower);
-	DrawFormatString(0, 40, GetColor(0, 0, 0), "Stun:%d", Stun);
+	/*DrawFormatString(0, 0, GetColor(0, 0, 0), "AttackStart:%d", AttackStart);
+	DrawFormatString(0, 40, GetColor(0, 0, 0), "KnockCount:%d", KnockCount);
+
+	DrawFormatString(0, 20, GetColor(0, 0, 0), "Speed:%f", PlayerSpeed);*/
 	/*
 	
 	DrawFormatString(0, 40, GetColor(0, 0, 0), "Attack:%d", Attack);*/
