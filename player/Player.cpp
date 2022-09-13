@@ -6,6 +6,7 @@
 Player::Player() {
 	attackSound = LoadSoundMem("Resources/sound/attack.mp3");
 	enemyStopSound = LoadSoundMem("Resources/sound/enemyStop.mp3");
+	enemyHitSound = LoadSoundMem("Resources/sound/enemyHit.mp3");
 	stopTexture = LoadGraph("Resources/stop.png");
 	MoveEffect* Effects_[EFFECTS_MAX];
 	for (int i = 0; i < EFFECTS_MAX; i++) {
@@ -81,6 +82,7 @@ void Player::Initialize(int soundBolume)
 	Joyangle = 0.0f;
 	ChangeVolumeSoundMem(soundBolume * 1.2, attackSound);
 	ChangeVolumeSoundMem(soundBolume * 1.2, enemyStopSound);
+	ChangeVolumeSoundMem(soundBolume * 2.0, enemyHitSound);
 }
 
 void Player::Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput) {
@@ -326,6 +328,10 @@ void Player::AttackArea() {
 void Player::PlayerStun() {
 	//ダメージ食らったとき動けない
 	if (Stun) {
+		if (StunTimer == 100)
+		{
+			PlaySoundMem(enemyHitSound, DX_PLAYTYPE_BACK);
+		}
 		AddSpeed = 0.0f;
 		AddVelocity = 0.0f;
 		StunTimer--;

@@ -201,6 +201,7 @@ void SceneManager::TutorialInit()
 	player->SetSound(true);
 	ResetTutorial = true;
 	ChangeStart = false;
+	ChangeVolumeSoundMem(title->GetVolume(), checkSE);
 }
 
 void SceneManager::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput)
@@ -307,6 +308,7 @@ void SceneManager::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STAT
 			scenechange->SetdoorStart(true);
 			scenechange->Setdoorframe(0.0f);
 			ChangeStart = true;
+			PlaySoundMem(checkSE, DX_PLAYTYPE_BACK);
 		}
 	}
 	if (tutorial->GetTutorialNumber() == 3 && tutorial->GetTextCheck() && tutorial->GetTutorialCheck()) {
