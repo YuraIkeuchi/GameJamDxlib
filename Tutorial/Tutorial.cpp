@@ -25,21 +25,14 @@ void Tutorial::Initialize()
 	TextCheck = false;
 	TutorialCheck = false;
 
-	doorStart = false;
-	doorEnd = false;
-	doorStopTimer = 0;
-	doorframe = 0.0f;
-	doorPosX1 = -320.0f;
-	doorPosX2 = 1600.0f;
-	doorTex = LoadGraph("Resources/tutorialdoor.png");
 }
 
-bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCount)
+void Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCount)
 {
-	//チュートリアルスキップ
-	if (input.Buttons[XINPUT_BUTTON_Y] && !oldinput.Buttons[XINPUT_BUTTON_Y]) {
-		doorStart = true;
-	}
+	////チュートリアルスキップ
+	//if (input.Buttons[XINPUT_BUTTON_Y] && !oldinput.Buttons[XINPUT_BUTTON_Y]) {
+	//	doorStart = true;
+	//}
 	//チュートリアルの進行状況を表している
 	//操作説明
 	if (TutorialNumber == Tutorial0) {
@@ -185,14 +178,6 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 			}
 		}
 		else if (TutorialCount == 3) {
-			if (TutorialTimer >= 305) {
-				TutorialTimer--;
-			}
-			else {
-				TutorialTimer = 305;
-			}
-		}
-		else if (TutorialCount == 4) {
 			TutorialCheck = true;
 			if (TextCount == 3 && frame == 1.0f) {
 				TextStart = false;
@@ -206,7 +191,6 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 				TutorialTimer = 300;
 			}
 		}
-
 		//テキストとタスクが終わったら次のチュートリアルに映る
 		if (TutorialCheck && TextCheck) {
 			TextCount = 0;
@@ -266,7 +250,7 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 			TextCheck = true;
 		}
 
-		if (TutorialCount == 7 && TutorialClear) {
+		if (TutorialCount == 6 && TutorialClear) {
 			TutorialCheck = true;
 			if (TextCount == 2 && frame == 1.0f) {
 				TextStart = false;
@@ -338,50 +322,17 @@ bool Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 			TextCheck = true;
 		}
 
-		//テキストとタスクが終わったら次のチュートリアルに映る
-		if (TutorialCheck && TextCheck) {
-			//doorPosX1 = -320.0f;
-			//doorPosX2 = 1600.0f;
-			doorStart = true;
-		}
 	}
-
-	if (doorStart) {
-		if (doorframe < 1.0f) {
-			doorframe += 0.01f;
-		}
-		else {
-			doorframe = 1.0f;
-			doorStopTimer++;
-
-			if (doorStopTimer == 10) {
-				doorStart = false;
-				doorEnd = true;
-				doorframe = 0.0f;
-				doorStopTimer = 0;
-			}
-		}
-		doorPosX1 = Ease(In, Cubic, doorframe, doorPosX1, 320.0f);
-		doorPosX2 = Ease(In, Cubic, doorframe, doorPosX2, 960.0f);
-	}
-
-	if (doorEnd) {
-		if (doorframe < 1.0f) {
-			doorframe += 0.01f;
-		}
-		else {
-			return true;
-		}
-		doorPosX1 = Ease(In, Cubic, doorframe, doorPosX1, -320.0f);
-		doorPosX2 = Ease(In, Cubic, doorframe, doorPosX2, 1600.0f);
-	}
-	return false;
 }
 
 void Tutorial::Draw()
 {
 	DrawFormatString(0, 360, GetColor(0, 0, 0), "TutorialTimer %d", TutorialTimer);
-	DrawFormatString(0, 380, GetColor(0, 0, 0), "TextCount %d", TextCount);
+	DrawFormatString(0, 380, GetColor(0, 0, 0), "TutorialCheck %d", TutorialCheck);
+	DrawFormatString(0, 400, GetColor(0, 0, 0), "TextCheck %d", TextCheck);
+	DrawFormatString(0, 420, GetColor(0, 0, 0), "TutorialClear %d", TutorialClear);
+	DrawFormatString(0, 440, GetColor(0, 0, 0), "TutorialPosX %f", TutorialPosX);
+	//DrawFormatString(0, 380, GetColor(0, 0, 0), "TextCount %d", TextCount);
 	/*DrawFormatString(0, 360, GetColor(0, 0, 0), "TutorialTimer %d", TutorialTimer);
 	
 	DrawFormatString(0, 400, GetColor(0, 0, 0), "TextStart %d", TextStart);
@@ -391,7 +342,6 @@ void Tutorial::Draw()
 	////DrawFormatString(600, 480, GetColor(0, 0, 0), "doorposX %f", doorPosX1);
 	//DrawFormatString(0, 500, GetColor(0, 0, 0), "doorpos2 %f", doorPosX2);
 
-	if (!doorEnd) {
 		DrawExtendGraph((TutorialPosX - 500), (656 - 64), (TutorialPosX + 500), (656 + 64),
 			TutorialGraph, TRUE);
 
@@ -428,7 +378,4 @@ void Tutorial::Draw()
 			DrawFormatString((TutorialPosX - 340), 630, GetColor(0, 0, 0), "リンクしてスコアを稼ぐのだ");
 		}
 		SetFontSize(20);
-	}
-	DrawRotaGraph(doorPosX1, 720 / 2, 1.0f, 0.0f, doorTex, TRUE);
-	DrawRotaGraph(doorPosX2, 720 / 2, 1.0f, DX_PI_F, doorTex, TRUE);
 }

@@ -59,6 +59,9 @@
     <ClCompile Include="particle\Particle.cpp">
       <Filter>particle</Filter>
     </ClCompile>
+    <ClCompile Include="scenechange\SceneChange.cpp">
+      <Filter>scenechange</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Effect\BreakEffect.h">
@@ -121,6 +124,9 @@
     <ClInclude Include="particle\Particle.h">
       <Filter>particle</Filter>
     </ClInclude>
+    <ClInclude Include="scenechange\SceneChange.h">
+      <Filter>scenechange</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resources\icon.rc" />
@@ -164,6 +170,9 @@
     </Filter>
     <Filter Include="particle">
       <UniqueIdentifier>{c11f74ec-797c-48ad-b9cf-aa72d9eb5453}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scenechange">
+      <UniqueIdentifier>{d286af85-a727-407f-895a-416de47cfd96}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

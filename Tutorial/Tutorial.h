@@ -7,7 +7,8 @@ public:
 	//getter setter
 	const int& GetTutorialNumber() { return TutorialNumber; }
 	const int& GetTutorialTimer() { return TutorialTimer; }
-	const bool& GetDoorEnd() { return doorEnd; }
+	const bool& GetTutorialCheck() { return TutorialCheck; }
+	const bool& GetTextCheck() { return TextCheck; }
 	void SetTutorialTimer(int TutorialTimer) { this->TutorialTimer = TutorialTimer; }
 	void SetTutorialNumber(int TutorialNumber) { this->TutorialNumber = TutorialNumber; }
 	void SetTutorialClear(bool TutorialClear) { this->TutorialClear = TutorialClear; }
@@ -52,19 +53,10 @@ private:
 	bool TutorialCheck;
 	int TextInterVal;
 
-	int doorTex;
-	bool doorStart;
-	bool doorEnd;
-
-
-	float doorPosX1;
-	float doorPosX2;
-	float doorframe;
-	int doorStopTimer;
 public:
 	Tutorial();
 	void Initialize();
-	bool Update(XINPUT_STATE input, XINPUT_STATE oldinput,int TutorialCount);
+	void Update(XINPUT_STATE input, XINPUT_STATE oldinput,int TutorialCount);
 	void Draw();
 
 };
