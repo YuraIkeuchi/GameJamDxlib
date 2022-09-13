@@ -5,7 +5,10 @@
 #include "StopEffect.h"
 
 constexpr int EFFECTS_MAX = 31;
-
+#include <vector>
+#include <memory>
+#include <list> // ヘッダファイルインクルード
+using namespace std;         //  名前空間指定
 class Player {
 public:
 	//コンストラクタ
@@ -62,7 +65,7 @@ public:
 	void SetInArea(bool InArea) { this->InArea = InArea; }
 	void SetAround(bool Around) { this->Around = Around; }
 	void SetInAreaStart(bool InAreaStart) { this->InAreaStart = InAreaStart; }
-
+	void SetSound(bool Sound) { this->PlayerSound = Sound; }
 
 	void SetPlayer(int _player) { this->texture = _player; }
 	void SetTargetArea(int _targetarea) { this->targettexture = _targetarea; }
@@ -145,9 +148,11 @@ private:
 	float InputX;
 	float InputY;
 	float Joyangle;
-	MoveEffect* Effects[EFFECTS_MAX] = {};
-	StopEffect* stopEffects = nullptr;
+
+	unique_ptr<MoveEffect> Effects[EFFECTS_MAX] = {};
+	unique_ptr<StopEffect> stopEffects = nullptr;
 	int attackSound;
+	bool PlayerSound;
 	int enemyStopSound;
 
 	int stopTexture;
