@@ -195,6 +195,8 @@ void SceneManager::TutorialInit()
 {
 	score->Initialize();
 	tutorial->Initialize();
+	ChangeVolumeSoundMem(title->GetVolume(), gameBgm);
+	PlaySoundMem(gameBgm, DX_PLAYTYPE_LOOP);
 	scenechange->Initialize();
 	player->SetSound(true);
 	ResetTutorial = true;
@@ -438,9 +440,10 @@ void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STA
 	//ゲーム終了
 	score->Update(keys, oldkeys, input, oldinput);
 
-	if (input.Buttons[XINPUT_BUTTON_START] && !oldinput.Buttons[XINPUT_BUTTON_START])
+	if (input.Buttons[XINPUT_BUTTON_START] && !oldinput.Buttons[XINPUT_BUTTON_START] && changeFlag == false)
 	{
 		changeFlag = true;
+		PlaySoundMem(checkSE, DX_PLAYTYPE_BACK);
 	}
 
 	if (changeFlag == true)
@@ -488,7 +491,7 @@ void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STA
 
 			if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A]) {
 				PlaySoundMem(checkSE, DX_PLAYTYPE_BACK);
-				curPosY = 500;
+				curPosY = 380;
 				changeFlag = false;
 			}
 		}
