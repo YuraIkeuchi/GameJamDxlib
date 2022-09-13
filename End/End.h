@@ -6,7 +6,7 @@
 #define S 200
 #define A 120
 #define B 70
-#define C 20
+#define C 40
 
 class End
 {
