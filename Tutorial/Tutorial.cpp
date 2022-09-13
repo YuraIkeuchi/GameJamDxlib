@@ -328,20 +328,20 @@ void Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 
 void Tutorial::Draw()
 {
-	DrawFormatString(0, 360, GetColor(0, 0, 0), "TutorialTimer %d", TutorialTimer);
-	DrawFormatString(0, 380, GetColor(0, 0, 0), "TutorialCheck %d", TutorialCheck);
-	DrawFormatString(0, 400, GetColor(0, 0, 0), "TextCheck %d", TextCheck);
-	DrawFormatString(0, 420, GetColor(0, 0, 0), "TutorialClear %d", TutorialClear);
-	DrawFormatString(0, 440, GetColor(0, 0, 0), "TutorialPosX %f", TutorialPosX);
-	//DrawFormatString(0, 380, GetColor(0, 0, 0), "TextCount %d", TextCount);
-	/*DrawFormatString(0, 360, GetColor(0, 0, 0), "TutorialTimer %d", TutorialTimer);
-	
-	DrawFormatString(0, 400, GetColor(0, 0, 0), "TextStart %d", TextStart);
-	DrawFormatString(0, 420, GetColor(0, 0, 0), "TextEnd %d", TextEnd);
-	DrawFormatString(0, 440, GetColor(0, 0, 0), "TutorialStopTimer %d", TutorialStopTimer);*/
-	//DrawFormatString(600, 460, GetColor(0, 0, 0), "doorframe %f", doorframe);
-	////DrawFormatString(600, 480, GetColor(0, 0, 0), "doorposX %f", doorPosX1);
-	//DrawFormatString(0, 500, GetColor(0, 0, 0), "doorpos2 %f", doorPosX2);
+	//DrawFormatString(0, 360, GetColor(0, 0, 0), "TutorialTimer %d", TutorialTimer);
+	//DrawFormatString(0, 380, GetColor(0, 0, 0), "TutorialCheck %d", TutorialCheck);
+	//DrawFormatString(0, 400, GetColor(0, 0, 0), "TextCheck %d", TextCheck);
+	//DrawFormatString(0, 420, GetColor(0, 0, 0), "TutorialClear %d", TutorialClear);
+	//DrawFormatString(0, 440, GetColor(0, 0, 0), "TutorialPosX %f", TutorialPosX);
+	////DrawFormatString(0, 380, GetColor(0, 0, 0), "TextCount %d", TextCount);
+	///*DrawFormatString(0, 360, GetColor(0, 0, 0), "TutorialTimer %d", TutorialTimer);
+	//
+	//DrawFormatString(0, 400, GetColor(0, 0, 0), "TextStart %d", TextStart);
+	//DrawFormatString(0, 420, GetColor(0, 0, 0), "TextEnd %d", TextEnd);
+	//DrawFormatString(0, 440, GetColor(0, 0, 0), "TutorialStopTimer %d", TutorialStopTimer);*/
+	////DrawFormatString(600, 460, GetColor(0, 0, 0), "doorframe %f", doorframe);
+	//////DrawFormatString(600, 480, GetColor(0, 0, 0), "doorposX %f", doorPosX1);
+	////DrawFormatString(0, 500, GetColor(0, 0, 0), "doorpos2 %f", doorPosX2);
 
 		DrawExtendGraph((TutorialPosX - 500), (656 - 64), (TutorialPosX + 500), (656 + 64),
 			TutorialGraph, TRUE);
@@ -370,7 +370,7 @@ void Tutorial::Draw()
 			DrawFormatString((TutorialPosX - 360), 630, GetColor(0, 0, 0), "近くの敵にリンクして倒せるぞ");
 		}
 		else if (TextNumber == TutorialTex7) {
-			DrawFormatString((TutorialPosX - 220), 630, GetColor(0, 0, 0), "リンクを使い一気に倒そう");
+			DrawFormatString((TutorialPosX - 280), 630, GetColor(0, 0, 0), "リンクを使い一気に倒そう");
 		}
 		else if (TextNumber == TutorialTex8) {
 			DrawFormatString((TutorialPosX - 460), 630, GetColor(0, 0, 0), "リンク終了時の場所でスコアが決まるぞ");

@@ -394,13 +394,13 @@ void Player::Draw() {
 		DrawBillboard3D(VGet(AttackAreaX, AttackAreaY, 0), 0.5f, 0.5f, 100, 0.0f, targettexture, true);
 	}
 
-	DrawFormatString(0, 20, GetColor(0, 0, 0), "Speed:%f", PlayerSpeed);
 }
 
 void Player::FormatDraw() {
-	DrawFormatString(0, 0, GetColor(0, 0, 0), "AttackStart:%d", AttackStart);
+	/*DrawFormatString(0, 0, GetColor(0, 0, 0), "AttackStart:%d", AttackStart);
 	DrawFormatString(0, 40, GetColor(0, 0, 0), "KnockCount:%d", KnockCount);
 
+	DrawFormatString(0, 20, GetColor(0, 0, 0), "Speed:%f", PlayerSpeed);*/
 	/*
 	
 	DrawFormatString(0, 40, GetColor(0, 0, 0), "Attack:%d", Attack);*/
