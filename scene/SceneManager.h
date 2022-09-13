@@ -76,6 +76,7 @@ private:
 	int gameBgm;
 	bool BGMLOOP;
 	bool ResetTutorial;
+	bool ChangeStart;
 	int BirthEnemyCount = 0;
 	int TutorialCount = 0;
 	enum EnemyDir {
@@ -108,6 +109,12 @@ private:
 	float scale1;
 	float scale2;
 	float scale3;
+
+	int enemyTex;
+	int enemyrespornTex;
+	int enemytargetTex;
+	int enemystopTex;
+
 public:
 	//最初に初期化するもの
 	void StaticInit();

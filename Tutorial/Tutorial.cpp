@@ -4,12 +4,11 @@
 
 Tutorial::Tutorial()
 {
-	
+	TutorialGraph = LoadGraph("Resources/Tutorial.png");
 }
 
 void Tutorial::Initialize()
 {
-	TutorialGraph = LoadGraph("Resources/Tutorial.png");
 	TutorialNumber = Tutorial0;
 	TutorialTimer = 500;
 	TextNumber = 0;
@@ -154,7 +153,7 @@ void Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 		}
 
 		if (TutorialCount == 0) {
-			if (TutorialTimer >= 320) {
+			if (TutorialTimer > 320) {
 				TutorialTimer--;
 			}
 			else {
@@ -162,7 +161,7 @@ void Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 			}
 		}
 		else if (TutorialCount == 1) {
-			if (TutorialTimer >= 315) {
+			if (TutorialTimer > 315) {
 				TutorialTimer--;
 			}
 			else {
@@ -170,7 +169,7 @@ void Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 			}
 		}
 		else if (TutorialCount == 2) {
-			if (TutorialTimer >= 310) {
+			if (TutorialTimer > 310) {
 				TutorialTimer--;
 			}
 			else {
@@ -184,7 +183,7 @@ void Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 				frame = 0.0f;
 				TextEnd = true;
 			}
-			if (TutorialTimer >= 300) {
+			if (TutorialTimer > 300) {
 				TutorialTimer--;
 			}
 			else {
@@ -259,11 +258,13 @@ void Tutorial::Update(XINPUT_STATE input, XINPUT_STATE oldinput, int TutorialCou
 			}
 		}
 
-		if (TutorialTimer >= 100) {
-			TutorialTimer--;
-		}
-		else {
-			TutorialTimer = 100;
+		if (TextCount != 0) {
+			if (TutorialTimer > 100) {
+				TutorialTimer--;
+			}
+			else {
+				TutorialTimer = 100;
+			}
 		}
 
 		//テキストとタスクが終わったら次のチュートリアルに映る
@@ -369,7 +370,7 @@ void Tutorial::Draw()
 			DrawFormatString((TutorialPosX - 360), 630, GetColor(0, 0, 0), "近くの敵にリンクして倒せるぞ");
 		}
 		else if (TextNumber == TutorialTex7) {
-			DrawFormatString((TutorialPosX - 220), 630, GetColor(0, 0, 0), "リンクを使い倒そう");
+			DrawFormatString((TutorialPosX - 220), 630, GetColor(0, 0, 0), "リンクを使い一気に倒そう");
 		}
 		else if (TextNumber == TutorialTex8) {
 			DrawFormatString((TutorialPosX - 460), 630, GetColor(0, 0, 0), "リンク終了時の場所でスコアが決まるぞ");
