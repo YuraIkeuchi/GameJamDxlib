@@ -110,6 +110,7 @@ void Score::Draw() {
 	//DrawFormatString(scorePosX, scorePosY + 64, GetColor(0, 0, 0), "frame %-10d", GameTimer);
 	DrawRotaGraph(1050, 150, 0.65f, 0.0f, scoreTex, TRUE);
 	DrawFormatString(scorePosX+15, scorePosY+18, GetColor(0, 0, 0), "%10d", ScorePoint);
+	DrawFormatString(scorePosX + 15, scorePosY + 70, GetColor(0, 0, 0), "%-10d", GameTimer);
 	SetFontSize(20);
 }
 

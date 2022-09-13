@@ -483,18 +483,20 @@ void Enemy::Target(Player* player) {
 					//player->SetLink(true);
 				}
 				else if (player->GetAttackInterval() != 0 && DistanceScale == -80.0f) {
-					player->SetAttackStart(true);
-					player->SetAfterScale(EnemyScale);
-					player->SetAfterSpeed(EnemySpeed);
-					player->SetFrame(0.0f);
-					//0度と360度の境目の差をなくす
-					if (player->GetSpeed() <= 60.0f && DistanceSpeed >= 310) {
-						player->SetAround(true);
-						player->SetSpeed(player->GetSpeed() + 360.0f);
-					}
-					else if (player->GetSpeed() >= 310.0f && DistanceSpeed >= 310) {
-						player->SetAround(true);
-						player->SetSpeed(player->GetSpeed() - 360.0f);
+					if (!player->GetInArea()) {
+						player->SetAttackStart(true);
+						player->SetAfterScale(EnemyScale);
+						player->SetAfterSpeed(EnemySpeed);
+						player->SetFrame(0.0f);
+						//0度と360度の境目の差をなくす
+						if (player->GetSpeed() <= 60.0f && DistanceSpeed >= 310) {
+							player->SetAround(true);
+							player->SetSpeed(player->GetSpeed() + 360.0f);
+						}
+						else if (player->GetSpeed() >= 310.0f && DistanceSpeed >= 310) {
+							player->SetAround(true);
+							player->SetSpeed(player->GetSpeed() - 360.0f);
+						}
 					}
 					//player->SetLink(true);
 				}

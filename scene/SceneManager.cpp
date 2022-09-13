@@ -598,17 +598,19 @@ void SceneManager::GameSceneDraw()
 void SceneManager::GameSceneEnemyArg() {
 
 	//特定のフレームで敵を生成する
-	if (score->GetGameTimer() == 3520 || score->GetGameTimer() == 3500 || score->GetGameTimer() == 3480
-		|| score->GetGameTimer() == 3460 || score->GetGameTimer() == 3100 || score->GetGameTimer() == 3050
-		|| score->GetGameTimer() == 3000 || score->GetGameTimer() == 2950 || score->GetGameTimer() == 2900//9
-		|| score->GetGameTimer() == 2850 || score->GetGameTimer() == 2800 || score->GetGameTimer() == 2750
-		|| score->GetGameTimer() == 2700 || score->GetGameTimer() == 2650 || score->GetGameTimer() == 2600
-		|| score->GetGameTimer() == 2200 || score->GetGameTimer() == 2150 || score->GetGameTimer() == 2100
-		|| score->GetGameTimer() == 2050 || score->GetGameTimer() == 2000 || score->GetGameTimer() == 1980//21
-		|| score->GetGameTimer() == 1500 || score->GetGameTimer() == 1450 || score->GetGameTimer() == 1400
-		|| score->GetGameTimer() == 1300 || score->GetGameTimer() == 1250 || score->GetGameTimer() == 1200
-		|| score->GetGameTimer() == 1100 || score->GetGameTimer() == 1050 || score->GetGameTimer() == 1000
-		|| score->GetGameTimer() == 900 || score->GetGameTimer() == 850 || score->GetGameTimer() == 800//30
+	if (score->GetGameTimer() == 7120 || score->GetGameTimer() == 7100 || score->GetGameTimer() == 7080//3
+		|| score->GetGameTimer() == 7060 || score->GetGameTimer() == 6700 || score->GetGameTimer() == 6680//6
+		|| score->GetGameTimer() == 6660 || score->GetGameTimer() == 6650 || score->GetGameTimer() == 6630//9
+		|| score->GetGameTimer() == 6610 || score->GetGameTimer() == 6600 || score->GetGameTimer() == 6580//12
+		|| score->GetGameTimer() == 6560 || score->GetGameTimer() == 6000 || score->GetGameTimer() == 5980//15
+		|| score->GetGameTimer() == 5940 || score->GetGameTimer() == 5920 || score->GetGameTimer() == 5880//18
+		|| score->GetGameTimer() == 5860 || score->GetGameTimer() == 5600 || score->GetGameTimer() == 5580//21
+		|| score->GetGameTimer() == 5560 || score->GetGameTimer() == 5540 || score->GetGameTimer() == 5300//24
+		|| score->GetGameTimer() == 5280 || score->GetGameTimer() == 5260 || score->GetGameTimer() == 5240//27
+		|| score->GetGameTimer() == 4500 || score->GetGameTimer() == 4450 || score->GetGameTimer() == 4400//30
+		|| score->GetGameTimer() == 4350 || score->GetGameTimer() == 4300 || score->GetGameTimer() == 4250//33
+		|| score->GetGameTimer() == 4200 || score->GetGameTimer() == 4150 || score->GetGameTimer() == 4100//36
+		|| score->GetGameTimer() == 4050 || score->GetGameTimer() == 4000 || score->GetGameTimer() == 3950//39
 		) {
 		BirthEnemyCount++;
 		EnemyArgment = true;
@@ -624,70 +626,83 @@ void SceneManager::GameSceneEnemyArg() {
 		newEnemy->Initialize();
 		//これで一組
 		if (BirthEnemyCount == 1) {
+			newEnemy->SetEnemyTimer(100);
 			newEnemy->SetTargetLine(0);
 			newEnemy->SetDir(RIGHT);
 			newEnemy->SetSpeed(0.0f);
 		}
 		else if (BirthEnemyCount == 2) {
+			newEnemy->SetEnemyTimer(100);
 			newEnemy->SetTargetLine(0);
 			newEnemy->SetDir(RIGHT);
 			newEnemy->SetSpeed(90.0f);
 		}
 		else if (BirthEnemyCount == 3) {
+			newEnemy->SetEnemyTimer(100);
 			newEnemy->SetTargetLine(0);
 			newEnemy->SetDir(RIGHT);
 			newEnemy->SetSpeed(180.0f);
 		}
 		else if (BirthEnemyCount == 4) {
+			newEnemy->SetEnemyTimer(100);
 			newEnemy->SetTargetLine(0);
 			newEnemy->SetDir(RIGHT);
 			newEnemy->SetSpeed(270.0f);
 		}
 		//これで一組
 		else if (BirthEnemyCount == 5) {
+			newEnemy->SetEnemyTimer(100);
 			newEnemy->SetTargetLine(0);
 			newEnemy->SetDir(LEFT);
 			newEnemy->SetSpeed(0.0f);
 		}
 		else if (BirthEnemyCount == 6) {
+			newEnemy->SetEnemyTimer(100);
 			newEnemy->SetTargetLine(0);
 			newEnemy->SetDir(LEFT);
 			newEnemy->SetSpeed(0.0f);
 		}
 		else if (BirthEnemyCount == 7) {
+			newEnemy->SetEnemyTimer(100);
 			newEnemy->SetTargetLine(0);
 			newEnemy->SetDir(LEFT);
 			newEnemy->SetSpeed(0.0f);
 		}
 		//これで一組
 		else if (BirthEnemyCount == 8) {
+			newEnemy->SetEnemyTimer(100);
 			newEnemy->SetTargetLine(0);
 			newEnemy->SetDir(LEFT);
 			newEnemy->SetSpeed(120.0f);
 		}
 		else if (BirthEnemyCount == 9) {
+			newEnemy->SetEnemyTimer(100);
 			newEnemy->SetTargetLine(0);
 			newEnemy->SetDir(LEFT);
 			newEnemy->SetSpeed(120.0f);
 		}
 		else if (BirthEnemyCount == 10) {
+			newEnemy->SetEnemyTimer(100);
 			newEnemy->SetTargetLine(0);
-			newEnemy->SetDir(RIGHT);
+			newEnemy->SetDir(LEFT);
 			newEnemy->SetSpeed(120.0f);
 		}
 		//これで一組
 		else if (BirthEnemyCount == 11) {
+			newEnemy->SetEnemyTimer(100);
 			newEnemy->SetTargetLine(0);
-			newEnemy->SetDir(RIGHT);
+			newEnemy->SetDir(LEFT);
 			newEnemy->SetSpeed(240.0f);
 		}
 		else if (BirthEnemyCount == 12) {
+			newEnemy->SetEnemyTimer(100);
 			newEnemy->SetTargetLine(0);
-			newEnemy->SetDir(RIGHT);
+			newEnemy->SetDir(LEFT);
 			newEnemy->SetSpeed(240.0f);
 		}
 
 		else if (BirthEnemyCount == 13) {
+			newEnemy->SetEnemyTimer(100);
 			newEnemy->SetTargetLine(0);
 			newEnemy->SetDir(LEFT);
 			newEnemy->SetSpeed(240.0f);
@@ -695,88 +710,141 @@ void SceneManager::GameSceneEnemyArg() {
 		//これで一組
 		else if (BirthEnemyCount == 14) {
 			newEnemy->SetTargetLine(0);
-			newEnemy->SetDir(LEFT);
+			newEnemy->SetDir(RIGHT);
 			newEnemy->SetSpeed(110.0f);
 		}
 		else if (BirthEnemyCount == 15) {
-			newEnemy->SetTargetLine(0);
-			newEnemy->SetDir(LEFT);
-			newEnemy->SetSpeed(130.0f);
+			newEnemy->SetTargetLine(1);
+			newEnemy->SetDir(RIGHT);
+			newEnemy->SetSpeed(110.0f);
 		}
+		//これで一組
 		else if (BirthEnemyCount == 16) {
 			newEnemy->SetTargetLine(0);
 			newEnemy->SetDir(RIGHT);
 			newEnemy->SetSpeed(180.0f);
 		}
 		else if (BirthEnemyCount == 17) {
-			newEnemy->SetTargetLine(0);
+			newEnemy->SetTargetLine(1);
 			newEnemy->SetDir(RIGHT);
-			newEnemy->SetSpeed(200.0f);
+			newEnemy->SetSpeed(180.0f);
 		}
+		//これで一組
 		else if (BirthEnemyCount == 18) {
 			newEnemy->SetTargetLine(0);
 			newEnemy->SetDir(RIGHT);
-			newEnemy->SetSpeed(220.0f);
+			newEnemy->SetSpeed(250.0f);
 		}
 		else if (BirthEnemyCount == 19) {
-			newEnemy->SetTargetLine(0);
-			newEnemy->SetDir(LEFT);
-			newEnemy->SetSpeed(270.0f);
+			newEnemy->SetTargetLine(1);
+			newEnemy->SetDir(RIGHT);
+			newEnemy->SetSpeed(250.0f);
 		}
+		//これで一組
 		else if (BirthEnemyCount == 20) {
 			newEnemy->SetTargetLine(0);
 			newEnemy->SetDir(LEFT);
 			newEnemy->SetSpeed(290.0f);
 		}
 		else if (BirthEnemyCount == 21) {
-			newEnemy->SetTargetLine(0);
+			newEnemy->SetTargetLine(1);
 			newEnemy->SetDir(LEFT);
-			newEnemy->SetSpeed(310.0f);
+			newEnemy->SetSpeed(290.0f);
 		}
 		else if (BirthEnemyCount == 22) {
-		newEnemy->SetTargetLine(2);
-		newEnemy->SetDir(RIGHT);
-		newEnemy->SetSpeed(40.0f);
+			newEnemy->SetTargetLine(2);
+			newEnemy->SetDir(LEFT);
+			newEnemy->SetSpeed(290.0f);
 		}
 		else if (BirthEnemyCount == 23) {
-		newEnemy->SetTargetLine(1);
-		newEnemy->SetDir(RIGHT);
-		newEnemy->SetSpeed(40.0f);
+			newEnemy->SetTargetLine(3);
+			newEnemy->SetDir(LEFT);
+			newEnemy->SetSpeed(290.0f);
 		}
+		//これで一組
 		else if (BirthEnemyCount == 24) {
 		newEnemy->SetTargetLine(0);
-		newEnemy->SetDir(RIGHT);
-		newEnemy->SetSpeed(40.0f);
+		newEnemy->SetDir(LEFT);
+		newEnemy->SetSpeed(110.0f);
 		}
 		else if (BirthEnemyCount == 25) {
-		newEnemy->SetTargetLine(2);
-		newEnemy->SetDir(LEFT);
-		newEnemy->SetSpeed(220.0f);
-		}
-		else if (BirthEnemyCount == 26) {
 		newEnemy->SetTargetLine(1);
 		newEnemy->SetDir(LEFT);
-		newEnemy->SetSpeed(220.0f);
+		newEnemy->SetSpeed(110.0f);
+		}
+		else if (BirthEnemyCount == 26) {
+		newEnemy->SetTargetLine(2);
+		newEnemy->SetDir(LEFT);
+		newEnemy->SetSpeed(110.0f);
 		}
 		else if (BirthEnemyCount == 27) {
-		newEnemy->SetTargetLine(0);
-		newEnemy->SetDir(LEFT);
-		newEnemy->SetSpeed(220.0f);
-		}
-		else if (BirthEnemyCount == 28) {
 		newEnemy->SetTargetLine(3);
+		newEnemy->SetDir(LEFT);
+		newEnemy->SetSpeed(110.0f);
+		}
+		//これで一組
+		else if (BirthEnemyCount == 28) {
+		newEnemy->SetTargetLine(0);
 		newEnemy->SetDir(RIGHT);
 		newEnemy->SetSpeed(0.0f);
 		}
 		else if (BirthEnemyCount == 29) {
-		newEnemy->SetTargetLine(3);
+		newEnemy->SetTargetLine(1);
 		newEnemy->SetDir(RIGHT);
-		newEnemy->SetSpeed(120.0f);
+		newEnemy->SetSpeed(0.0f);
 		}
 		else if (BirthEnemyCount == 30) {
-		newEnemy->SetTargetLine(3);
+		newEnemy->SetTargetLine(2);
 		newEnemy->SetDir(RIGHT);
-		newEnemy->SetSpeed(240.0f);
+		newEnemy->SetSpeed(0.0f);
+		}
+		//これで一組
+		else if (BirthEnemyCount == 31) {
+		newEnemy->SetTargetLine(0);
+		newEnemy->SetDir(RIGHT);
+		newEnemy->SetSpeed(90.0f);
+		}
+		else if (BirthEnemyCount == 32) {
+		newEnemy->SetTargetLine(1);
+		newEnemy->SetDir(RIGHT);
+		newEnemy->SetSpeed(90.0f);
+		}
+		else if (BirthEnemyCount == 33) {
+		newEnemy->SetTargetLine(2);
+		newEnemy->SetDir(RIGHT);
+		newEnemy->SetSpeed(90.0f);
+		}
+		//これで一組
+		else if (BirthEnemyCount == 34) {
+		newEnemy->SetTargetLine(0);
+		newEnemy->SetDir(RIGHT);
+		newEnemy->SetSpeed(180.0f);
+		}
+		else if (BirthEnemyCount == 35) {
+		newEnemy->SetTargetLine(1);
+		newEnemy->SetDir(RIGHT);
+		newEnemy->SetSpeed(180.0f);
+		}
+		else if (BirthEnemyCount == 36) {
+		newEnemy->SetTargetLine(2);
+		newEnemy->SetDir(RIGHT);
+		newEnemy->SetSpeed(180.0f);
+		}
+		//これで一組
+		else if (BirthEnemyCount == 37) {
+		newEnemy->SetTargetLine(0);
+		newEnemy->SetDir(RIGHT);
+		newEnemy->SetSpeed(270.0f);
+		}
+		else if (BirthEnemyCount == 38) {
+		newEnemy->SetTargetLine(1);
+		newEnemy->SetDir(RIGHT);
+		newEnemy->SetSpeed(270.0f);
+		}
+		else if (BirthEnemyCount == 39) {
+		newEnemy->SetTargetLine(2);
+		newEnemy->SetDir(RIGHT);
+		newEnemy->SetSpeed(270.0f);
 		}
 		enemy.push_back(std::move(newEnemy));
 		EnemyArgment = false;
