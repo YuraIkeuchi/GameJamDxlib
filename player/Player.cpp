@@ -410,6 +410,8 @@ void Player::Draw() {
 }
 
 void Player::FormatDraw() {
+	DrawFormatString(0, 40, GetColor(0, 0, 0), "InArea:%d", InArea);
+	DrawFormatString(0, 60, GetColor(0, 0, 0), "InAreaStart:%d", InAreaStart);
 	/*DrawFormatString(0, 0, GetColor(0, 0, 0), "AttackStart:%d", AttackStart);
 	DrawFormatString(0, 40, GetColor(0, 0, 0), "KnockCount:%d", KnockCount);
 

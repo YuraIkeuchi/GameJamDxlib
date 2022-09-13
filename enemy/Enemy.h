@@ -47,6 +47,7 @@ public:
 	const bool& GetDeathEnemy() { return DeathEnemy; }
 	void SetStop(bool Stop) { this->EnemyStop = Stop; }
 	void SetDir(int Dir) { this->Dir = Dir; }
+	void SetEnemyTimer(int EnemyTimer) { this->EnemyTimer = EnemyTimer; }
 	void SetTutorialMove(bool TutorialMove) { this->TutorialMove = TutorialMove; }
 	void SetSpeed(float EnemySpeed) { this->EnemySpeed = EnemySpeed; }
 	void SetDeathEnemy(bool DeathEnemy) { this->DeathEnemy = DeathEnemy; }
