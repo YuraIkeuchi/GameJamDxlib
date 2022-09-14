@@ -56,6 +56,20 @@ bool Score::Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT
 		scorePosY2 += 0.5f;
 		alphaCount -= 5;
 	}
+
+
+	//ダメージを食らったときにスコアが減る
+	if (player->GetStunTimer() == 100 && player->GetStun()) {
+
+		ScorePoint -= 5;
+
+	}
+
+	//スコアは0以下にならない
+	if (ScorePoint < 0) {
+		ScorePoint = 0;
+	}
+
 	return false;
 }
 
@@ -94,6 +108,18 @@ bool Score::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input
 	{
 		scorePosY2 += 0.5f;
 		alphaCount -= 5;
+	}
+
+	//ダメージを食らったときにスコアが減る
+	if (player->GetStunTimer() == 100 && player->GetStun()) {
+
+		ScorePoint -= 5;
+
+	}
+
+	//スコアは0以下にならない
+	if (ScorePoint < 0) {
+		ScorePoint = 0;
 	}
 
 	return false;

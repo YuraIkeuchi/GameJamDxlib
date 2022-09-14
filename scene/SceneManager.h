@@ -48,6 +48,8 @@ private:
 
 	void GameSceneEnemyArg();
 
+	//void EnemyPatternSecond();
+
 	void EndInit();
 	void EndUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput);
 	void EndDraw();
