@@ -15,6 +15,7 @@ private:
 	int TitleTex8;
 	int TitleTex9[6];
 	int tex9Num;
+	int TitleTex10;
 	int soundBolume = 50;
 
 	int TitleSound1;
