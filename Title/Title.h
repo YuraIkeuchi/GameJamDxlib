@@ -47,7 +47,7 @@ private:
 public:
 	Title();
 	void Initialize();
-	bool Update(XINPUT_STATE input, XINPUT_STATE oldinput);
+	bool Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput);
 	void Draw();
 
 	//İ’è‚Å’²ß‚µ‚½‰¹—Ê‚ğæ“¾
