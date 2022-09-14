@@ -1,5 +1,6 @@
 #include"SceneManager.h"
 #include "Vector3.h"
+#include"FPS.h"
 
 const char TITLE[] = "3002_リーサル";
 
@@ -41,6 +42,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	//ボタン
 	XINPUT_STATE input = { 0 };
 	
+	FPS fps(30.0f,800);
+
 	// ゲームループ
 	while (1)
 	{
@@ -86,10 +89,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		scene->Update(keys, oldkeys, input, oldinput);
 		scene->Draw();
 
+		fps.getFps();
+		fps.wait();
 		//---------  ここまでにプログラムを記述  ---------//
 		ScreenFlip();//（ダブルバッファ）裏面
 		// 20ミリ秒待機（疑似60FPS）
-		WaitTimer(20);
+		//WaitTimer(20);
 		// Windows システムからくる情報を処理する
 		if (ProcessMessage() == -1)
 		{
