@@ -28,7 +28,7 @@ void End::Initialize(int soundBolume)
 	ChangeVolumeSoundMem(soundBolume, endSe1);
 }
 
-bool End::Update(XINPUT_STATE input, XINPUT_STATE oldinput)
+bool End::Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput)
 {
 	if (alpha < 255)
 	{
@@ -58,7 +58,7 @@ bool End::Update(XINPUT_STATE input, XINPUT_STATE oldinput)
 		if (timer > 40)
 		{
 			drawFlag = true;
-			if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A])
+			if (((keys[KEY_INPUT_SPACE] && !oldkeys[KEY_INPUT_SPACE]) || (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A])))
 			{
 				Speedframe = 0.0f;
 				PlaySoundMem(endSe1, DX_PLAYTYPE_BACK);

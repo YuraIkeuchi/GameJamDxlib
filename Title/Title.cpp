@@ -41,19 +41,19 @@ void Title::Initialize()
 	ChangeVolumeSoundMem(soundBolume, TitleSe2);
 }
 
-bool Title::Update(XINPUT_STATE input, XINPUT_STATE oldinput)
+bool Title::Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput)
 {
-	if (input.Buttons[XINPUT_BUTTON_DPAD_UP] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_UP] && curPosY >= 500 && settingFlag == false && moveFlag == false) {
+	if (((keys[KEY_INPUT_UP] && !oldkeys[KEY_INPUT_UP]) || (input.Buttons[XINPUT_BUTTON_DPAD_UP] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_UP])) && curPosY >= 500 && settingFlag == false && moveFlag == false) {
 		curPosY -= 120;
 		PlaySoundMem(TitleSe1, DX_PLAYTYPE_BACK);
 	}
 
-	if (input.Buttons[XINPUT_BUTTON_DPAD_UP] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_UP] && curPosY >= 620 && settingFlag == true) {
+	if (((keys[KEY_INPUT_UP] && !oldkeys[KEY_INPUT_UP]) || (input.Buttons[XINPUT_BUTTON_DPAD_UP] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_UP])) && curPosY >= 620 && settingFlag == true) {
 		curPosY -= 120;
 		PlaySoundMem(TitleSe1, DX_PLAYTYPE_BACK);
 	}
 
-	if (input.Buttons[XINPUT_BUTTON_DPAD_DOWN] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_DOWN] && curPosY <= 500 && moveFlag == false) {
+	if (((keys[KEY_INPUT_DOWN] && !oldkeys[KEY_INPUT_DOWN]) || (input.Buttons[XINPUT_BUTTON_DPAD_DOWN] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_DOWN])) && curPosY <= 500 && moveFlag == false) {
 		curPosY += 120;
 		PlaySoundMem(TitleSe1, DX_PLAYTYPE_BACK);
 	}
@@ -64,7 +64,7 @@ bool Title::Update(XINPUT_STATE input, XINPUT_STATE oldinput)
 		scale2 = 0.5f;
 		scale3 = 0.5f;
 
-		if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A] && moveFlag == false && settingFlag == false) {
+		if (((keys[KEY_INPUT_SPACE] && !oldkeys[KEY_INPUT_SPACE]) || (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A])) && moveFlag == false && settingFlag == false) {
 			moveFlag = true;
 			PlaySoundMem(TitleSe2, DX_PLAYTYPE_BACK);
 		}
@@ -74,11 +74,11 @@ bool Title::Update(XINPUT_STATE input, XINPUT_STATE oldinput)
 		scale1 = 0.5f;
 		scale2 = 0.7f;
 		scale3 = 0.5f;
-		if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A] && settingFlag == false && moveFlag == false) {
+		if (((keys[KEY_INPUT_SPACE] && !oldkeys[KEY_INPUT_SPACE]) || (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A])) && settingFlag == false && moveFlag == false) {
 			settingFlag = true;
 			PlaySoundMem(TitleSe2, DX_PLAYTYPE_BACK);
 		}
-		if (input.Buttons[XINPUT_BUTTON_DPAD_LEFT] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_LEFT] && settingFlag == true) {
+		if (((keys[KEY_INPUT_LEFT] && !oldkeys[KEY_INPUT_LEFT]) || (input.Buttons[XINPUT_BUTTON_DPAD_LEFT] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_LEFT])) && settingFlag == true) {
 			if (tex9Num > 0)
 			{
 				tex9Num--;
@@ -88,7 +88,7 @@ bool Title::Update(XINPUT_STATE input, XINPUT_STATE oldinput)
 				ChangeVolumeSoundMem(soundBolume, TitleSe2);
 			}
 		}
-		if (input.Buttons[XINPUT_BUTTON_DPAD_RIGHT] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_RIGHT] && settingFlag == true) {
+		if (((keys[KEY_INPUT_RIGHT] && !oldkeys[KEY_INPUT_RIGHT]) || (input.Buttons[XINPUT_BUTTON_DPAD_RIGHT] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_RIGHT])) && settingFlag == true) {
 			if (tex9Num < 5)
 			{
 				tex9Num++;
@@ -105,11 +105,11 @@ bool Title::Update(XINPUT_STATE input, XINPUT_STATE oldinput)
 		scale2 = 0.5f;
 		scale3 = 0.7f;
 
-		if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A] && settingFlag == false) {
+		if (((keys[KEY_INPUT_SPACE] && !oldkeys[KEY_INPUT_SPACE]) || (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A])) && settingFlag == false) {
 			PlaySoundMem(TitleSe2, DX_PLAYTYPE_BACK);
 			endFlag = true;
 		}
-		if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A] && settingFlag == true) {
+		if (((keys[KEY_INPUT_SPACE] && !oldkeys[KEY_INPUT_SPACE]) || (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A])) && settingFlag == true) {
 			PlaySoundMem(TitleSe2, DX_PLAYTYPE_BACK);
 			curPosY = 500;
 			settingFlag = false;

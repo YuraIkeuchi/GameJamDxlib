@@ -36,6 +36,6 @@ private:
 public:
 	End();
 	void Initialize(int soundBolume);
-	bool Update(XINPUT_STATE input, XINPUT_STATE oldinput);
+	bool Update(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput);
 	void Draw(int score);
 };

@@ -146,7 +146,7 @@ void SceneManager::TitleInit()
 
 void SceneManager::TitleUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput)
 {
-	if (title->Update(input, oldinput) == true)
+	if (title->Update(keys, oldkeys, input, oldinput) == true)
 	{
 		TutorialCount = 0;
 		SceneTime = 0;
@@ -436,7 +436,7 @@ void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STA
 		}
 	}
 
-	if (input.Buttons[XINPUT_BUTTON_START] && !oldinput.Buttons[XINPUT_BUTTON_START] && changeFlag == false)
+	if (((keys[KEY_INPUT_ESCAPE] && !oldkeys[KEY_INPUT_ESCAPE]) || (input.Buttons[XINPUT_BUTTON_START] && !oldinput.Buttons[XINPUT_BUTTON_START])) && changeFlag == false)
 	{
 		changeFlag = true;
 		PlaySoundMem(checkSE, DX_PLAYTYPE_BACK);
@@ -444,12 +444,12 @@ void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STA
 
 	if (changeFlag == true)
 	{
-		if (input.Buttons[XINPUT_BUTTON_DPAD_UP] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_UP] && curPosY >= 500) {
+		if (((keys[KEY_INPUT_UP] && !oldkeys[KEY_INPUT_UP]) || (input.Buttons[XINPUT_BUTTON_DPAD_UP] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_UP])) && curPosY >= 500) {
 			curPosY -= 120;
 			PlaySoundMem(menuChangeSE, DX_PLAYTYPE_BACK);
 		}
 
-		if (input.Buttons[XINPUT_BUTTON_DPAD_DOWN] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_DOWN] && curPosY <= 500) {
+		if (((keys[KEY_INPUT_DOWN] && !oldkeys[KEY_INPUT_DOWN]) || (input.Buttons[XINPUT_BUTTON_DPAD_DOWN] && !oldinput.Buttons[XINPUT_BUTTON_DPAD_DOWN])) && curPosY <= 500) {
 			curPosY += 120;
 			PlaySoundMem(menuChangeSE, DX_PLAYTYPE_BACK);
 		}
@@ -461,7 +461,7 @@ void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STA
 			scale2 = 0.5f;
 			scale3 = 0.5f;
 
-			if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A]) {
+			if (((keys[KEY_INPUT_SPACE] && !oldkeys[KEY_INPUT_SPACE]) || (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A]))) {
 				scenechange->SetdoorStart(true);
 				scenechange->Setdoorframe(0.0f);
 				ChangeNumber = RESTART;
@@ -473,7 +473,7 @@ void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STA
 			scale1 = 0.5f;
 			scale2 = 0.7f;
 			scale3 = 0.5f;
-			if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A]) {
+			if (((keys[KEY_INPUT_SPACE] && !oldkeys[KEY_INPUT_SPACE]) || (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A]))) {
 				scenechange->SetdoorStart(true);
 				scenechange->Setdoorframe(0.0f);
 				ChangeNumber = TITLE;
@@ -485,7 +485,7 @@ void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STA
 			scale2 = 0.5f;
 			scale3 = 0.7f;
 
-			if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A]) {
+			if (((keys[KEY_INPUT_SPACE] && !oldkeys[KEY_INPUT_SPACE]) || (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A]))) {
 				PlaySoundMem(checkSE, DX_PLAYTYPE_BACK);
 				curPosY = 380;
 				changeFlag = false;
@@ -986,7 +986,7 @@ void SceneManager::EndInit()
 void SceneManager::EndUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput)
 {
 	//仮置き（次のシーンに行く）
-	if (end->Update(input, oldinput) == true) {
+	if (end->Update(keys, oldkeys, input, oldinput) == true) {
 		scenechange->SetdoorStart(true);
 		scenechange->Setdoorframe(0.0f);
 		ChangeStart = true;
