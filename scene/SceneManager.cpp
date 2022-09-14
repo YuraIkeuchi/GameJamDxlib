@@ -496,6 +496,7 @@ void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STA
 	//ゲーム終了
 	if (score->Update(keys, oldkeys, input, oldinput) == true)
 	{
+		player->SetAttackInterval(0);
 		player->SetAttackStart(false);
 		player->SetScale(320.0f);
 		BirthEnemyCount = 0;
@@ -595,44 +596,67 @@ void SceneManager::GameSceneDraw()
 void SceneManager::GameSceneEnemyArg() {
 
 	//特定のフレームで敵を生成する
-	if (score->GetGameTimer() == 7120 || score->GetGameTimer() == 7100 || score->GetGameTimer() == 7080//3
-		|| score->GetGameTimer() == 7060 || score->GetGameTimer() == 6700 || score->GetGameTimer() == 6680//6
-		|| score->GetGameTimer() == 6660 || score->GetGameTimer() == 6650 || score->GetGameTimer() == 6630//9
-		|| score->GetGameTimer() == 6610 || score->GetGameTimer() == 6600 || score->GetGameTimer() == 6580//12
-		|| score->GetGameTimer() == 6560 || score->GetGameTimer() == 6000 || score->GetGameTimer() == 5980//15
-		|| score->GetGameTimer() == 5940 || score->GetGameTimer() == 5920 || score->GetGameTimer() == 5880//18
-		|| score->GetGameTimer() == 5860 || score->GetGameTimer() == 5600 || score->GetGameTimer() == 5580//21
-		|| score->GetGameTimer() == 5560 || score->GetGameTimer() == 5540 || score->GetGameTimer() == 5300//24
-		|| score->GetGameTimer() == 5280 || score->GetGameTimer() == 5260 || score->GetGameTimer() == 5240//27
-		|| score->GetGameTimer() == 4500 || score->GetGameTimer() == 4450 || score->GetGameTimer() == 4400//30
-		|| score->GetGameTimer() == 4350 || score->GetGameTimer() == 4300 || score->GetGameTimer() == 4250//33
-		|| score->GetGameTimer() == 4200 || score->GetGameTimer() == 4150 || score->GetGameTimer() == 4100//36
-		|| score->GetGameTimer() == 4050 || score->GetGameTimer() == 4000 || score->GetGameTimer() == 3950//39
-		|| score->GetGameTimer() == 3300 || score->GetGameTimer() == 3290 || score->GetGameTimer() == 3280//42
-		|| score->GetGameTimer() == 3270 || score->GetGameTimer() == 3260 || score->GetGameTimer() == 3250//45
-		|| score->GetGameTimer() == 3240 || score->GetGameTimer() == 3230 || score->GetGameTimer() == 3220//48
-		|| score->GetGameTimer() == 3210 || score->GetGameTimer() == 3200 || score->GetGameTimer() == 3190//51
-		|| score->GetGameTimer() == 3180 || score->GetGameTimer() == 3170 || score->GetGameTimer() == 3160//54
-		|| score->GetGameTimer() == 3150 || score->GetGameTimer() == 2700 || score->GetGameTimer() == 2680//57
+	if (score->GetGameTimer() == 5920 || score->GetGameTimer() == 5900 || score->GetGameTimer() == 5880//3
+		|| score->GetGameTimer() == 5860 || score->GetGameTimer() == 5700 || score->GetGameTimer() == 5680//6
+		|| score->GetGameTimer() == 5660 || score->GetGameTimer() == 5650 || score->GetGameTimer() == 5630//9
+		|| score->GetGameTimer() == 5610 || score->GetGameTimer() == 5600 || score->GetGameTimer() == 5580//12
+
+		|| score->GetGameTimer() == 5560 || score->GetGameTimer() == 5300 || score->GetGameTimer() == 5280//15
+		|| score->GetGameTimer() == 5240 || score->GetGameTimer() == 5220 || score->GetGameTimer() == 5180//18
+		|| score->GetGameTimer() == 5160 || score->GetGameTimer() == 5100 || score->GetGameTimer() == 5080//21
+
+		|| score->GetGameTimer() == 5060 || score->GetGameTimer() == 5040 || score->GetGameTimer() == 5000//24
+		|| score->GetGameTimer() == 4980 || score->GetGameTimer() == 4960 || score->GetGameTimer() == 4940//27
+		|| score->GetGameTimer() == 4800 || score->GetGameTimer() == 4700 || score->GetGameTimer() == 4600//30
+
+		|| score->GetGameTimer() == 4600 || score->GetGameTimer() == 4500 || score->GetGameTimer() == 4400//33
+		|| score->GetGameTimer() == 4300 || score->GetGameTimer() == 4200 || score->GetGameTimer() == 4100//36
+		|| score->GetGameTimer() == 4000 || score->GetGameTimer() == 3900 || score->GetGameTimer() == 3800//39
+
+		|| score->GetGameTimer() == 3500 || score->GetGameTimer() == 3460 || score->GetGameTimer() == 3420//42
+		|| score->GetGameTimer() == 3380 || score->GetGameTimer() == 3340 || score->GetGameTimer() == 3300//45
+		|| score->GetGameTimer() == 3260 || score->GetGameTimer() == 3220 || score->GetGameTimer() == 3180//48
+
+		|| score->GetGameTimer() == 3140 || score->GetGameTimer() == 3100 || score->GetGameTimer() == 3060//51
+		|| score->GetGameTimer() == 3020 || score->GetGameTimer() == 2980 || score->GetGameTimer() == 2940//54
+		|| score->GetGameTimer() == 2900 || score->GetGameTimer() == 2700 || score->GetGameTimer() == 2680//57
+
 		|| score->GetGameTimer() == 2660 || score->GetGameTimer() == 2640 || score->GetGameTimer() == 2620//60
 		|| score->GetGameTimer() == 2600 || score->GetGameTimer() == 2580 || score->GetGameTimer() == 2560//63
 		|| score->GetGameTimer() == 2540 || score->GetGameTimer() == 2520 || score->GetGameTimer() == 2500//66
+
 		|| score->GetGameTimer() == 2480 || score->GetGameTimer() == 2460 || score->GetGameTimer() == 2440//69
 		|| score->GetGameTimer() == 2420 || score->GetGameTimer() == 2400 || score->GetGameTimer() == 2380//71
 		|| score->GetGameTimer() == 2360 || score->GetGameTimer() == 2340 || score->GetGameTimer() == 2320//74
+
 		|| score->GetGameTimer() == 2300 || score->GetGameTimer() == 2280 || score->GetGameTimer() == 2260//77
-		|| score->GetGameTimer() == 2340 || score->GetGameTimer() == 2320 || score->GetGameTimer() == 1500//80
-		|| score->GetGameTimer() == 1490 || score->GetGameTimer() == 1480 || score->GetGameTimer() == 1470//83
-		|| score->GetGameTimer() == 1460 || score->GetGameTimer() == 1450 || score->GetGameTimer() == 1440//86
-		|| score->GetGameTimer() == 1430 || score->GetGameTimer() == 1420 || score->GetGameTimer() == 1410//89
-		|| score->GetGameTimer() == 1400 || score->GetGameTimer() == 1390 || score->GetGameTimer() == 1380//92
-		|| score->GetGameTimer() == 1370 || score->GetGameTimer() == 1360 || score->GetGameTimer() == 1350//95
-		|| score->GetGameTimer() == 1340 || score->GetGameTimer() == 1330 || score->GetGameTimer() == 1320//98
-		|| score->GetGameTimer() == 1310 || score->GetGameTimer() == 1300 || score->GetGameTimer() == 1290//101
-		|| score->GetGameTimer() == 1280 || score->GetGameTimer() == 1270 || score->GetGameTimer() == 1260//104
-		|| score->GetGameTimer() == 1250 || score->GetGameTimer() == 1240 || score->GetGameTimer() == 1230//107
-		|| score->GetGameTimer() == 1220 || score->GetGameTimer() == 1210 || score->GetGameTimer() == 1200//110
-		|| score->GetGameTimer() == 1190//111
+		|| score->GetGameTimer() == 2340 || score->GetGameTimer() == 2320 || score->GetGameTimer() == 1800//80
+		|| score->GetGameTimer() == 1790 || score->GetGameTimer() == 1780 || score->GetGameTimer() == 1770//83
+
+		|| score->GetGameTimer() == 1760 || score->GetGameTimer() == 1750 || score->GetGameTimer() == 1740//86
+		|| score->GetGameTimer() == 1730 || score->GetGameTimer() == 1720 || score->GetGameTimer() == 1710//89
+		|| score->GetGameTimer() == 1700 || score->GetGameTimer() == 1690 || score->GetGameTimer() == 1680//92
+
+		|| score->GetGameTimer() == 1670 || score->GetGameTimer() == 1660 || score->GetGameTimer() == 1650//95
+		|| score->GetGameTimer() == 1640 || score->GetGameTimer() == 1630 || score->GetGameTimer() == 1620//98
+		|| score->GetGameTimer() == 1610 || score->GetGameTimer() == 1600 || score->GetGameTimer() == 1590//101
+
+		|| score->GetGameTimer() == 1580 || score->GetGameTimer() == 1570 || score->GetGameTimer() == 1560//104
+		|| score->GetGameTimer() == 1550 || score->GetGameTimer() == 1540 || score->GetGameTimer() == 1530//107
+		|| score->GetGameTimer() == 1520 || score->GetGameTimer() == 1510 || score->GetGameTimer() == 1500//110
+
+		|| score->GetGameTimer() == 1490 || score->GetGameTimer() == 900 || score->GetGameTimer() == 890//113
+		|| score->GetGameTimer() == 880 || score->GetGameTimer() == 870 || score->GetGameTimer() == 860//116
+		|| score->GetGameTimer() == 850 || score->GetGameTimer() == 840 || score->GetGameTimer() == 830//119
+
+		|| score->GetGameTimer() == 810 || score->GetGameTimer() == 820 || score->GetGameTimer() == 800//122
+		|| score->GetGameTimer() == 790 || score->GetGameTimer() == 780 || score->GetGameTimer() == 770//125
+
+		|| score->GetGameTimer() == 760 || score->GetGameTimer() == 750 || score->GetGameTimer() == 740//128
+		|| score->GetGameTimer() == 730 || score->GetGameTimer() == 720 || score->GetGameTimer() == 710//131
+		|| score->GetGameTimer() == 700 || score->GetGameTimer() == 690 || score->GetGameTimer() == 680//140
+		|| score->GetGameTimer() == 670 || score->GetGameTimer() == 660 || score->GetGameTimer() == 650//143
+
 		) {
 		BirthEnemyCount++;
 		EnemyArgment = true;
@@ -673,24 +697,24 @@ void SceneManager::GameSceneEnemyArg() {
 		}
 		//これで一組
 		else if (BirthEnemyCount == 14) {
-			newEnemy->Pattern(110.0f, 0, RIGHT);
+			newEnemy->Pattern(0.0f, 0, RIGHT);
 		}
 		else if (BirthEnemyCount == 15) {
-			newEnemy->Pattern(110.0f, 1, RIGHT);
+			newEnemy->Pattern(0.0f, 1, RIGHT);
 		}
 		//これで一組
 		else if (BirthEnemyCount == 16) {
-			newEnemy->Pattern(180.0f, 0, RIGHT);
+			newEnemy->Pattern(120.0f, 0, RIGHT);
 		}
 		else if (BirthEnemyCount == 17) {
-			newEnemy->Pattern(180.0f, 1, RIGHT);
+			newEnemy->Pattern(120.0f, 1, RIGHT);
 		}
 		//これで一組
 		else if (BirthEnemyCount == 18) {
-			newEnemy->Pattern(250.0f, 0, RIGHT);
+			newEnemy->Pattern(240.0f, 0, RIGHT);
 		}
 		else if (BirthEnemyCount == 19) {
-			newEnemy->Pattern(250.0f, 1, RIGHT);
+			newEnemy->Pattern(240.0f, 1, RIGHT);
 		}
 		//これで一組
 		else if (BirthEnemyCount == 20) {
@@ -844,103 +868,103 @@ void SceneManager::GameSceneEnemyArg() {
 			newEnemy->Pattern(180.0f, 0, RIGHT);
 		}
 		//これで一組
-		else if (BirthEnemyCount == 80) {
+		else if (BirthEnemyCount == 80 || BirthEnemyCount == 112) {
 		newEnemy->Pattern(0.0f, 0, RIGHT);
 		}
-		else if (BirthEnemyCount == 81) {
+		else if (BirthEnemyCount == 81 || BirthEnemyCount == 113) {
 		newEnemy->Pattern(45.0f, 0, RIGHT);
 		}
-		else if (BirthEnemyCount == 82) {
+		else if (BirthEnemyCount == 82 || BirthEnemyCount == 114) {
 		newEnemy->Pattern(90.0f, 0, RIGHT);
 		}
-		else if (BirthEnemyCount == 83) {
+		else if (BirthEnemyCount == 83 || BirthEnemyCount == 115) {
 		newEnemy->Pattern(135.0f, 0, RIGHT);
 		}
-		else if (BirthEnemyCount == 84) {
+		else if (BirthEnemyCount == 84 || BirthEnemyCount == 116) {
 		newEnemy->Pattern(180.0f, 0, RIGHT);
 		}
-		else if (BirthEnemyCount == 85) {
+		else if (BirthEnemyCount == 85 || BirthEnemyCount == 117) {
 		newEnemy->Pattern(225.0f, 0, RIGHT);
 		}
-		else if (BirthEnemyCount == 86) {
+		else if (BirthEnemyCount == 86 || BirthEnemyCount == 118) {
 		newEnemy->Pattern(270.0f, 0, RIGHT);
 		}
-		else if (BirthEnemyCount == 87) {
+		else if (BirthEnemyCount == 87 || BirthEnemyCount == 119) {
 		newEnemy->Pattern(315.0f, 0, RIGHT);
 		}
 		//これで一組
-		else if (BirthEnemyCount == 88) {
+		else if (BirthEnemyCount == 88 || BirthEnemyCount == 120) {
 		newEnemy->Pattern(0.0f, 1, LEFT);
 		}
-		else if (BirthEnemyCount == 89) {
+		else if (BirthEnemyCount == 89 || BirthEnemyCount == 121) {
 		newEnemy->Pattern(45.0f, 1, LEFT);
 		}
-		else if (BirthEnemyCount == 90) {
+		else if (BirthEnemyCount == 90 || BirthEnemyCount == 122) {
 		newEnemy->Pattern(90.0f, 1, LEFT);
 		}
-		else if (BirthEnemyCount == 91) {
+		else if (BirthEnemyCount == 91 || BirthEnemyCount == 123) {
 		newEnemy->Pattern(135.0f, 1, LEFT);
 		}
-		else if (BirthEnemyCount == 92) {
+		else if (BirthEnemyCount == 92 || BirthEnemyCount == 124) {
 		newEnemy->Pattern(180.0f, 1, LEFT);
 		}
-		else if (BirthEnemyCount == 93) {
+		else if (BirthEnemyCount == 93 || BirthEnemyCount == 125) {
 		newEnemy->Pattern(225.0f, 1, LEFT);
 		}
-		else if (BirthEnemyCount == 94) {
+		else if (BirthEnemyCount == 94 || BirthEnemyCount == 126) {
 		newEnemy->Pattern(270.0f, 1, LEFT);
 		}
-		else if (BirthEnemyCount == 95) {
+		else if (BirthEnemyCount == 95 || BirthEnemyCount == 127) {
 		newEnemy->Pattern(315.0f, 1, LEFT);
 		}
 		//これで一組
-		else if (BirthEnemyCount == 96) {
+		else if (BirthEnemyCount == 96 || BirthEnemyCount == 128) {
 		newEnemy->Pattern(0.0f, 2, RIGHT);
 		}
-		else if (BirthEnemyCount == 97) {
+		else if (BirthEnemyCount == 97 || BirthEnemyCount == 129) {
 		newEnemy->Pattern(45.0f, 2, RIGHT);
 		}
-		else if (BirthEnemyCount == 98) {
+		else if (BirthEnemyCount == 98 || BirthEnemyCount == 130) {
 		newEnemy->Pattern(90.0f, 2, RIGHT);
 		}
-		else if (BirthEnemyCount == 99) {
+		else if (BirthEnemyCount == 99 || BirthEnemyCount == 131) {
 		newEnemy->Pattern(135.0f, 2, RIGHT);
 		}
-		else if (BirthEnemyCount == 100) {
+		else if (BirthEnemyCount == 100 || BirthEnemyCount == 132) {
 		newEnemy->Pattern(180.0f, 2, RIGHT);
 		}
-		else if (BirthEnemyCount == 101) {
+		else if (BirthEnemyCount == 101 || BirthEnemyCount == 133) {
 		newEnemy->Pattern(225.0f, 2, RIGHT);
 		}
-		else if (BirthEnemyCount == 102) {
+		else if (BirthEnemyCount == 102 || BirthEnemyCount == 134) {
 		newEnemy->Pattern(270.0f, 2, RIGHT);
 		}
-		else if (BirthEnemyCount == 103) {
+		else if (BirthEnemyCount == 103 || BirthEnemyCount == 135) {
 		newEnemy->Pattern(315.0f, 2, RIGHT);
 		}
 		//これで一組
-		else if (BirthEnemyCount == 104) {
+		else if (BirthEnemyCount == 104 || BirthEnemyCount == 136) {
 		newEnemy->Pattern(0.0f, 3, LEFT);
 		}
-		else if (BirthEnemyCount == 105) {
+		else if (BirthEnemyCount == 105 || BirthEnemyCount == 137) {
 		newEnemy->Pattern(45.0f, 3, LEFT);
 		}
-		else if (BirthEnemyCount == 106) {
+		else if (BirthEnemyCount == 106 || BirthEnemyCount == 138) {
 		newEnemy->Pattern(90.0f, 3, LEFT);
 		}
-		else if (BirthEnemyCount == 107) {
+		else if (BirthEnemyCount == 107 || BirthEnemyCount == 139) {
 		newEnemy->Pattern(135.0f, 3, LEFT);
 		}
-		else if (BirthEnemyCount == 108) {
+		else if (BirthEnemyCount == 108 || BirthEnemyCount == 140) {
 		newEnemy->Pattern(180.0f, 3, LEFT);
 		}
-		else if (BirthEnemyCount == 109) {
+		else if (BirthEnemyCount == 109 || BirthEnemyCount == 141) {
 		newEnemy->Pattern(225.0f, 3, LEFT);
 		}
-		else if (BirthEnemyCount == 110) {
+		else if (BirthEnemyCount == 110 || BirthEnemyCount == 142) {
 		newEnemy->Pattern(270.0f, 3, LEFT);
 		}
-		else if (BirthEnemyCount == 111) {
+		else if (BirthEnemyCount == 111 || BirthEnemyCount == 143) {
 		newEnemy->Pattern(315.0f, 3, LEFT);
 		}
 		enemy.push_back(std::move(newEnemy));

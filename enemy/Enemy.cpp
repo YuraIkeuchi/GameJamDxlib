@@ -115,11 +115,11 @@ void Enemy::Update(Player* player) {
 void Enemy::TutorialUpdate(Player* player) {
 
 	if (!player->GetAttackStart()) {
-		ResPorn();
 		if (TutorialMove) {
 			Move(player);
 		}
 	}
+	ResPorn();
 	InArea(player);
 	Stop(player);
 	Collide(player);
@@ -512,7 +512,7 @@ bool Enemy::Collide(Player* player) {
 	//当たり判定
 	float plaPosX = player->GetPositionX();
 	float plaPosY = player->GetPositionY();
-	if (Collision::CircleCollision(EnemyPosX, EnemyPosY, 15.0f, plaPosX, plaPosY, 15.0f)
+	if (Collision::CircleCollision(EnemyPosX, EnemyPosY, 20.0f, plaPosX, plaPosY, 20.0f)
 		&& (EnemyMove) && (EnemyAlive) && (player->GetScale() == EnemyScale) && (player->GetAttackStart())) {
 		//敵の情報を消す
 		EnemyAlive = false;
