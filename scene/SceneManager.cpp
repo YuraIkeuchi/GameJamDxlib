@@ -115,11 +115,12 @@ void SceneManager::Draw()
 	case static_cast<int>(SceneManager::NO::Tutorial):
 		//DrawFormatString(0, 300, GetColor(0, 0, 0), "TUTORIAL");
 		//DrawFormatString(0, 340, GetColor(0, 0, 0), "TutorialCount %d", TutorialCount);
-		/*DrawFormatString(0, 320, GetColor(0, 0, 0), "BirthEnemyCount %d", BirthEnemyCount);
+		/*
 		*/
 		TutorialDraw();
 		break;
 	case static_cast<int>(SceneManager::NO::GameScene):
+		DrawFormatString(0, 320, GetColor(0, 0, 0), "BirthEnemyCount %d", BirthEnemyCount);
 		//DrawFormatString(0, 300, GetColor(0, 0, 0), "GAME");
 		//DrawFormatString(0, 320, GetColor(0, 0, 0), "BirthEnemyCount %d", BirthEnemyCount);
 		GameSceneDraw();
@@ -231,34 +232,28 @@ void SceneManager::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STAT
 		newEnemy->SetStopTex(enemystopTex);
 		newEnemy->Initialize();
 		if (BirthEnemyCount == 1) {
-			newEnemy->SetTargetLine(0);
 			newEnemy->SetTutorialMove(true);
-			newEnemy->SetSpeed(0.0f);
+			newEnemy->Pattern(0.0f, 0, RIGHT);
 		}
 		else if (BirthEnemyCount == 2) {
-			newEnemy->SetTargetLine(0);
 			newEnemy->SetTutorialMove(true);
-			newEnemy->SetSpeed(90.0f);
+			newEnemy->Pattern(90.0f, 0, RIGHT);
 		}
 		else if (BirthEnemyCount == 3) {
-			newEnemy->SetTargetLine(1);
 			newEnemy->SetTutorialMove(true);
-			newEnemy->SetSpeed(180.0f);
+			newEnemy->Pattern(180.0f, 1, RIGHT);
 		}
 		else if (BirthEnemyCount == 4) {
-			newEnemy->SetTargetLine(1);
 			newEnemy->SetTutorialMove(true);
-			newEnemy->SetSpeed(180.0f);
+			newEnemy->Pattern(180.0f, 1, RIGHT);
 		}
 		else if (BirthEnemyCount == 5) {
-			newEnemy->SetTargetLine(2);
 			newEnemy->SetTutorialMove(true);
-			newEnemy->SetSpeed(180.0f);
+			newEnemy->Pattern(180.0f, 2, RIGHT);
 		}
 		else if (BirthEnemyCount == 6) {
-			newEnemy->SetTargetLine(3);
 			newEnemy->SetTutorialMove(true);
-			newEnemy->SetSpeed(180.0f);
+			newEnemy->Pattern(180.0f, 3, RIGHT);
 		}
 		enemy.push_back(std::move(newEnemy));
 		EnemyArgment = false;
@@ -624,7 +619,7 @@ void SceneManager::GameSceneEnemyArg() {
 		|| score->GetGameTimer() == 2420 || score->GetGameTimer() == 2400 || score->GetGameTimer() == 2380//71
 		|| score->GetGameTimer() == 2360 || score->GetGameTimer() == 2340 || score->GetGameTimer() == 2320//74
 		|| score->GetGameTimer() == 2300 || score->GetGameTimer() == 2280 || score->GetGameTimer() == 2260//77
-		|| score->GetGameTimer() == 2340 || score->GetGameTimer() == 20 || score->GetGameTimer() == 200//80
+		|| score->GetGameTimer() == 2340 || score->GetGameTimer() == 2320 || score->GetGameTimer() == 200//80
 		) {
 		BirthEnemyCount++;
 		EnemyArgment = true;
@@ -652,34 +647,15 @@ void SceneManager::GameSceneEnemyArg() {
 			newEnemy->Pattern(270.0f, 0, RIGHT);
 		}
 		//これで一組
-		else if (BirthEnemyCount == 5) {
-			newEnemy->Pattern(0.0f, 0, LEFT);
-		}
-		else if (BirthEnemyCount == 6) {
-			newEnemy->Pattern(0.0f, 0, LEFT);
-		}
-		else if (BirthEnemyCount == 7) {
+		else if (BirthEnemyCount == 5 || BirthEnemyCount == 6 || BirthEnemyCount == 7) {
 			newEnemy->Pattern(0.0f, 0, LEFT);
 		}
 		//これで一組
-		else if (BirthEnemyCount == 8) {
-			newEnemy->Pattern(120.0f, 0, LEFT);
-		}
-		else if (BirthEnemyCount == 9) {
-			newEnemy->Pattern(120.0f, 0, LEFT);
-		}
-		else if (BirthEnemyCount == 10) {
+		else if (BirthEnemyCount == 8 || BirthEnemyCount == 9 || BirthEnemyCount == 10) {
 			newEnemy->Pattern(120.0f, 0, LEFT);
 		}
 		//これで一組
-		else if (BirthEnemyCount == 11) {
-			newEnemy->Pattern(240.0f, 0, LEFT);
-		}
-		else if (BirthEnemyCount == 12) {
-			newEnemy->Pattern(240.0f, 0, LEFT);
-		}
-
-		else if (BirthEnemyCount == 13) {
+		else if (BirthEnemyCount == 11 || BirthEnemyCount == 12 || BirthEnemyCount == 13) {
 			newEnemy->Pattern(240.0f, 0, LEFT);
 		}
 		//これで一組
@@ -821,6 +797,38 @@ void SceneManager::GameSceneEnemyArg() {
 		}
 		else if (BirthEnemyCount == 55) {
 			newEnemy->Pattern(270.0f, 3, LEFT);
+		}
+		//これで一組
+		else if (BirthEnemyCount == 56 || BirthEnemyCount == 57 || BirthEnemyCount == 58) {
+			newEnemy->Pattern(90.0f, 0, LEFT);
+		}
+		//これで一組
+		else if (BirthEnemyCount == 59 || BirthEnemyCount == 60 || BirthEnemyCount == 61) {
+			newEnemy->Pattern(270.0f, 0, LEFT);
+		}
+		//これで一組
+		else if (BirthEnemyCount == 62 || BirthEnemyCount == 63 || BirthEnemyCount == 64) {
+			newEnemy->Pattern(0.0f, 1, RIGHT);
+		}
+		//これで一組
+		else if (BirthEnemyCount == 65 || BirthEnemyCount == 66 || BirthEnemyCount == 67) {
+			newEnemy->Pattern(180.0f, 1, RIGHT);
+		}
+		//これで一組
+		else if (BirthEnemyCount == 68 || BirthEnemyCount == 69 || BirthEnemyCount == 70) {
+			newEnemy->Pattern(90.0f, 2, LEFT);
+		}
+		//これで一組
+		else if (BirthEnemyCount == 71 || BirthEnemyCount == 72 || BirthEnemyCount == 73) {
+			newEnemy->Pattern(270.0f, 0, LEFT);
+		}
+		//これで一組
+		else if (BirthEnemyCount == 74 || BirthEnemyCount == 75 || BirthEnemyCount == 76) {
+			newEnemy->Pattern(0.0f, 0, RIGHT);
+		}
+		//これで一組
+		else if (BirthEnemyCount == 77 || BirthEnemyCount == 78 || BirthEnemyCount == 79) {
+			newEnemy->Pattern(180.0f, 0, RIGHT);
 		}
 		enemy.push_back(std::move(newEnemy));
 		EnemyArgment = false;

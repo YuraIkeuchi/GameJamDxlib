@@ -372,11 +372,11 @@ void Enemy::Target(Player* player) {
 			if (player->GetKnockCount() == 0) {
 				if (player->GetAttack()) {
 					//0度と360度の境目の差をなくす
-					if (player->GetSpeed() <= 40.0f && EnemySpeed >= 320.0f) {
+					if (player->GetSpeed() <= 80.0f && EnemySpeed >= 280.0f) {
 						player->SetAround(true);
 						player->SetSpeed(player->GetSpeed() + 360.0f);
 					}
-					else if (EnemySpeed <= 40.0f && player->GetSpeed() >= 320.0f) {
+					else if (EnemySpeed <= 80.0f && player->GetSpeed() >= 280.0f) {
 						player->SetAround(true);
 						player->SetSpeed(player->GetSpeed() - 360.0f);
 					}
