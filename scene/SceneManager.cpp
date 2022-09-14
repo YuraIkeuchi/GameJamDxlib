@@ -298,7 +298,7 @@ void SceneManager::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STAT
 	}
 
 	//チュートリアル
-	if (input.Buttons[XINPUT_BUTTON_Y] && !oldinput.Buttons[XINPUT_BUTTON_Y]) {
+	if (((input.Buttons[XINPUT_BUTTON_Y] && !oldinput.Buttons[XINPUT_BUTTON_Y]) || (keys[KEY_INPUT_RETURN] && !oldkeys[KEY_INPUT_RETURN]))) {
 		ResetTutorial = false;
 		if (!ChangeStart) {
 			scenechange->SetdoorStart(true);
@@ -657,9 +657,10 @@ void SceneManager::GameSceneEnemyArg() {
 
 		|| score->GetGameTimer() == 760 || score->GetGameTimer() == 750 || score->GetGameTimer() == 740//128
 		|| score->GetGameTimer() == 730 || score->GetGameTimer() == 720 || score->GetGameTimer() == 710//131
-		|| score->GetGameTimer() == 700 || score->GetGameTimer() == 690 || score->GetGameTimer() == 680//140
-		|| score->GetGameTimer() == 670 || score->GetGameTimer() == 660 || score->GetGameTimer() == 650//143
-
+		|| score->GetGameTimer() == 700 || score->GetGameTimer() == 690 || score->GetGameTimer() == 680//134
+		|| score->GetGameTimer() == 670 || score->GetGameTimer() == 660 || score->GetGameTimer() == 650//137
+		|| score->GetGameTimer() == 640 || score->GetGameTimer() == 630 || score->GetGameTimer() == 620//140
+		|| score->GetGameTimer() == 610 || score->GetGameTimer() == 600 || score->GetGameTimer() == 590//143
 		) {
 		BirthEnemyCount++;
 		EnemyArgment = true;

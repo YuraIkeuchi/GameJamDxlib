@@ -119,7 +119,7 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 	InputX = (float)input.ThumbLX / 32768;
 	InputY = (float)input.ThumbLY / 32768;
 	Joyangle = ((atan2(InputX, InputY) * (180.0f / PI))) + 90;
-	if(InputX == 0.0f && InputY == 0.0f){
+	if((InputX == 0.0f && InputY == 0.0f) && (!keys[KEY_INPUT_A]) && (!keys[KEY_INPUT_D])){
 		if (Dir == RIGHT) {
 			AttackSpeed = PlayerSpeed + 90.0f;
 		}
@@ -129,6 +129,16 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 	}
 	else {
 		AttackSpeed = Joyangle;
+
+
+		//キーボードの場合
+		if (keys[KEY_INPUT_A]) {
+			AttackSpeed += 20.0f;
+		}
+		if (keys[KEY_INPUT_D]) {
+			AttackSpeed -= 20.0f;
+		}
+
 	}
 
 	//プレイヤーの回転
@@ -179,7 +189,7 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 
 	//移動方向変換
 	//(右向きになる)
-	if (input.RightTrigger && !oldinput.RightTrigger
+	if (((input.RightTrigger && !oldinput.RightTrigger) || (keys[KEY_INPUT_RIGHT] && !oldkeys[KEY_INPUT_RIGHT]))
 		&& (Dir == LEFT)) {
 		Speedframe = 0.0f;
 		Dir = RIGHT;
@@ -188,7 +198,7 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 	}
 
 	//(右向きになる)
-	if (input.LeftTrigger && !oldinput.LeftTrigger
+	if (((input.LeftTrigger && !oldinput.LeftTrigger) || (keys[KEY_INPUT_LEFT] && !oldkeys[KEY_INPUT_LEFT]))
 		&& (Dir == RIGHT)) {
 		Speedframe = 0.0f;
 		Dir = LEFT;
@@ -214,7 +224,8 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 	}
 
 	//敵を止める
-	if (input.Buttons[XINPUT_BUTTON_B] && !oldinput.Buttons[XINPUT_BUTTON_B] && !Stop && !stopEffects->getIsAlive()) {
+	if (((input.Buttons[XINPUT_BUTTON_B] && !oldinput.Buttons[XINPUT_BUTTON_B]) || (keys[KEY_INPUT_S] && !oldkeys[KEY_INPUT_S]))
+		&& !Stop && !stopEffects->getIsAlive()) {
 		Stop = true;
 		stopEffects->active(VGet(playerPosX, playerPosY, 0));
 		if (PlayerSound) {
@@ -286,7 +297,7 @@ void Player::Move(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_
 
 void Player::AttackMove(char keys[255], char oldkeys[255], XINPUT_STATE input, XINPUT_STATE oldinput) {
 	//敵に攻撃する
-	if (input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A] && !Attack && !AttackStart) {
+	if (((input.Buttons[XINPUT_BUTTON_A] && !oldinput.Buttons[XINPUT_BUTTON_A]) || (keys[KEY_INPUT_SPACE] && keys[KEY_INPUT_SPACE])) && !Attack && !AttackStart) {
 		Attack = true;
 	}
 
