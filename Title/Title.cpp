@@ -14,6 +14,7 @@ Title::Title()
 	TitleTex7 = LoadGraph("Resources/title7.png");
 	TitleTex8 = LoadGraph("Resources/title8.png");
 	LoadDivGraph("Resources/title9.png", 6, 6, 1, 288, 112, TitleTex9);
+	TitleTex10 = LoadGraph("Resources/co.png");
 	TitleSe1 = LoadSoundMem("Resources/sound/titleSound2.mp3");
 	TitleSe2 = LoadSoundMem("Resources/sound/titleSound3.mp3");
 }
@@ -161,6 +162,7 @@ void Title::Draw()
 		DrawRotaGraph(WIN_WIDTH / 2, 620, scale3, 0.0f, TitleTex5, TRUE);
 		DrawRotaGraph(curPosX, curPosY, 0.5f, 0.0f, TitleTex4, TRUE);
 		DrawGraph(0, 0, TitleTex, TRUE);
+		DrawRotaGraph(WIN_WIDTH - (128 * 1.2), WIN_HEIGHT - (128 * 1.2), 1.2f, 0.0f, TitleTex10, TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 	else
