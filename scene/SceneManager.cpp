@@ -121,7 +121,7 @@ void SceneManager::Draw()
 		TutorialDraw();
 		break;
 	case static_cast<int>(SceneManager::NO::GameScene):
-		DrawFormatString(0, 320, GetColor(0, 0, 0), "BirthEnemyCount %d", BirthEnemyCount);
+		//DrawFormatString(0, 320, GetColor(0, 0, 0), "BirthEnemyCount %d", BirthEnemyCount);
 		//DrawFormatString(0, 300, GetColor(0, 0, 0), "GAME");
 		//DrawFormatString(0, 320, GetColor(0, 0, 0), "BirthEnemyCount %d", BirthEnemyCount);
 		GameSceneDraw();
@@ -435,8 +435,6 @@ void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STA
 			}
 		}
 	}
-	//ゲーム終了
-	score->Update(keys, oldkeys, input, oldinput);
 
 	if (input.Buttons[XINPUT_BUTTON_START] && !oldinput.Buttons[XINPUT_BUTTON_START] && changeFlag == false)
 	{
@@ -498,8 +496,8 @@ void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STA
 	//ゲーム終了
 	if (score->Update(keys, oldkeys, input, oldinput) == true)
 	{
+		player->SetAttackStart(false);
 		player->SetScale(320.0f);
-		score->SetScorePoint(0);
 		BirthEnemyCount = 0;
 		//要素全削除
 		enemy.clear();
@@ -623,7 +621,18 @@ void SceneManager::GameSceneEnemyArg() {
 		|| score->GetGameTimer() == 2420 || score->GetGameTimer() == 2400 || score->GetGameTimer() == 2380//71
 		|| score->GetGameTimer() == 2360 || score->GetGameTimer() == 2340 || score->GetGameTimer() == 2320//74
 		|| score->GetGameTimer() == 2300 || score->GetGameTimer() == 2280 || score->GetGameTimer() == 2260//77
-		|| score->GetGameTimer() == 2340 || score->GetGameTimer() == 2320 || score->GetGameTimer() == 200//80
+		|| score->GetGameTimer() == 2340 || score->GetGameTimer() == 2320 || score->GetGameTimer() == 1500//80
+		|| score->GetGameTimer() == 1490 || score->GetGameTimer() == 1480 || score->GetGameTimer() == 1470//83
+		|| score->GetGameTimer() == 1460 || score->GetGameTimer() == 1450 || score->GetGameTimer() == 1440//86
+		|| score->GetGameTimer() == 1430 || score->GetGameTimer() == 1420 || score->GetGameTimer() == 1410//89
+		|| score->GetGameTimer() == 1400 || score->GetGameTimer() == 1390 || score->GetGameTimer() == 1380//92
+		|| score->GetGameTimer() == 1370 || score->GetGameTimer() == 1360 || score->GetGameTimer() == 1350//95
+		|| score->GetGameTimer() == 1340 || score->GetGameTimer() == 1330 || score->GetGameTimer() == 1320//98
+		|| score->GetGameTimer() == 1310 || score->GetGameTimer() == 1300 || score->GetGameTimer() == 1290//101
+		|| score->GetGameTimer() == 1280 || score->GetGameTimer() == 1270 || score->GetGameTimer() == 1260//104
+		|| score->GetGameTimer() == 1250 || score->GetGameTimer() == 1240 || score->GetGameTimer() == 1230//107
+		|| score->GetGameTimer() == 1220 || score->GetGameTimer() == 1210 || score->GetGameTimer() == 1200//110
+		|| score->GetGameTimer() == 1190//111
 		) {
 		BirthEnemyCount++;
 		EnemyArgment = true;
@@ -834,6 +843,106 @@ void SceneManager::GameSceneEnemyArg() {
 		else if (BirthEnemyCount == 77 || BirthEnemyCount == 78 || BirthEnemyCount == 79) {
 			newEnemy->Pattern(180.0f, 0, RIGHT);
 		}
+		//これで一組
+		else if (BirthEnemyCount == 80) {
+		newEnemy->Pattern(0.0f, 0, RIGHT);
+		}
+		else if (BirthEnemyCount == 81) {
+		newEnemy->Pattern(45.0f, 0, RIGHT);
+		}
+		else if (BirthEnemyCount == 82) {
+		newEnemy->Pattern(90.0f, 0, RIGHT);
+		}
+		else if (BirthEnemyCount == 83) {
+		newEnemy->Pattern(135.0f, 0, RIGHT);
+		}
+		else if (BirthEnemyCount == 84) {
+		newEnemy->Pattern(180.0f, 0, RIGHT);
+		}
+		else if (BirthEnemyCount == 85) {
+		newEnemy->Pattern(225.0f, 0, RIGHT);
+		}
+		else if (BirthEnemyCount == 86) {
+		newEnemy->Pattern(270.0f, 0, RIGHT);
+		}
+		else if (BirthEnemyCount == 87) {
+		newEnemy->Pattern(315.0f, 0, RIGHT);
+		}
+		//これで一組
+		else if (BirthEnemyCount == 88) {
+		newEnemy->Pattern(0.0f, 1, LEFT);
+		}
+		else if (BirthEnemyCount == 89) {
+		newEnemy->Pattern(45.0f, 1, LEFT);
+		}
+		else if (BirthEnemyCount == 90) {
+		newEnemy->Pattern(90.0f, 1, LEFT);
+		}
+		else if (BirthEnemyCount == 91) {
+		newEnemy->Pattern(135.0f, 1, LEFT);
+		}
+		else if (BirthEnemyCount == 92) {
+		newEnemy->Pattern(180.0f, 1, LEFT);
+		}
+		else if (BirthEnemyCount == 93) {
+		newEnemy->Pattern(225.0f, 1, LEFT);
+		}
+		else if (BirthEnemyCount == 94) {
+		newEnemy->Pattern(270.0f, 1, LEFT);
+		}
+		else if (BirthEnemyCount == 95) {
+		newEnemy->Pattern(315.0f, 1, LEFT);
+		}
+		//これで一組
+		else if (BirthEnemyCount == 96) {
+		newEnemy->Pattern(0.0f, 2, RIGHT);
+		}
+		else if (BirthEnemyCount == 97) {
+		newEnemy->Pattern(45.0f, 2, RIGHT);
+		}
+		else if (BirthEnemyCount == 98) {
+		newEnemy->Pattern(90.0f, 2, RIGHT);
+		}
+		else if (BirthEnemyCount == 99) {
+		newEnemy->Pattern(135.0f, 2, RIGHT);
+		}
+		else if (BirthEnemyCount == 100) {
+		newEnemy->Pattern(180.0f, 2, RIGHT);
+		}
+		else if (BirthEnemyCount == 101) {
+		newEnemy->Pattern(225.0f, 2, RIGHT);
+		}
+		else if (BirthEnemyCount == 102) {
+		newEnemy->Pattern(270.0f, 2, RIGHT);
+		}
+		else if (BirthEnemyCount == 103) {
+		newEnemy->Pattern(315.0f, 2, RIGHT);
+		}
+		//これで一組
+		else if (BirthEnemyCount == 104) {
+		newEnemy->Pattern(0.0f, 3, LEFT);
+		}
+		else if (BirthEnemyCount == 105) {
+		newEnemy->Pattern(45.0f, 3, LEFT);
+		}
+		else if (BirthEnemyCount == 106) {
+		newEnemy->Pattern(90.0f, 3, LEFT);
+		}
+		else if (BirthEnemyCount == 107) {
+		newEnemy->Pattern(135.0f, 3, LEFT);
+		}
+		else if (BirthEnemyCount == 108) {
+		newEnemy->Pattern(180.0f, 3, LEFT);
+		}
+		else if (BirthEnemyCount == 109) {
+		newEnemy->Pattern(225.0f, 3, LEFT);
+		}
+		else if (BirthEnemyCount == 110) {
+		newEnemy->Pattern(270.0f, 3, LEFT);
+		}
+		else if (BirthEnemyCount == 111) {
+		newEnemy->Pattern(315.0f, 3, LEFT);
+		}
 		enemy.push_back(std::move(newEnemy));
 		EnemyArgment = false;
 	}
@@ -894,7 +1003,7 @@ void SceneManager::EndDraw()
 	////player->FormatDraw();
 
 	////スコア
-	//score->Draw();
+	score->Draw();
 	end->Draw(score->GetScorePoint());
 
 	scenechange->Draw();
