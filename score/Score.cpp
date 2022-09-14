@@ -102,15 +102,17 @@ bool Score::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input
 void Score::Draw() {
 	SetFontSize(30);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alphaCount);
+	ChangeFont("HOKKORI");
+	SetFontThickness(9);
 	DrawFormatString(scorePosX2, scorePosY2, GetColor(0, 0, 0), "%d * %d", knockCount,MultPoint);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	SetFontSize(64);
 	DrawRotaGraph(1050, 80, 0.65f, 0.0f, timeTex, TRUE);
-	DrawFormatString(scorePosX + 15, scorePosY + 18 - 64, GetColor(0, 0, 0), "%10d", GameTimer / 60);
+	DrawFormatString(scorePosX - 30, scorePosY + 18 - 64, GetColor(0, 0, 0), "%10d", GameTimer / 60);
 	//DrawFormatString(scorePosX, scorePosY + 64, GetColor(0, 0, 0), "frame %-10d", GameTimer);
 	DrawRotaGraph(1050, 150, 0.65f, 0.0f, scoreTex, TRUE);
-	DrawFormatString(scorePosX+15, scorePosY+18, GetColor(0, 0, 0), "%10d", ScorePoint);
-	DrawFormatString(scorePosX + 15, scorePosY + 70, GetColor(0, 0, 0), "%-10d", GameTimer);
+	DrawFormatString(scorePosX- 30, scorePosY+18, GetColor(0, 0, 0), "%10d", ScorePoint);
+	//DrawFormatString(scorePosX - 30, scorePosY + 70, GetColor(0, 0, 0), "%-10d", GameTimer);
 	SetFontSize(20);
 }
 

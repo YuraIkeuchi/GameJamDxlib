@@ -17,6 +17,7 @@ void SceneManager::StaticInit()
 	enemyrespornTex = LoadGraph("Resources/resporn.png");
 	enemytargetTex = LoadGraph("Resources/enemytarget.png");
 	enemystopTex = LoadGraph("Resources/enemystop.png");
+	startTex = LoadGraph("Resources/start.png");
 
 	menuChangeSE = LoadSoundMem("Resources/sound/titleSound2.mp3");
 	checkSE = LoadSoundMem("Resources/sound/titleSound3.mp3");
@@ -579,6 +580,9 @@ void SceneManager::GameSceneDraw()
 
 	//スコア
 	score->Draw();
+
+	DrawRotaGraph(WIN_WIDTH - (128 * 0.4f) , WIN_HEIGHT - (128 * 0.4f), 0.4f, 0.0f, startTex, TRUE);
+
 	if (changeFlag == true)
 	{
 		//スコア

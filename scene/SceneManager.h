@@ -114,6 +114,7 @@ private:
 	int enemyrespornTex;
 	int enemytargetTex;
 	int enemystopTex;
+	int startTex;
 
 public:
 	//最初に初期化するもの
