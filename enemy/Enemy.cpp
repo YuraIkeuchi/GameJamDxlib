@@ -5,8 +5,7 @@
 #include "Easing.h"
 Enemy::Enemy() {
 	int EffectTex = LoadGraph("Resources/attackEffect.png");
-	int breakEffectTex = LoadGraph("breakEffect.png");
-	int TimeEffectTex = LoadGraph("TimeEffect.png");
+	int breakEffectTex = LoadGraph("Resources/breakEffect.png");
 	int particleTex = LoadGraph("Resources/hootEffect.png");
 
 	AttackEffect* effects_;
@@ -19,7 +18,6 @@ Enemy::Enemy() {
 	breakEffects.reset(breakEffects_);
 	TimeEffect* timeEffects_;
 	timeEffects_ = new TimeEffect();
-	timeEffects_->SetTexture(TimeEffectTex);
 	timeEffects.reset(timeEffects_);
 	Particle* particle_;
 	particle_ = new Particle();
