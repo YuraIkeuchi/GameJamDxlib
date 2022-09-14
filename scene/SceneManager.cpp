@@ -376,7 +376,7 @@ void SceneManager::TutorialDraw()
 
 	//プレイヤー
 	player->Draw();
-	player->FormatDraw();
+	//player->FormatDraw();
 
 	//score->FormatDraw();
 	//エネミー
@@ -560,7 +560,7 @@ void SceneManager::GameSceneDraw()
 
 	//プレイヤー
 	player->Draw();
-	player->FormatDraw();
+	//player->FormatDraw();
 
 	//score->FormatDraw();
 	//エネミー

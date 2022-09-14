@@ -128,6 +128,7 @@ bool Score::TutorialUpdate(char keys[255], char oldkeys[255], XINPUT_STATE input
 void Score::Draw() {
 	SetFontSize(30);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alphaCount);
+	AddFontResourceEx("Resources/HOKKORI.ttf", FR_PRIVATE, NULL);
 	ChangeFont("HOKKORI");
 	SetFontThickness(9);
 	DrawFormatString(scorePosX2, scorePosY2, GetColor(0, 0, 0), "%d * %d", knockCount,MultPoint);
