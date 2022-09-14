@@ -410,8 +410,8 @@ void Player::Draw() {
 }
 
 void Player::FormatDraw() {
-	DrawFormatString(0, 40, GetColor(0, 0, 0), "InArea:%d", Stun);
-	DrawFormatString(0, 60, GetColor(0, 0, 0), "InAreaStart:%d", StunTimer);
+	//DrawFormatString(0, 40, GetColor(0, 0, 0), "InArea:%d", Stun);
+	//DrawFormatString(0, 60, GetColor(0, 0, 0), "InAreaStart:%d", StunTimer);
 	/*DrawFormatString(0, 0, GetColor(0, 0, 0), "AttackStart:%d", AttackStart);
 	DrawFormatString(0, 40, GetColor(0, 0, 0), "KnockCount:%d", KnockCount);
 
@@ -419,7 +419,8 @@ void Player::FormatDraw() {
 	/*
 	
 	DrawFormatString(0, 40, GetColor(0, 0, 0), "Attack:%d", Attack);*/
-	//DrawFormatString(0, 20, GetColor(0, 0, 0), "Speed:%f", AfterSpeed);
+	//DrawFormatString(0, 20, GetColor(0, 0, 0), "AfterSpeed:%f", AfterSpeed);
+	//DrawFormatString(0, 40, GetColor(0, 0, 0), "PlayerSpeed:%f", PlayerSpeed);
 	//DrawFormatString(0, 40, GetColor(0, 0, 0), "frame:%f", frame);
 	//DrawFormatString(0, 60, GetColor(0, 0, 0), "PlayerRot:%f", PlayerRot);
 	//DrawFormatString(0, 80, GetColor(0, 0, 0), "Knock:%d", KnockCount);
