@@ -19,6 +19,8 @@ public:
 	void TutorialUpdate(Player* player);
 	//¶¬
 	void ResPorn();
+	//¶¬êŠİ’u
+	void Pattern(float Speed, int TargetLine, int Dir);
 	//ˆÚ“®
 	void Move(Player* player);
 	//UŒ‚”ÍˆÍ“à

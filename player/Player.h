@@ -43,6 +43,7 @@ public:
 	const bool& GetAttack() { return Attack; }
 	const bool& GetInvisible() { return Invisible; }
 	const bool& GetStun() { return Stun; }
+	const int& GetStunTimer() { return StunTimer; }
 	const bool& GetAttackStart() { return AttackStart; }
 	const int& GetAttackInterval() { return AttackInterval; }
 	const int& GetKnockCount() { return KnockCount; }
