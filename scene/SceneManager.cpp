@@ -494,18 +494,21 @@ void SceneManager::GameSceneUpdate(char keys[255], char oldkeys[255], XINPUT_STA
 	}
 
 	//ゲーム終了
-	if (score->Update(keys, oldkeys, input, oldinput) == true)
+	if (changeFlag == false)
 	{
-		player->SetAttackInterval(0);
-		player->SetAttackStart(false);
-		player->SetScale(320.0f);
-		BirthEnemyCount = 0;
-		//要素全削除
-		enemy.clear();
-		SceneTime = 0;
-		StopSoundMem(gameBgm);
-		EndInit();
-		SceneNo = static_cast<int>(NO::End);
+		if (score->Update(keys, oldkeys, input, oldinput) == true)
+		{
+			player->SetAttackInterval(0);
+			player->SetAttackStart(false);
+			player->SetScale(320.0f);
+			BirthEnemyCount = 0;
+			//要素全削除
+			enemy.clear();
+			SceneTime = 0;
+			StopSoundMem(gameBgm);
+			EndInit();
+			SceneNo = static_cast<int>(NO::End);
+		}
 	}
 	if (ChangeNumber == RESTART) {
 		if (scenechange->GetChange()) {
